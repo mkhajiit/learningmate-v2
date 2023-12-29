@@ -3,7 +3,6 @@ import { useCallback, useState } from "react";
 import { Form, Container, Row, Col, Button, InputGroup } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { serverDomain } from "../config/config";
-
 function Signup() {
     const [data, setData] = useState({
         email: "",
@@ -22,8 +21,7 @@ function Signup() {
     const fn_read_data = useCallback(async () => {
         try {
             const result = await axios.get(`${serverDomain}/users/check`);
-            // console.log(result.data.data);
-
+            console.log(result.data.data);
             return result;
         } catch (err) {
             console.log("에러:", err);

@@ -1,4 +1,4 @@
-// 2023.12.22 수정 - 민경
+// 다시 수정하기 - 민경
 
 const database = require('./../src/database'); 
 
