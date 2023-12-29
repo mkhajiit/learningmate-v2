@@ -21,7 +21,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 //origin: 클라이언트의 주소 , 다른 포트로 쿠키를 보낼때는 cors 옵션에  credentials: true 추가해야함
-app.use(cors({ origin: `${domain.deployDomain}`, credentials: true }));
+app.use(
+    cors({
+        origin: `https://web-learningmate-5r422alqajqbni.sel4.cloudtype.app`,
+        credentials: true,
+    })
+);
 //saveUninitialized는 세션이 초기화될 때(예: 사용자가 웹사이트에 처음 방문했을 때) 세션을 저장할지 여부를 결정합니다.
 //resave는 요청이 완료된 후(통신 후)에 세션을 저장할지 여부를 결정합니다.
 app.use(
