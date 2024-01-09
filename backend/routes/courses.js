@@ -3,12 +3,12 @@ const router = express.Router();
 const multer = require('multer');
 const coursesController = require('../controllers/courses');
 const path = require('path');
-const staticPath = path.join(__dirname, '..', 'public');
+// const staticPath = path.join(__dirname, '..', 'public');
 
 const uploadFile = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) =>
-      cb(null, path.join(staticPath, 'videos', 'courses')),
+      cb(null, path.join('https://port-0-learningmate-server-5r422alqajqbni.sel4.cloudtype.app', 'videos', 'courses')),
     filename: (req, file, cb) =>
       //file.originalname: 업로드 파일 원본이름
       cb(null, `${Date.now()}_${file.originalname}`),

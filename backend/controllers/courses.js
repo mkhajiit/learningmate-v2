@@ -6,7 +6,6 @@ const path = require('path');
 exports.courseInsert = async (req, res) => {
   try {
     const courseData = JSON.parse(req.body.data);
-    // const videoUploadPath = `${domain.deployDomain}/videos/courses `${videoUploadPath}/${req.files['lectureVideo'][0].filename}` 이렇게 하면 잘못된 경로가되는데 이유는 모르겠음
     const videoPath = req.files['lectureVideo'][0]
       ? `${videoUploadPath}${req.files['lectureVideo'][0].filename}`
       : '';
