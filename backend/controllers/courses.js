@@ -1,6 +1,6 @@
 const coursesDAO = require('../models/coursesDAO');
 const domain = require('../config/config.js');
-const videoUploadPath = `${domain.deployDomain}/videos/courses/`;
+const videoUploadPath = `${domain.deployDomain}/images/users/`;
 const path = require('path');
 
 exports.courseInsert = async (req, res) => {

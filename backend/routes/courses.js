@@ -7,7 +7,7 @@ const path = require('path');
 const uploadFile = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) =>
-      cb(null, path.join(__dirname, '..', 'public', 'videos', 'courses')),
+      cb(null, path.join(__dirname, '..', 'public', 'images', 'users')),
     filename: (req, file, cb) =>
       //file.originalname: 업로드 파일 원본이름
       cb(null, `${Date.now()}_${file.originalname}`),
