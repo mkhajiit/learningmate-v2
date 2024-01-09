@@ -1,6 +1,6 @@
 const usersDao = require('../models/usersDAO');
 const domain = require('../config/config.js');
-const imageUploadPath = `${domain.localDomain}/images/users/`;
+const imageUploadPath = `${domain.deployDomain}/images/users/`;
 const path = require('path');
 
 exports.login = async (req, res) => {
