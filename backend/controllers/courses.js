@@ -1,13 +1,14 @@
 const coursesDAO = require('../models/coursesDAO');
 const domain = require('../config/config.js');
-const videoUploadPath = `${domain.deployDomain}/videos/courses`;
+const videoUploadPath = `${domain.deployDomain}/videos/courses/`;
 const path = require('path');
 
 exports.courseInsert = async (req, res) => {
   try {
     const courseData = JSON.parse(req.body.data);
+    // const videoUploadPath = `${domain.deployDomain}/videos/courses `${videoUploadPath}/${req.files['lectureVideo'][0].filename}` 이렇게 하면 잘못된 경로가되는데 이유는 모르겠음
     const videoPath = req.files['lectureVideo'][0]
-      ? `${videoUploadPath}/${req.files['lectureVideo'][0].filename}`
+      ? `${videoUploadPath}${req.files['lectureVideo'][0].filename}`
       : '';
     //path.parse().name으로 확장자를 제거한 데이터를 받는다
     const videoName = req.files['lectureVideo'][0]
@@ -15,7 +16,7 @@ exports.courseInsert = async (req, res) => {
       : '강의영상';
 
     const imagePath = req.files['lectureImage'][0]
-      ? `${videoUploadPath}/${req.files['lectureImage'][0].filename}`
+      ? `${videoUploadPath}${req.files['lectureImage'][0].filename}`
       : '';
     await coursesDAO.insert(
       courseData,

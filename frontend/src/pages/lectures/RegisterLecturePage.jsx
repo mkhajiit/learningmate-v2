@@ -54,7 +54,6 @@ function RegisterLecturePage() {
   };
   const onSubmitEvent = useCallback(
     async (formSubmitData) => {
-      console.log('등록됨');
       try {
         const submitData = { ...formSubmitData, user_id: userId };
         const formData = new FormData();
