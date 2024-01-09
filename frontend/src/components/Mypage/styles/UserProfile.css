@@ -1,0 +1,10 @@
+.user-info {
+  background-color: #007bff94;
+  color: rgb(255, 255, 255);
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.info-label {
+  font-weight: bold;
+}
