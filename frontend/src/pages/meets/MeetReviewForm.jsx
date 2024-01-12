@@ -3,7 +3,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { localDomain } from '../../config/config';
+import { serverDomain } from '../../config/config';
 
 const ReviewForm = ({ meet_id, getMeetDetailAndReviews, handleClose }) => {
   const [reviewContent, setReviewContent] = useState('');
@@ -13,7 +13,7 @@ const ReviewForm = ({ meet_id, getMeetDetailAndReviews, handleClose }) => {
 
     try {
       await axios.post(
-        `${localDomain}/reviews/insert/${meet_id}`,
+        `${serverDomain}/reviews/insert/${meet_id}`,
         { content: reviewContent },
         { withCredentials: true },
       );

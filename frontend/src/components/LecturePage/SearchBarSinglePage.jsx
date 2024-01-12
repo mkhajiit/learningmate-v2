@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { lectureAction } from '../../store/lecture';
-import { localDomain } from '../../config/config';
+import { serverDomain } from '../../config/config';
 
 function SearchBarSinglePage() {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ function SearchBarSinglePage() {
 
   const fetchSearchTerm = async (submitData) => {
     try {
-      const result = await axios.get(`${localDomain}/courses/search`, {
+      const result = await axios.get(`${serverDomain}/courses/search`, {
         params: {
           term: submitData.searchInput,
         },

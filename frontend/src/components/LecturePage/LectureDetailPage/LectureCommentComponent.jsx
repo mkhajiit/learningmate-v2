@@ -3,14 +3,14 @@ import React, { useCallback } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { localDomain } from '../../../config/config';
+import { serverDomain } from '../../../config/config';
 import { commentAction } from '../../../store/comment';
 
 function LectureCommentComponent({ item }) {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userInfo.userId);
   const deleteComment = useCallback(async () => {
-    await axios.delete(`${localDomain}/comments/delete/${item.comment_id}`);
+    await axios.delete(`${serverDomain}/comments/delete/${item.comment_id}`);
     // 삭제된 댓글을 Redux 상태에서도 제거
     dispatch(
       commentAction.delete({

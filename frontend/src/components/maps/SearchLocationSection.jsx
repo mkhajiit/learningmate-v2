@@ -64,15 +64,7 @@ function SearchLocationSection() {
       }),
     );
   };
-<<<<<<< HEAD
 
-=======
-  // useEffect(() => {
-  //   console.log('내 위도:', reduxLat);
-  //   console.log('내 경도:', reduxLng);
-  //   console.log('저장할 위치정보:', position);
-  // }, [reduxLat, reduxLng, position]);
->>>>>>> develop
   return (
     <Container>
       {/* mx-auto: 중앙정렬 */}

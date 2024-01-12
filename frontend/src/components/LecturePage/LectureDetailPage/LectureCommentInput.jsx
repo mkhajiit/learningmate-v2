@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import axios from 'axios';
 import { commentAction } from '../../../store/comment';
+import { serverDomain } from '../../../config/config';
 
 function LectureCommentInput() {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ function LectureCommentInput() {
     async (formData) => {
       try {
         const submitData = { comment: formData.comment, user_id: userInfo.userId, course_id };
-        const result = await axios.post('http://localhost:8000/comments/insert', submitData);
+        const result = await axios.post(`${serverDomain}/comments/insert`, submitData);
         dispatch(
           commentAction.insert({
             commentList: result.data.data,

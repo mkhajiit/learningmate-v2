@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import axios from 'axios';
-import { localDomain } from '../../config/config';
+import { serverDomain } from '../../config/config';
 
 const FileInputComponent = () => {
   const [file, setFile] = useState(null);
@@ -16,7 +16,7 @@ const FileInputComponent = () => {
       formData.append('image', file);
 
       // 업로드할 이미지를 포함한 FormData를 서버로 전송
-      await axios.post(`${localDomain}/meets/insert`, formData, {
+      await axios.post(`${serverDomain}/meets/insert`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

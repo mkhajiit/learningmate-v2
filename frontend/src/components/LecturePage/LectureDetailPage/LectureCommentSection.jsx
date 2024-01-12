@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 import axios from 'axios';
 import LectureCommentComponent from './LectureCommentComponent';
 import LectureCommentInput from './LectureCommentInput';
-import { localDomain } from '../../../config/config';
+import { serverDomain } from '../../../config/config';
 import { commentAction } from '../../../store/comment';
 
 function LectureCommentSection() {
@@ -18,7 +18,7 @@ function LectureCommentSection() {
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
-      const resp = await axios.get(`${localDomain}/comments/lecture-comment-list/${course_id}`);
+      const resp = await axios.get(`${serverDomain}/comments/lecture-comment-list/${course_id}`);
       dispatch(
         commentAction.insert({
           commentList: resp.data.data,

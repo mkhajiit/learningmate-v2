@@ -9,7 +9,7 @@ import { Container } from 'react-bootstrap';
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import CardForSwiper from './CardForSwiper';
-import { localDomain } from '../../config/config';
+import { serverDomain } from '../../config/config';
 
 export default function CourseSection() {
   const [dataList, setDataList] = useState([]);
@@ -18,7 +18,7 @@ export default function CourseSection() {
   const fetchData = useCallback(async () => {
     try {
       // 메인페이지 강의정보에서 카드로 띄울 데이터를 9개만 가져오는 api
-      const resp = await axios.get(`${localDomain}/courses/main-course-list`);
+      const resp = await axios.get(`${serverDomain}/courses/main-course-list`);
       console.log(resp.data.data);
       setDataList(resp.data.data);
     } catch (error) {

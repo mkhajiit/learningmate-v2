@@ -18,7 +18,7 @@ import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { localDomain, serverDomain } from '../../config/config';
+import { serverDomain } from '../../config/config';
 import { changeData, clearData, setDates } from '../../store/meetStore';
 import LandingModal from '../../components/maps/LandingModal';
 
@@ -39,7 +39,7 @@ function MeetInsert() {
 
   const getData = useCallback(async () => {
     try {
-      const resp = await axios.get(`${localDomain}/users/userinfo`, {
+      const resp = await axios.get(`${serverDomain}/users/userinfo`, {
         withCredentials: true,
       });
       if (resp.data.data === false) {
