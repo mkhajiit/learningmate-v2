@@ -5,6 +5,7 @@ const router = express.Router();
 const multer = require('multer');
 const coursesController = require('../controllers/courses');
 const path = require('path');
+const staticPath = path.join(__dirname, '..', 'public');
 
 const uploadFile = multer({
   storage: multer.diskStorage({
