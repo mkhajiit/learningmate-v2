@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
 import { Button, Col, Container, Row } from 'react-bootstrap';
-import { localDomain } from '../../config/config';
+import { serverDomain } from '../../config/config';
 import { lectureAction } from '../../store/lecture';
 import SearchBarSinglePage from '../../components/LecturePage/SearchBarSinglePage';
 import LectureTable from '../../components/LecturePage/LectureTable';
@@ -19,7 +19,7 @@ function CoursesSinglePage() {
   const readCourses = useCallback(async () => {
     try {
       setLoading(true);
-      const resData = await axios.get(`${localDomain}/courses/courseList`);
+      const resData = await axios.get(`${serverDomain}/courses/courseList`);
       dispatch(lectureAction.insert({ courses: resData.data.data }));
     } catch (err) {
       console.log('에러', err);

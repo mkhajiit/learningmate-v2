@@ -5,7 +5,7 @@ import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
-import { localDomain, serverDomain } from '../../config/config';
+import { serverDomain } from '../../config/config';
 
 function UpdateLecturePage() {
   const inputRef = useRef();
