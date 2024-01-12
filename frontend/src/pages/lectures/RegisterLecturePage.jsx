@@ -68,7 +68,6 @@ function RegisterLecturePage() {
             'Content-Type': 'multipart/form-data',
           },
         });
-        console.log(resp.data.data);
         // 강의 detail 만들어지면 그 url로 연결
         // 백앤드에서 insert가 성공하면 저장된 강의의 id를 받아와야함
         navigate(`../detail/${resp.data.data}`);

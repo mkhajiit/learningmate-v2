@@ -7,7 +7,7 @@ const meetsController = require('../controllers/meets');
 // 모임 생성
 router.post('/insert', meetsController.meetInsert);
 // 모임 수정
-router.post('/update', meetsController.meetUpdate);
+router.put('/update', meetsController.meetUpdate);
 // 특정 모임 삭제
 router.delete('/delete/:meet_id', meetsController.meetDelete);
 // 전체 모임 조회

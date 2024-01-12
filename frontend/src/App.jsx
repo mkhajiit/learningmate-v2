@@ -20,9 +20,11 @@ import WaitingMeets from './pages/mypage/WaitingMeets';
 import MyMeets from './pages/mypage/MyMeets';
 import MyCourses from './pages/mypage/MyCourses';
 import Withdraw from './pages/mypage/Withdraw';
-import Courses from './pages/lectures/Courses';
+// 강의페이지
+import CoursesSinglePage from './pages/lectures/CoursesSiglePage';
 import UpdateLecturePage from './pages/lectures/UpdateLecturePage';
 import LectureDetail from './pages/lectures/LectureDetail';
+// 챗봇페이지
 import ChatbotPage from './pages/chatbot/ChabotPage';
 
 function App() {
@@ -37,13 +39,14 @@ function App() {
           <Route path='/test' element={<TestPage />} />
           <Route path='/user-list' element={<UserListPage />} />
           <Route path='/courses'>
-            <Route index element={<Courses />} />
-            <Route path='register' element={<RegisterLecturePage />}></Route>
-            <Route path='update/:courseid' element={<UpdateLecturePage />}></Route>
-            <Route path='detail/:courseid' element={<LectureDetail />}></Route>
+            {/* <Route index element={<Courses />} /> */}
+            <Route index element={<CoursesSinglePage />} />
+            <Route path='register' element={<RegisterLecturePage />} />
+            <Route path='update/:courseid' element={<UpdateLecturePage />} />
+            <Route path='detail/:courseid' element={<LectureDetail />} />
           </Route>
           <Route path='/meets' element={<MeetList />} />
-          <Route path='/detail/:id' element={<MeetDetail />} />
+          <Route path='/detail/:meetid' element={<MeetDetail />} />
           <Route path='/insert' element={<MeetInsert />} />
           <Route path='/update' element={<MeetUpdate />} />
           <Route path='/chatbot' element={<ChatbotPage />} />

@@ -40,7 +40,6 @@ function UpdateLecturePage() {
         navigate('../');
       } else {
         const respData = resp.data.data[0];
-        console.log(respData);
         setVideoPath(respData.attach_file_path);
         setImagePath(respData.attach_image_path);
         setTitle(respData.title);
@@ -50,7 +49,7 @@ function UpdateLecturePage() {
     } catch (error) {
       console.error('Error fetching lecture detail:', error);
     }
-  }, [course_id]);
+  }, [course_id, navigate]);
 
   const handleVideoFileChange = (event) => {
     if (event.target.files[0]) {
@@ -83,7 +82,6 @@ function UpdateLecturePage() {
   };
   const onSubmitEvent = useCallback(
     async (formSubmitData) => {
-      console.log('등록됨');
       try {
         const submitData = { ...formSubmitData, course_id };
         const formData = new FormData();
@@ -103,7 +101,7 @@ function UpdateLecturePage() {
         console.log(error);
       }
     },
-    [userId],
+    [navigate, course_id],
   );
 
   useEffect(() => {

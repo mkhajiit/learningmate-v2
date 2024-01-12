@@ -73,7 +73,7 @@ const meetStore = (state = init, action) => {
           content: '',
           start_date: '',
           end_date: '',
-          max_num: 0,
+          max_num: '',
           onoff: '',
           image: '',
           category: '',

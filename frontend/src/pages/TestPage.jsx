@@ -36,18 +36,17 @@ function Test() {
     <>
       <h1>test</h1>
       <h2>Sever Data:</h2>
-      <h2>테스트용입니다~!!</h2>
       <h2>
         email:
-        {data.email}
+        {userInfo.email}
       </h2>
       <h2>
         휴대폰번호:
-        {data.phone_number}
+        {userInfo.phone_number}
       </h2>
       <h2>
         nickname:
-        {data.nickname}
+        {userInfo.nickname}
       </h2>
       <h2>
         로그인상태:

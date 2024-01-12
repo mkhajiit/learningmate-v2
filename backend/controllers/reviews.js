@@ -13,7 +13,7 @@ exports.reviewInsert = async (req, res) => {
 };
 
 exports.reviewDelete = async (req, res) => {
-  const { review_id, user_id } = req.params;
+  const {review_id, user_id} = req.params;
   console.log(req.params);
   try {
     await reviewsDAO.delete(review_id, user_id, (resp) => {
@@ -25,7 +25,7 @@ exports.reviewDelete = async (req, res) => {
 };
 
 exports.reviewList = async (req, res) => {
-  const { meet_id } = req.params;
+  const {meet_id} = req.params;
   try {
     await reviewsDAO.reviewList(meet_id, (resp) => {
       res.send(resp);

@@ -5,14 +5,29 @@
   height: 100vh;
   margin: 0;
 }
-.message {
+.user.message {
+  max-width: 65%;
+  border-top: 1px solid #ccc;
+  padding: 10px;
+  margin-top: 5px;
+  background-color: #f1c40f;
+  text-align: left;
+  border-radius: 15px;
+  margin-left: auto;
+}
+
+.chatbot.message {
+  max-width: 65%;
   border-top: 1px solid #ccc;
   padding: 10px;
   margin-top: 5px;
   background-color: #e6e6e6;
+  text-align: left;
+  border-radius: 15px;
+  margin-right: auto;
 }
 #chat-container {
-  width: 400px;
+  width: 600px;
   height: 600px;
   display: flex;
   flex-direction: column;

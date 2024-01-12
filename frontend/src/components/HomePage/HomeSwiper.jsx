@@ -31,14 +31,9 @@ export default function App() {
           <SwiperSlide>
             <img src={`${process.env.PUBLIC_URL}/img/party01.jpg`} alt='exampleImage3.jpg'></img>
           </SwiperSlide>
-          <SwiperSlide>Slide 4</SwiperSlide>
           <SwiperSlide>
             <img src={`${process.env.PUBLIC_URL}/img/lectureImg.jpg`} alt='exampleImage3.jpg'></img>
           </SwiperSlide>
-          <SwiperSlide>Slide 6</SwiperSlide>
-          <SwiperSlide>Slide 7</SwiperSlide>
-          <SwiperSlide>Slide 8</SwiperSlide>
-          <SwiperSlide>Slide 9</SwiperSlide>
         </Swiper>
       </Container>
     </>

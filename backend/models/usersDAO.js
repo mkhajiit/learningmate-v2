@@ -2,7 +2,8 @@ const bcrypt = require('bcrypt');
 const db = require('../src/database');
 
 const sql = {
-  sql_login: 'SELECT user_id,email,password_hash,nickname FROM users WHERE email = ?',
+  sql_login:
+    'SELECT user_id,email,password_hash,nickname,phone_number,profile_name FROM users WHERE email = ?',
   sql_signUp:
     'INSERT INTO users(email,phone_number, password_hash,nickname,profile_name,profile_nickname) VALUES (?,?,?,?,?,?)', //회원가입
   sql_userList:
@@ -44,7 +45,7 @@ const usersDao = {
                 status: 200,
                 message: '로그인성공',
                 sessionData: resdata[0].user_id,
-                data: resdata[0]
+                data: resdata[0],
               });
             } else {
               console.log('비밀번호 불일치');

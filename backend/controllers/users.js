@@ -24,7 +24,7 @@ exports.signupUser = async (req, res) => {
     const imageName = req.file
       ? `${imageUploadPath}${req.file.filename}`
       : `${imageUploadPath}default.png`;
-      //path.parse().name으로 확장자를 제거한 데이터를 받는다
+    //path.parse().name으로 확장자를 제거한 데이터를 받는다
     const imageNickname = req.file
       ? path.parse(req.file.originalname).name
       : '';

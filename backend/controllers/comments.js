@@ -54,3 +54,14 @@ exports.comment = async (req, res) => {
         console.log(err);
     }
 };
+
+exports.lectureCommentList = async(req,res)=>{
+    const {course_id} = req.params;
+    try{
+        await commentsDAO.lectureCommentList(course_id,(resp)=>{
+            res.send(resp);
+        })
+    }catch(error){
+        console.log(error);
+    }
+};

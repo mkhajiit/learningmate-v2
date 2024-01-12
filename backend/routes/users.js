@@ -29,6 +29,7 @@ router.post(
 );
 router.get('/logout', usersController.logout);
 router.post('/image/:id', uploadFile.single('image'), usersController.image);
+
 router.get('/imagetest/:id', usersController.imagetest);
 router.get('/userinfo', usersController.userInfo);
 router.get('/list', usersController.userList);

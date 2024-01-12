@@ -46,18 +46,15 @@ exports.participantList = async (req, res) => {
   }
 };
 
-// 다시 수정하기
-exports.getMeetParticipantsCount = async (req, res) => {
+exports.getParticipantCount = async (req, res) => {
+  const {meet_id} = req.params;
+
   try {
-    const {meet_id} = req.params;
-    const result = await pool.query(
-      'SELECT COUNT(*) AS participant_count FROM meet_participants WHERE meet_id = $1 AND status = 1',
-      [meet_id]
-    );
-    const participantCount = result.rows[0].participant_count;
-    res.json({participant_count: participantCount});
+    await participantsDAO.getParticipantCount(meet_id, (resp) => {
+      res.send({resp});
+    });
   } catch (err) {
     console.log(err);
-    res.status(500).json({error: 'Internal Server Error'});
+    res.status(500).send({error: 'Internal Server Error'});
   }
 };

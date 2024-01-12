@@ -1,69 +1,117 @@
+/* eslint-disable no-console */
+/* eslint-disable no-alert */
 // 모임 생성
 // 24.01.04 ~
 // - onoff, approve는 0, 1 값 받기(완료)
 // - 최대 참여 인원 음수로 안 가게 설정하기(완료), 최대 인원도 제한 하면 좋을 듯
-// - 제목, 내용 글자수 제한 두기
-// - 종료날짜가 시작날짜 뒤로 가지 않게 하기
-// - 모임 생성 안 됨 (user불러오는지 확인)
-// - 오프라인 체크하면 위치 작성 뜨게 하기
-// - 로그인 정보가 안 가져와짐
-
-import React, { useCallback, useEffect } from 'react';
+// - 제목, 내용 글자수 제한 두기 - 완료
+// - 종료날짜가 시작날짜 뒤로 가지 않게 하기 - 완료
+// 24.01.08 ~
+// - 모임 생성 안 됨 - 완료
+// - 오프라인 체크하면 위치 작성 뜨게 하기 - 완료
+// - 로그인 정보가 안 가져와짐 - 완료
+// - 최대 참여 인원만큼 참여자 수 제한해야함
+// - 하나라도 작성 안 하면 생성 안 되게
+// - 이미지 기능 다시
+// - meets 사진도 public - users에 넣기
+import axios from 'axios';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import { localDomain, serverDomain } from '../../config/config';
 import { changeData, clearData, setDates } from '../../store/meetStore';
 import LandingModal from '../../components/maps/LandingModal';
-import { serverDomain } from '../../config/config';
 
 function MeetInsert() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { userId, nickname } = useSelector((state) => state.userStore);
   // 위치선택 버튼으로 선택한 위치는 position에 위도와 경도가 저장됩니다
-  // const position = useSelector((state) => state.position);
+  const position = useSelector((state) => state.position);
   const { meet } = useSelector((state) => state.meetStore);
-  const { register } = useForm({ defaultValues: {}, mode: 'onBlur' });
-
+  const userInfo = useSelector((state) => state.userInfo);
+  const auth = useSelector((state) => state.auth.isAuth);
+  // const { register } = useForm({ defaultValues: {}, mode: 'onBlur' });
   const categories = ['게임', '요리', '운동', '여행', '취미', '문화예술']; // 카테고리 생성
 
-  const insertBoard = useCallback(
+  const [data, setData] = useState({ user_id: '', nickname: '' });
+  const [isloading, setLoading] = useState(true);
+  const [isOffline, setOffline] = useState(false);
+
+  const getData = useCallback(async () => {
+    try {
+      const resp = await axios.get(`${localDomain}/users/userinfo`, {
+        withCredentials: true,
+      });
+      if (resp.data.data === false) {
+        window.alert('불러오기 실패');
+      } else {
+        const userData = resp.data.data[0];
+        setData((currentData) => ({
+          ...currentData,
+          ...userData,
+          user_id: userInfo.userId,
+        }));
+        dispatch(changeData({ target: { name: 'user_id', value: userInfo.userId } }));
+      }
+    } catch (err) {
+      console.error('Error fetching user info:', err);
+    } finally {
+      setLoading(false);
+    }
+  }, [dispatch, userInfo]);
+
+  // console.log(userInfo.userId);
+
+  const insertMeet = useCallback(
     async (evt) => {
       evt.preventDefault();
 
-      // 라디오 버튼 onoff 값 확인
-      // console.log('선택된 온오프라인:', meet.onoff);
-
-      // 라디오 버튼 approve 값 확인
-      // console.log('선택된 온오프라인:', meet.approve);
-
       const sendData = {
-        user_id: userId,
         title: meet.title,
         content: meet.content,
-        nickname,
         start_date: meet.start_date,
         end_date: meet.end_date,
         max_num: meet.max_num,
-        onoff: meet.onoff,
+        onoff: meet.onoff === '온라인' ? 1 : 0,
         image: meet.image,
         category: meet.category,
-        approve: meet.approve,
+        approve: meet.approve === '승인 후 참가' ? 1 : 0,
+        user_id: data.user_id,
+        position,
       };
-      await axios.post(`${serverDomain}/meets/insert/`, sendData);
-      navigate('/meets');
+      try {
+        const response = await axios.post(`${serverDomain}/meets/insert/`, sendData, { withCredentials: true });
+        console.log('Server Response:', response.data); // 서버 응답을 콘솔에 출력
+        navigate(`../meets`);
+      } catch (error) {
+        console.error(error);
+      }
     },
-    [meet, userId, nickname, navigate],
+    [meet, data, navigate],
   );
 
-  // useEffect(() => {
-  //   if (!userId) navigate('/sign-in');
-  // }, [navigate, userId]);
+  // 없애도 됨
+  useEffect(() => {
+    if (!auth) {
+      navigate('/sign-in');
+    } else {
+      getData();
+    }
+  }, [auth, getData, navigate]);
+
+  useEffect(() => {
+    if (auth) {
+      getData();
+    }
+  }, [auth, getData]);
 
   useEffect(() => {
     dispatch(clearData());
   }, [dispatch]);
+
+  if (isloading) {
+    return <div>Loading....</div>;
+  }
 
   return (
     <main id='main' style={{ background: 'white' }}>
@@ -82,6 +130,8 @@ function MeetInsert() {
                         name='title'
                         value={meet.title}
                         onChange={(evt) => dispatch(changeData(evt))}
+                        placeholder='50자 이하로 작성해주세요.'
+                        maxLength={50}
                       />
                     </td>
                   </tr>
@@ -95,6 +145,8 @@ function MeetInsert() {
                         className='form-control'
                         value={meet.content}
                         onChange={(evt) => dispatch(changeData(evt))}
+                        placeholder='500자 이하로 작성해주세요.'
+                        maxLength={500}
                       ></textarea>
                     </td>
                   </tr>
@@ -103,7 +155,7 @@ function MeetInsert() {
                     <td>
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         <input
-                          type='date'
+                          type='datetime-local'
                           className='form-control'
                           name='start_date'
                           value={meet.start_date}
@@ -112,41 +164,47 @@ function MeetInsert() {
                         />
                         <span style={{ marginRight: '10px' }}>~</span>
                         <input
-                          type='date'
+                          type='datetime-local'
                           className='form-control'
                           name='end_date'
                           value={meet.end_date}
-                          onChange={(evt) => dispatch(setDates(meet.start_date, evt.target.value))}
+                          onChange={(evt) => {
+                            // 시작날짜가 종료날짜보다 크면 종료날짜를 시작날짜로 설정
+                            const endDate = evt.target.value < meet.start_date ? meet.start_date : evt.target.value;
+                            dispatch(setDates(meet.start_date, endDate));
+                          }}
                         />
                       </div>
+                      {meet.end_date < meet.start_date && (
+                        <div style={{ color: 'red', marginTop: '5px' }}>종료날짜는 시작날짜보다 늦을 수 없습니다.</div>
+                      )}
                     </td>
                   </tr>
                   <tr>
-                    <td>참여 최대 인원</td>
+                    <td>참여 최대 인원 *</td>
                     <td>
                       <input
                         type='number'
                         className='form-control'
                         name='max_num'
-                        value={meet.max_num}
+                        // meet.max_num이 0이면 빈 문자열로 설정(0으로 남지 않게)
+                        value={meet.max_num === 0 ? '' : meet.max_num}
                         onChange={(evt) => {
-                          // 입력된 값이 음수인지 확인
-                          const inputValue = parseInt(evt.target.value, 10);
+                          const inputValue = evt.target.value;
+                          // 양의 정수인 경우에만 값 업데이트
                           if (!Number.isNaN(inputValue) && inputValue >= 0) {
-                            // 음수가 아닌 경우만 값 업데이트
                             dispatch(changeData(evt));
                           }
                         }}
+                        placeholder='0'
                       />
                     </td>
                   </tr>
                   <tr>
                     <td>생성자</td>
-                    <td>{userId.nickname}</td>
-                    {/* 이렇게 두면 닉네임 나오는지 꼭 확인하기 */}
+                    <td>{data.nickname}</td>
                   </tr>
                   <tr>
-                    <LandingModal />
                     <td>온오프라인</td>
                     <td>
                       <div className='form-check form-check-inline'>
@@ -156,7 +214,11 @@ function MeetInsert() {
                           name='onoff'
                           value='온라인'
                           checked={meet.onoff === '온라인'}
-                          onChange={(evt) => dispatch(changeData(evt))}
+                          onChange={(evt) => {
+                            dispatch(changeData(evt));
+                            // 온라인일 경우 오프라인 상태를 false로 설정
+                            setOffline(false);
+                          }}
                         />
                         <label className='form-check-label'>온라인</label>
                       </div>
@@ -167,24 +229,22 @@ function MeetInsert() {
                           name='onoff'
                           value='오프라인'
                           checked={meet.onoff === '오프라인'}
-                          onChange={(evt) => dispatch(changeData(evt))}
+                          onChange={(evt) => {
+                            dispatch(changeData(evt));
+                            // 오프라인일 경우 오프라인 상태를 true로 설정
+                            setOffline(true);
+                          }}
                         />
                         <label className='form-check-label'>오프라인</label>
                       </div>
+
+                      {/* 오프라인이면서 isOffline이 true일 때 모달 렌더링 */}
+                      {meet.onoff === '오프라인' && isOffline && <LandingModal />}
                     </td>
                   </tr>
                   <tr>
                     <td>관련 이미지</td>
-                    <td>
-                      <input
-                        type='file'
-                        className='form-control'
-                        id='images'
-                        name='images'
-                        accept='image/*'
-                        {...register('images')}
-                      />{' '}
-                    </td>
+                    <td>{/* <ImageUpload /> */}</td>
                   </tr>
                   <tr>
                     <td>카테고리 선택</td>
@@ -236,7 +296,7 @@ function MeetInsert() {
                       <button type='button' className='btn btn-primary btn-sm' onClick={() => navigate('/meets')}>
                         취소
                       </button>{' '}
-                      <button type='submit' className='btn btn-warning btn-sm' onClick={insertBoard}>
+                      <button type='submit' className='btn btn-warning btn-sm' onClick={insertMeet}>
                         입력
                       </button>
                     </td>
@@ -245,8 +305,6 @@ function MeetInsert() {
               </table>
             </form>
           </div>
-          {/* 위치선택 테스트용 */}
-          {/* {position && <h1>{`모달창에서 읽어온값:${position.lat},${position.lng}`}</h1>} */}
         </div>
       </section>
     </main>

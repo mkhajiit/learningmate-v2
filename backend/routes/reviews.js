@@ -9,7 +9,7 @@ router.post('/insert', reviewsController.reviewInsert);
 // 리뷰 삭제
 router.delete('/delete/:review_id/:user_id', reviewsController.reviewDelete);
 // _번 게시물에 대한 리뷰 전체 조회
-router.get('/reviewList/:meet_id', reviewsController.reviewList);
+router.get('/detail/:meet_id/reviewList', reviewsController.reviewList);
 // _번 게시물에 대한 _번 리뷰 조회
 router.get('/review/:meet_id/:review_id', reviewsController.review);
 

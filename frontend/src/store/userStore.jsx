@@ -7,7 +7,7 @@ export const loginAction = (data) => ({ type: USER_LOGIN, payload: data });
 
 // 초기 상태 정의
 const init = {
-  userId: '',
+  user_id: '',
   nickname: '',
   email: '',
 };
@@ -19,7 +19,7 @@ const userStore = (state = init, action) => {
       // console.log(action.payload);
       return {
         ...state,
-        userId: action.payload.user_id,
+        user_id: action.payload.user_id,
         nickname: action.payload.nickname,
         email: action.payload.email,
       };

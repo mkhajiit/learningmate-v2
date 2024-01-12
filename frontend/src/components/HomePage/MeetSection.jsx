@@ -31,22 +31,22 @@ export default function MeetSection() {
             <CardForSwiper item={img} />
           </SwiperSlide>
           <SwiperSlide>
-            <CardForSwiper />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CardForSwiper />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CardForSwiper />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CardForSwiper />
+            <CardForSwiper item={img} />
           </SwiperSlide>
           <SwiperSlide>
             <CardForSwiper item={img} />
           </SwiperSlide>
           <SwiperSlide>
-            <CardForSwiper />
+            <CardForSwiper item={img} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <CardForSwiper item={img} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <CardForSwiper item={img} />
+          </SwiperSlide>
+          <SwiperSlide>
+            <CardForSwiper item={img} />
           </SwiperSlide>
           <SwiperSlide>
             <CardForSwiper item={img} />
