@@ -1,4 +1,4 @@
--- Active: 1703034513814@@34.64.245.68@3306@learningmate
+-- Active: 1703034958535@@34.64.245.68@3306@learningmate
 DROP TABLE courses;
 
 -- 강의 테이블 생성
@@ -170,6 +170,27 @@ ALTER TABLE
 ADD
     CONSTRAINT course_comments_course_id_fk FOREIGN KEY (course_id) REFERENCES courses(course_id) ON DELETE CASCADE ON UPDATE CASCADE;
 
+DELETE FROM
+    bookmark;
+
+SELECT * FROM bookmark;
+
+ALTER TABLE bookmark
+DROP COLUMN status;
+
+ALTER TABLE bookmark
+DROP FOREIGN KEY user_id;
+
+DROP TABLE bookmark;
+
+CREATE TABLE bookmark (
+    bookmark INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    course_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (course_id) REFERENCES courses(course_id) ON DELETE CASCADE
+);
+
 ----------------- 민경 -----------------
 -------- meet table ------
 DROP TABLE meets;
@@ -194,6 +215,21 @@ CREATE TABLE meets(
 ) -- 현재 제약을 삭제
 ALTER TABLE
     meets DROP FOREIGN KEY meet_user_id_fk;
+
+ALTER TABLE meets
+DROP COLUMN approve;
+
+-- Modify start_date column to DATETIME
+ALTER TABLE meets
+MODIFY start_date TIMESTAMP NOT NULL;
+
+-- Modify end_date column to DATETIME
+ALTER TABLE meets
+MODIFY end_date TIMESTAMP;
+
+
+ALTER TABLE meets
+MODIFY COLUMN image TEXT NOT NULL;
 
 -- 새로운 제약을 추가하고 ON DELETE CASCADE 옵션을 설정
 ALTER TABLE
@@ -319,8 +355,6 @@ CREATE TABLE meet_participants (
     participant_id INT NOT NULL AUTO_INCREMENT,
     meet_id INT,
     user_id INT,
-    manager BOOLEAN NOT NULL DEFAULT 0,
-    status BOOLEAN NOT NULL DEFAULT 0,
     -- 참여 여부
     CONSTRAINT meet_participants_participant_id_pk PRIMARY KEY(participant_id),
     CONSTRAINT meet_participants_meet_id_fk FOREIGN KEY(meet_id) REFERENCES meets(meet_id),
@@ -408,7 +442,7 @@ DELETE FROM
 WHERE
     participant_id = ?
     AND meet_id = ?
-    AND manager = 1 -- DELETE mp
+    -- AND manager = 1 -- DELETE mp
     -- FROM meet_participants mp
     -- INNER JOIN meets m ON mp.meet_id = m.meet_id
     -- WHERE mp.participant_id = 10
@@ -496,3 +530,23 @@ DELETE FROM
 WHERE
     review_id = 1
     AND user_id = 17;
+
+-- 나현
+-- 마이페이지 달력 일정 테이블 생성
+CREATE TABLE events (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  title VARCHAR(255),
+  start DATE,
+  end DATE,
+  memo VARCHAR(1024),
+  FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+INSERT INTO events (user_id, title, start, end, memo) VALUES (70, '테스트일정', '2024-01-15', '2024-01-16', '테스트이벤트에 대한 메모');
+SELECT * FROM events WHERE user_id = 70;
+ALTER TABLE events
+DROP FOREIGN KEY events_ibfk_1;
+ALTER TABLE events
+ADD FOREIGN KEY (user_id)
+REFERENCES users(user_id)
+ON DELETE CASCADE;

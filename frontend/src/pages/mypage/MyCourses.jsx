@@ -1,15 +1,14 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import Sidebar from '../../components/Mypage/Sidebar';
-import Header from '../../components/Mypage/Header';
-import Footer from '../../components/Mypage/Footer';
 import '../../components/Mypage/styles/Title.css';
 import UserUploadedCourses from '../../components/Mypage/UserUploadedCourses';
 
 function MyCourses() {
+  const userInfo = useSelector((state) => state.userInfo);
   return (
     <div>
-      <Header />
       <Container fluid>
         <h2 className='title'>내가 올린 강의 보기</h2>
         <Row>
@@ -17,11 +16,14 @@ function MyCourses() {
             <Sidebar />
           </Col>
           <Col xs={10} id='content'>
+            <h3>
+              {userInfo.nickname}
+              님이 업로드한 강의 목록
+            </h3>
             <UserUploadedCourses />
           </Col>
         </Row>
       </Container>
-      <Footer />
     </div>
   );
 }

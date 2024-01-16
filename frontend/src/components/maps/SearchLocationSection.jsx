@@ -1,4 +1,5 @@
-// 추가할 기능: 검색결과 ui목록 구현
+// 카카오맵으로 위치선택해서 위치정보를 얻는 화면
+// 추가할 기능: 검색결과 ui목록 구현(프로젝트 끝나고 나중에)
 import { useState } from 'react';
 import { Button, Container, Form, InputGroup } from 'react-bootstrap';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
@@ -47,8 +48,12 @@ function SearchLocationSection() {
     });
   };
 
+<<<<<<< HEAD
   const handleFormSubmit = (e) => {
     e.preventDefault();
+=======
+  const handleFormSubmit = () => {
+>>>>>>> develop
     searchLocation();
   };
 
@@ -64,7 +69,10 @@ function SearchLocationSection() {
       }),
     );
   };
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
   return (
     <Container>
       {/* mx-auto: 중앙정렬 */}
@@ -90,33 +98,20 @@ function SearchLocationSection() {
           onCreate={setMap}
           disableDoubleClickZoom={true} // 더블클릭 확대 끔
           // 클릭한 위치의 위도 경도를 받는 이벤트 소수점6자리까지만 받는다 mouseEvent.latLng.getLat()는 숫자라 따로 변환안해도 된다
-          onClick={
-            (_t, mouseEvent) =>
-              dispatch(
-                positionAction.setPosition({
-                  lat: mouseEvent.latLng.getLat().toFixed(6),
-                  lng: mouseEvent.latLng.getLng().toFixed(6),
-                }),
-              )
-            // setPosition((current) => ({
-            //   ...current,
-            //   lat: mouseEvent.latLng.getLat().toFixed(6),
-            //   lng: mouseEvent.latLng.getLng().toFixed(6),
-            // }))
+          onClick={(_t, mouseEvent) =>
+            dispatch(
+              positionAction.setPosition({
+                lat: mouseEvent.latLng.getLat().toFixed(6),
+                lng: mouseEvent.latLng.getLng().toFixed(6),
+              }),
+            )
           }
         >
           {/* 내위치 마커 생성 */}
           <MapMarker
             position={{ lat: reduxLat, lng: reduxLng }}
             // 내위치마커를 클릭해도 위치가 저장이 된다
-            onClick={
-              () => dispatch(positionAction.setPosition({ lat: reduxLat.toFixed(6), lng: reduxLng.toFixed(6) }))
-              // setPosition((current) => ({
-              //   ...current,
-              //   lat: reduxLat.toFixed(6),
-              //   lng: reduxLng.toFixed(6),
-              // }))
-            }
+            onClick={() => dispatch(positionAction.setPosition({ lat: reduxLat.toFixed(6), lng: reduxLng.toFixed(6) }))}
           >
             <div style={{ color: '#000', textAlign: 'center' }}>내위치</div>
           </MapMarker>

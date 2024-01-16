@@ -31,9 +31,20 @@ router.get('/logout', usersController.logout);
 router.post('/image/:id', uploadFile.single('image'), usersController.image);
 
 router.get('/imagetest/:id', usersController.imagetest);
-router.get('/userinfo', usersController.userInfo);
+
+//마이리스트
+router.get('/userinfo/:id', usersController.userInfo);
+//회원 프로필 불러오기
+router.get('/getuserprofile/:user_id', usersController.getUserProfile);
+//회원 프로필 수정하기
+router.patch('/updateuserprofile/:user_id', usersController.updateUserProfile);
+//회원리스트
+
 router.get('/list', usersController.userList);
 router.get('/check', usersController.check);
-router.delete('/delete/:id', usersController.deleteUser);
+
+//회원삭제
+router.delete('/delete/:user_id', usersController.delete);
+
 
 module.exports = router;

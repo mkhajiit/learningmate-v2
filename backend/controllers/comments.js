@@ -65,3 +65,15 @@ exports.lectureCommentList = async(req,res)=>{
         console.log(error);
     }
 };
+
+exports.myLectureCommentList = async (req, res) => {
+    const { user_id } = req.params;
+    try {
+      const resp = await commentsDAO.myLectureCommentList(user_id);
+      res.status(resp.status).send(resp);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ status: 500, message: '내 댓글 조회 실패', error: error.message });
+    }
+  };
+  

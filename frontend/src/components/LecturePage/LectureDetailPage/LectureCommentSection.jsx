@@ -2,11 +2,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import axios from 'axios';
 import LectureCommentComponent from './LectureCommentComponent';
 import LectureCommentInput from './LectureCommentInput';
-import { serverDomain } from '../../../config/config';
 import { commentAction } from '../../../store/comment';
+import commentsApi from '../../../services/comments';
 
 function LectureCommentSection() {
   const dispatch = useDispatch();
@@ -18,7 +17,7 @@ function LectureCommentSection() {
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
-      const resp = await axios.get(`${serverDomain}/comments/lecture-comment-list/${course_id}`);
+      const resp = await commentsApi.getCommentList(course_id);
       dispatch(
         commentAction.insert({
           commentList: resp.data.data,
@@ -43,7 +42,7 @@ function LectureCommentSection() {
   return (
     <>
       {auth ? <LectureCommentInput /> : <h3>로그인을 해주세요</h3>}
-      <Container style={{ backgroundColor: '#ecf0f1', borderRadius: '15px' }}>
+      <Container className='mt-4' style={{ backgroundColor: '#ecf0f1', borderRadius: '15px' }}>
         {isLoading ? <h1>Loading...</h1> : renderCommentList()}
       </Container>
     </>

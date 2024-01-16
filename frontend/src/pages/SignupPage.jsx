@@ -1,10 +1,9 @@
-// 이미지 취소 눌렀을때 처리 추가
-import axios from 'axios';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Form, Container, Row, Col, Button, InputGroup } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
-import { serverDomain } from '../config/config';
+import usersApi from '../services/users';
+import ScrollToTop from '../helpers/scrollToTop';
 
 function SignUpPage() {
   // useRef()훅을 이용하여 input을 inputRef에 저장한후 가져와서 사용합니다
@@ -19,51 +18,32 @@ function SignUpPage() {
   } = useForm({ defaultValues: {}, mode: 'onBlur' });
 
   const confirmPassword = watch('password', '');
-  // 데이터를 읽어오는 함수
-  const readData = useCallback(async () => {
-    try {
-      const result = await axios.get(`${serverDomain}/users/check`);
-      return result;
-    } catch (error) {
-      console.log('에러:', error);
-      return error;
-    }
-  }, []);
 
   // email중복확인
   // useCallback에서 의존성 배열에 명시하지 않으면 해당 함수는 초기 렌더링 때 한 번만 생성되고,
   // 이후에는 해당 함수가 참조하는 상태나 함수의 변경을 감지하지 않습니다. 즉, 초기 렌더링 시의 값들이 고정적으로 사용되게 됩니다.
-  const checkValue = useCallback(
-    async (name, value) => {
-      const result = await readData();
-      let isDuplicate = false;
-      // forEach 문에서는 return이나 break를 못쓴다 때문에 isDuplicate 변수를 따로 둬서 사용함
-      result.data.data.forEach((item) => {
-        if (item[name] === value) {
-          // 중복이 있을때만 설정한 변수를 true로 바꾼다
-          isDuplicate = true;
-        }
-      });
-      // 없는경우엔 그대로 false
-      return isDuplicate;
-    },
-    [readData],
-  );
+  const checkValue = useCallback(async (name, value) => {
+    const result = await usersApi.checkUser();
+    let isDuplicate = false;
+    // forEach 문에서는 return이나 break를 못쓴다 때문에 isDuplicate 변수를 따로 둬서 사용함
+    result.data.data.forEach((item) => {
+      if (item[name] === value) {
+        // 중복이 있을때만 설정한 변수를 true로 바꾼다
+        isDuplicate = true;
+      }
+    });
+    // 없는경우엔 그대로 false
+    return isDuplicate;
+  }, []);
 
   const submitEvent = useCallback(
     async (formSubmitData) => {
       try {
-        console.log(formSubmitData);
         const formData = new FormData();
         const { files } = document.querySelector('input[name="profile"]');
         formData.append('data', JSON.stringify(formSubmitData));
         formData.append('profile', files[0]);
-        // console.log(formData);
-        await axios.post(`${serverDomain}/users/signup`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        await usersApi.signUpUser(formData);
         navigate('/sign-in');
       } catch (error) {
         console.log(error);
@@ -79,6 +59,7 @@ function SignUpPage() {
 
   return (
     <Container fluid style={{ height: '100vh' }}>
+      <ScrollToTop />
       <Row className='justify-content-md-center'>
         <Col md={4}>
           <h1 className='display-1 text-center' style={{ marginTop: 100 }}>
@@ -92,6 +73,10 @@ function SignUpPage() {
                   placeholder='이메일을 입력하세요'
                   {...register('email', {
                     required: true,
+                    pattern: {
+                      value: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
+                      message: '잘못된 문자형식 입력입니다 숫자를 입력하세요',
+                    },
                     validate: async (value) => {
                       // validate 함수에서는 true가 반환되면 유효성 검사를 통과했다고 간주하고, false가 반환되면 유효성 검사를 실패했다고 간주
                       const isDuplicate = await checkValue('email', value);
@@ -99,29 +84,28 @@ function SignUpPage() {
                     },
                   })}
                 />
+                {errors.email?.type === 'pattern' && errors.email.message}
                 {errors.email?.type === 'validate' && '중복된 이메일입니다.'}
                 {errors.email?.type === 'required' && '이메일을 입력해주세요'}
               </Form.Group>
             </InputGroup>
-            {/* <Button variant='primary' onClick={() => console.log('인증번호전송')}>
-              인증번호전송
-            </Button> */}
-
-            {/* <Form.Group className='mb-3'>
-              <Form.Control type='text' placeholder='이메일인증번호' />
-            </Form.Group> */}
             <Form.Group className='mb-3'>
               <Form.Control
                 type='text'
                 placeholder='휴대전화번호를 입력하세요'
                 {...register('phone_number', {
                   required: true,
+                  pattern: {
+                    value: /^\d+$/,
+                    message: '잘못된 휴대전화번호 형식입니다 숫자를 입력하세요',
+                  },
                   validate: async (value) => {
                     const isDuplicate = await checkValue('phone_number', value);
                     return !isDuplicate;
                   },
                 })}
               />
+              {errors.phone_number?.type === 'pattern' && errors.phone_number.message}
               {errors.phone_number?.type === 'validate' && '중복된 휴대전화번호입니다.'}
               {errors.phone_number?.type === 'required' && '휴대전화번호를 입력해주세요'}
             </Form.Group>
@@ -129,7 +113,13 @@ function SignUpPage() {
               <Form.Control
                 type='password'
                 placeholder='비밀번호를 입력하세요'
-                {...register('password', { required: '비밀번호를 입력하세요' })}
+                {...register('password', {
+                  required: '비밀번호를 입력해주세요',
+                  pattern: {
+                    value: /^(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/, // 최소한 하나의 특수문자를 포함하는 positive lookahead(전방 탐색)입니다.
+                    message: '잘못된 비밀번호 형식입니다 8글자이상 특수문자1개이상 포함하여 입력하세요',
+                  },
+                })}
               />
               {errors.password?.message}
             </Form.Group>

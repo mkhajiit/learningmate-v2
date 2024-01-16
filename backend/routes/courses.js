@@ -10,13 +10,12 @@ const staticPath = path.join(__dirname, '..', 'public');
 const uploadFile = multer({
   storage: multer.diskStorage({
     // 파일이 저장될 경로를 설정합니다
-    destination: (req, file, cb) =>
-      cb(null, path.join(staticPath, 'images', 'courses')),
+    destination: (req, file, cb) => cb(null, path.join(staticPath, 'images', 'courses')),
     filename: (req, file, cb) =>
       //file.originalname: 업로드 파일 원본이름
       cb(null, `${Date.now()}_${file.originalname}`),
   }),
-  limits: { fileSize: 1024 * 1024 * 3 },
+  limits: {fileSize: 1024 * 1024 * 3},
 });
 
 // 강의 생성
@@ -24,20 +23,20 @@ router.post(
   '/insert',
   uploadFile.fields([
     // 이름으로 식별하는 req.files 생성
-    { name: 'lectureVideo', maxCount: 1 },
-    { name: 'lectureImage', maxCount: 1 },
+    {name: 'lectureVideo', maxCount: 1},
+    {name: 'lectureImage', maxCount: 1},
   ]),
-  coursesController.courseInsert,
+  coursesController.courseInsert
 );
 // 강의 수정
 router.patch(
   '/update',
   uploadFile.fields([
     // 이름으로 식별하는 req.files 생성
-    { name: 'lectureVideo', maxCount: 1 },
-    { name: 'lectureImage', maxCount: 1 },
+    {name: 'lectureVideo', maxCount: 1},
+    {name: 'lectureImage', maxCount: 1},
   ]),
-  coursesController.courseUpdate,
+  coursesController.courseUpdate
 );
 // 강의 삭제
 router.delete('/delete/:course_id', coursesController.courseDelete);
@@ -49,5 +48,7 @@ router.get('/main-course-list', coursesController.mainCourseList);
 router.get('/course/:course_id', coursesController.course);
 // 강의 검색
 router.get('/search', coursesController.search);
+// 해당 유저가 올린 강의
+router.get('/courseList/:user_id', coursesController.myCourseList);
 
 module.exports = router;

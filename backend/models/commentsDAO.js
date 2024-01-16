@@ -14,7 +14,8 @@ const sql = {
             ORDER BY c.createdAt DESC;`,
     insert: `INSERT INTO comments(content, course_id, user_id)
              VALUES(?, ?, ?)`,
-    delete: 'DELETE FROM comments WHERE comment_id = ?'
+    delete: 'DELETE FROM comments WHERE comment_id = ?',
+    myLectureCommentList: `SELECT * FROM comments WHERE user_id = ?`,
 };
 
 const commentsDAO = {
@@ -68,7 +69,6 @@ const commentsDAO = {
         }
     },
 
-
     delete: async (id, callback) => {
         try {
             const resp = await db.query(sql.delete, [id]);
@@ -82,6 +82,16 @@ const commentsDAO = {
             callback({ status: 500, message: '댓글 삭제 실패', error: error });
         }
     },
+
+    myLectureCommentList: async (user_id) => {
+        try {
+          const [rows, fields] = await db.query(sql.myLectureCommentList, [user_id]);
+          return { status: 200, data: rows };
+        } catch (error) {
+          console.error('내 댓글 불러오기 중 에러 발생:', error);
+          return { status: 500, message: '내 댓글 불러오기 실패', error: error.message };
+        }
+      },
 };
 
 module.exports = commentsDAO;

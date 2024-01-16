@@ -2,13 +2,15 @@
 const reviewsDAO = require('../models/reviewsDAO');
 
 exports.reviewInsert = async (req, res) => {
+  //  const {meet_id} = req.params;
   const reviewData = req.body;
+  console.log('전송된 리뷰 데이터:', reviewData);
   try {
-    await reviewsDAO.insert(reviewData, (resp) => {
-      res.send(resp);
-    });
+    const resp = await reviewsDAO.insert(reviewData);
+    res.send(resp);
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    res.status(500).send('Internal Server Error');
   }
 };
 

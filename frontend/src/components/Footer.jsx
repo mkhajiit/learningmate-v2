@@ -6,44 +6,44 @@ const Footer = () => (
     <div className='container-fluid text-center text-md-left'>
       <div className='row'>
         <div className='col-md-6 mt-md-0 mt-3'>
-          <h5 className='text-uppercase'>Footer Content</h5>
-          <p>Here you can use rows and columns to organize your footer content.</p>
+          <h5 className='text-uppercase'>러닝메이트</h5>
+          <p>이곳에서 나만의 러닝메이트들을 찾아보세요</p>
         </div>
 
         <hr className='clearfix w-100 d-md-none pb-0' />
 
         <div className='col-md-3 mb-md-0 mb-3'>
-          <h5 className='text-uppercase'>Links</h5>
+          <h5 className='text-uppercase'>탐색</h5>
           <ul className='list-unstyled'>
             <li>
-              <Link to='/about'>팀소개</Link>
+              <Link to='/meets'>모임</Link>
             </li>
             <li>
-              <a href='/test'>개발용테스트</a>
+              <Link to='/courses'>강의</Link>
             </li>
             <li>
-              <a href='/user-list'>개발용유저리스트</a>
+              <Link to='/sign-in'>로그인</Link>
             </li>
             <li>
-              <a href='#!'>Link 4</a>
+              <Link to='/sign-up'>회원가입</Link>
             </li>
           </ul>
         </div>
 
         <div className='col-md-3 mb-md-0 mb-3'>
-          <h5 className='text-uppercase'>Links</h5>
+          <h5 className='text-uppercase'>러닝메이트</h5>
           <ul className='list-unstyled'>
             <li>
-              <a href='#!'>Link 1</a>
+              <Link to='/about'>정보</Link>
             </li>
             <li>
-              <a href='#!'>Link 2</a>
+              <Link to='/about'>개발자소개</Link>
             </li>
             <li>
-              <a href='#!'>Link 3</a>
+              <a href='#!'>이용약관</a>
             </li>
             <li>
-              <a href='#!'>Link 4</a>
+              <a href='#!'>개인정보처리방침</a>
             </li>
           </ul>
         </div>

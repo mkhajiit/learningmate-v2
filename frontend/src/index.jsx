@@ -5,6 +5,8 @@ import 'bootswatch/dist/materia/bootstrap.min.css';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import './assets/fonts/font.css';
+import './index.css';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
@@ -17,9 +19,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
+      {/* <React.StrictMode> */}
+      <App />
+      {/* </React.StrictMode> */}
     </PersistGate>
   </Provider>,
 );

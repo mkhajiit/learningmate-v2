@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-
+// 모임 디테일
 import axios from 'axios';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -7,15 +7,18 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { serverDomain } from '../../config/config';
-import ReviewForm from './MeetReviewForm';
+import MeetReviewForm from './MeetReviewForm';
 import MeetDetailMapSection from '../../components/maps/MeetDetailMapSection';
 
 function MeetDetail() {
   const navigate = useNavigate();
   const meet_id = useParams().meetid;
   const userInfo = useSelector((state) => state.userInfo);
+  const login = useSelector((state) => state.auth.isAuth);
+  // console.log(userInfo.userId);
   const [reviews, setReviews] = useState([]);
   const [reviewModalContent, setReviewModalContent] = useState(null);
+  const [isJoined, setIsJoined] = useState(false);
 
   const [meet, setMeet] = useState({
     meet_id: '',
@@ -29,7 +32,6 @@ function MeetDetail() {
     onoff: false,
     image: '',
     category: '',
-    approve: false,
     createdAt: '',
     latitude: '',
     longitude: '',
@@ -40,32 +42,28 @@ function MeetDetail() {
     alignItems: 'left',
   };
 
-  const iconImageStyle1 = {
-    width: '24px',
-    height: '24px',
-    marginRight: '10px',
-    marginLeft: '8px',
-  };
+  // const iconImageStyle1 = {
+  //   width: '24px',
+  //   height: '24px',
+  //   marginRight: '10px',
+  //   marginLeft: '8px',
+  // };
 
   const iconImageStyle2 = {
     width: '20px',
     height: '20px',
     marginRight: '10px',
     marginLeft: '10px',
+    marginBottom: '5px',
   };
 
   const iconImageStyle3 = {
-    width: '24px',
-    height: '24px',
-    marginRight: '10px',
-    marginLeft: '10px',
+    width: '28px',
+    height: '28px',
+    marginRight: '5px',
+    marginLeft: '7px',
+    marginBottom: '5px',
   };
-
-  const joinMeet = () => {
-    // 참여 버튼 클릭 시 실행되어야 하는 동작
-    // console.log('Meet 참여 버튼 클릭');
-  };
-
   const getMeetDetailAndReviews = useCallback(async () => {
     try {
       const [meetResp, reviewResp] = await Promise.all([
@@ -80,13 +78,27 @@ function MeetDetail() {
 
       // 리뷰 정보 설정
       setReviews(reviewResp.data.data);
+      console.log(reviewResp.data.data);
     } catch (error) {
       console.error(error);
     }
   }, [meet_id]);
+
+  const joinMeet = () => {
+    if (!login) {
+      // 로그인되지 않은 경우 알림 메시지 표시
+      window.alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+      navigate('/sign-in');
+    } else {
+      navigate(`/chat/chatRoom/${meet_id}`);
+    }
+  };
+
+  console.log('userInfo.userId:', userInfo.userId);
+
   const openReviewModal = () => {
     setReviewModalContent(
-      <ReviewForm
+      <MeetReviewForm
         meet_id={meet_id}
         getMeetDetailAndReviews={getMeetDetailAndReviews}
         handleClose={() => setReviewModalContent(null)}
@@ -102,6 +114,12 @@ function MeetDetail() {
       console.error(error);
     }
   }, [meet_id, navigate]);
+
+  // 현재 사용자가 글을 작성한 사용자인지 여부를 확인
+  const UserPostAuthor = meet.nickname === userInfo.nickname;
+  // console.log(meet.nickname);
+  // console.log(userInfo.nickname);
+  // console.log(UserPostAuthor);
 
   useEffect(() => {
     getMeetDetailAndReviews();
@@ -120,20 +138,19 @@ function MeetDetail() {
               <table className='table table-borderless'>
                 <tbody>
                   <tr>
-                    <td>{meet.title}</td>
+                    <td style={{ fontSize: '30px' }}>{meet.title}</td>
                   </tr>
                   <tr>
                     <td>
                       <img
-                        src={`${process.env.PUBLIC_URL}/img/Hani.jpg`}
-                        alt='exampleImage2.jpg'
+                        src={meet.image}
+                        alt='모임이미지.jpg'
                         style={{ borderRadius: '15px', width: '880px', height: '450px' }}
                       ></img>
                     </td>
-                    {/* <td>{meet.image}</td> */}
                   </tr>
                   <tr>
-                    <td>{meet.content}</td>
+                    <td style={{ fontSize: '25px' }}>{meet.content}</td>
                   </tr>
                   <tr>
                     <td colSpan='2' className='text-end'>
@@ -142,7 +159,10 @@ function MeetDetail() {
                       </button>{' '}
                       {userInfo.nickname === meet.nickname && (
                         <>
-                          <button className='btn btn-warning btn-sm' onClick={() => navigate('/update')}>
+                          <button
+                            className='btn btn-warning btn-sm'
+                            onClick={() => navigate(`/update/${meet.meet_id}`)}
+                          >
                             수정
                           </button>{' '}
                           <button className='btn btn-danger btn-sm' onClick={() => deleteMeet(meet.meet_id)}>
@@ -157,7 +177,12 @@ function MeetDetail() {
             </div>
             <div
               className='card p-3'
-              style={{ width: '25rem', height: '20rem', marginTop: '95px', marginLeft: '40px' }}
+              style={{
+                width: '25rem',
+                height: meet.onoff === 1 ? '11rem' : '19rem',
+                marginTop: '120px',
+                marginLeft: '40px',
+              }}
             >
               <table>
                 <tbody>
@@ -168,16 +193,16 @@ function MeetDetail() {
                     </td>
                   </tr>
                   <tr>
-                    <td>{meet.onoff ? '온라인' : '오프라인'}</td>
+                    <td style={{ fontSize: '15px' }}>{meet.onoff ? '온라인 모임' : '오프라인 모임'}</td>
                   </tr>
-                  {meet.onoff === 0 && (
+                  {/* {meet.onoff === 0 && (
                     <tr>
                       <td className='icon-only' style={iconStyle}>
                         <img src='/icons/icon-location.png' alt='Location Icon' style={iconImageStyle1} />
                         제주특별자치도 ...
                       </td>
                     </tr>
-                  )}
+                  )} */}
                   <tr>
                     <td className='icon-only' style={iconStyle}>
                       <img src='/icons/icon-schedule.png' alt='Schedule Icon' style={iconImageStyle2} />
@@ -187,8 +212,8 @@ function MeetDetail() {
                   </tr>
                   <tr>
                     <td className='icon-only' style={iconStyle}>
-                      <img src='/icons/icon-approve.png' alt='Location Icon' style={iconImageStyle3} />
-                      {meet.approve ? '자유 참가' : '관리자 승인 후 참가'}
+                      <img src='/icons/icon-category.png' alt='Category Icon' style={iconImageStyle3} />
+                      {meet.category}
                     </td>
                   </tr>
                   <tr>
@@ -198,14 +223,19 @@ function MeetDetail() {
                   </tr>
                   <tr>
                     <td className='icon-only' style={iconStyle}>
-                      참여자 수: {0}/{meet.max_num}
+                      작성일: {meet.createdAt}
                     </td>
                   </tr>
+                  {/* <tr>
+                    <td className='icon-only' style={iconStyle}>
+                      참여자 수: {0}/{meet.max_num}
+                    </td>
+                  </tr> */}
                 </tbody>
               </table>
-              <div className='d-flex justify-content-end' style={{ marginTop: '130px' }}>
+              <div className='d-flex justify-content-end' style={{ marginTop: '50px' }}>
                 <button
-                  className='btn btn-primary btn-sm'
+                  className={`btn btn-${isJoined ? 'success' : 'primary'} btn-sm`}
                   onClick={joinMeet}
                   style={{ width: '500px', height: '50px' }}
                 >
@@ -217,9 +247,11 @@ function MeetDetail() {
         </div>
         {/* 리뷰 리스트 */}
         <div className='m-4'>
-          <Button size='sm' variant='primary' onClick={openReviewModal}>
-            리뷰 작성하기
-          </Button>
+          {login && !UserPostAuthor && (
+            <Button size='sm' variant='primary' onClick={openReviewModal} style={{ marginLeft: '80px' }}>
+              리뷰 작성하기
+            </Button>
+          )}
           {/* 모달로 띄우기 */}
           <Modal show={reviewModalContent !== null} onHide={() => setReviewModalContent(null)}>
             <Modal.Header closeButton>
@@ -227,7 +259,7 @@ function MeetDetail() {
             </Modal.Header>
             <Modal.Body>{reviewModalContent}</Modal.Body>
           </Modal>{' '}
-          <div className='col'>
+          <div className='col' style={{ marginLeft: '80px', marginTop: '30px' }}>
             <h3>리뷰</h3>
             {reviews.length > 0 ? (
               <ul>

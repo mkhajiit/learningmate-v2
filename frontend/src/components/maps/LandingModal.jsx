@@ -1,3 +1,4 @@
+// 카카오맵으로 위치선택해서 위치정보를 얻는 화면을 띄우는 모달입니다
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';

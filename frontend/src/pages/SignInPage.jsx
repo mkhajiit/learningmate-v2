@@ -1,28 +1,39 @@
-import axios from 'axios';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Form, Container, Row, Col, Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { authAction } from '../store/auth';
 import { userInfoAction } from '../store/userInfo';
-import { serverDomain } from '../config/config';
+import usersApi from '../services/users';
+import ScrollToTop from '../helpers/scrollToTop';
+import PopupModal from '../components/PopupModal';
 
-function Login() {
+function SignInPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const text = '아이디 또는 비밀번호가 잘못 입력 되었습니다';
+  const image = `${process.env.PUBLIC_URL}/img/oops.png`;
   const [data, setData] = useState({ email: '', password: '' });
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const changeData = useCallback((evt) => {
     setData((currentData) => ({ ...currentData, [evt.target.name]: evt.target.value }));
   }, []);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   const submitData = useCallback(
     async (evt) => {
       evt.preventDefault();
       try {
-        const result = await axios.post(`${serverDomain}/users/login`, data, {
-          withCredentials: true,
-        });
+        const result = await usersApi.signInUser(data);
         if (result.data.status === 500) {
-          window.alert('잘못된 로그인 정보입니다');
+          openModal();
         } else {
           dispatch(authAction.login());
           dispatch(
@@ -43,8 +54,14 @@ function Login() {
     },
     [data, navigate, dispatch],
   );
+  useEffect(() => {
+    // 페이지가 로드될 때 스크롤을 최상단으로 이동
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <Container fluid style={{ height: '100vh' }}>
+      <PopupModal modalIsOpen={modalIsOpen} closeModal={closeModal} text={text} image={image} />
+      <ScrollToTop />
       <Row className='justify-content-md-center'>
         <Col md={4}>
           <h1 className='display-1 text-center' style={{ marginTop: 100 }}>
@@ -85,4 +102,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignInPage;

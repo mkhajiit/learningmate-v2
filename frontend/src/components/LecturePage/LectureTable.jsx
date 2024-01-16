@@ -1,3 +1,4 @@
+// 개선해야하는 사항 유튜브 비슷하게 3x3으로 카드 컴포넌트에 영상 정보 담아서 출력하게 레이아웃 수정
 import { useSelector } from 'react-redux';
 import { Pagination, Table } from 'react-bootstrap';
 import { useState } from 'react';

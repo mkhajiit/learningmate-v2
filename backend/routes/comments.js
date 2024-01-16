@@ -11,5 +11,8 @@ router.delete('/delete/:comment_id', commentsController.commentDelete);
 router.get('/commentList/:course_id', commentsController.commentList);
 
 router.get('/lecture-comment-list/:course_id', commentsController.lectureCommentList);
+// 마이페이지 해당 유저 댓글 조회
+router.get('/my-comment-list/:user_id', commentsController.myLectureCommentList);
+
 
 module.exports = router;

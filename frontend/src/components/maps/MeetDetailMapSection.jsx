@@ -1,6 +1,6 @@
+// 모임 detail화면에 출력하는 맵 컴포넌트 입니다.
 import { Container } from 'react-bootstrap';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import { useSelector } from 'react-redux';
 
 // 위치정보 받을 수 있으면 {position} 프롭추가
 export default function MeetDetailMapSection({ latitude, longitude }) {

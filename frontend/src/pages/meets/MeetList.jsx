@@ -1,22 +1,11 @@
-/* eslint-disable no-console */
-// 모임 리스트
-// 2024.01.04 ~
-// - 검색했을 때 검색 키워드가 들어가있는 제목의 리스트들 나오게 하기
-// - 카테고리별로 리스트 나오게 하기
-// - 예쁘게 꾸미기
-// 01.09 ~
-// - 새로 생성한 모임이 안 뜸;;
-
 import axios from 'axios';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { serverDomain } from '../../config/config';
 
 function MeetList() {
-  // 페이지 간 이동
-  const navigate = useNavigate();
+  const location = useLocation();
   const [meetList, setMeetList] = useState({
     status: '',
     message: '',
@@ -26,17 +15,19 @@ function MeetList() {
     totalPage: 1,
     data: [],
   });
-  const login = useSelector((state) => state.auth.isAuth);
 
-  const getMeetList = useCallback(async (no = 1, size = 10) => {
-    const resp = await axios.get(`${serverDomain}/meets/meetList`, { params: { no, size } });
-    console.log(resp.data);
+  const getMeetList = useCallback(async (no = 1, size = 10, category = null) => {
+    const params = { no, size, category };
+    const resp = await axios.get(`${serverDomain}/meets/meetList`, { params });
+    // console.log(resp.data);
     setMeetList(resp.data);
   }, []);
 
   useEffect(() => {
-    getMeetList();
-  }, [getMeetList]);
+    const category = new URLSearchParams(location.search).get('category');
+    getMeetList(1, 10, category);
+    // console.log(category);
+  }, [getMeetList, location.search]);
 
   return (
     <main id='main' style={{ background: 'white' }}>
@@ -94,7 +85,7 @@ function MeetList() {
                               </Link>
                             </h3>
                             <p style={{ color: '#4f4f4f', fontWeight: 600 }}>
-                              {meetlist.onoff === 0 ? '오프라인' : '온라인'}
+                              {meetlist.onoff === 0 ? '오프라인' : '온라인'}/{meetlist.category}
                             </p>
                             <p style={{ color: 'gray' }}>{meetlist.content}</p>
                           </div>
@@ -104,7 +95,7 @@ function MeetList() {
                   ))}
                 </tbody>
                 <tfoot>
-                  <tr>
+                  {/* <tr>
                     <td colSpan={5} className='text-end'>
                       {login && (
                         <button className='btn btn-primary btn-sm' onClick={() => navigate('/insert')}>
@@ -112,7 +103,7 @@ function MeetList() {
                         </button>
                       )}
                     </td>
-                  </tr>
+                  </tr> */}
                 </tfoot>
               </table>
             </div>
@@ -124,7 +115,3 @@ function MeetList() {
 }
 
 export default MeetList;
-
-MeetList.defaultProps = {
-  sub: '',
-};

@@ -1,0 +1,14 @@
+@import url(./assets/fonts/font.css);
+
+/* 전역으로 폰트를 적용 */
+body {
+  font-family: 'Pretendard', sans-serif !important;/* 원하는 폰트를 전역으로 적용 */
+  font-weight: bold;
+}
+.navbar {
+  font-family: 'Pretendard', sans-serif;
+  font-weight: bold;
+}
+.nav-link {
+  font-size: 18px; /* 필요에 따라 폰트 크기를 조절하세요 */
+}
