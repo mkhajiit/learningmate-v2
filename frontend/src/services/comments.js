@@ -12,7 +12,7 @@ const commentsApi = {
   },
   insertComment: async (submitData) => {
     try {
-      const response = await axios.post('http://localhost:8000/comments/insert', submitData);
+      const response = await axios.post(`${serverDomain}/comments/insert`, submitData);
       return response;
     } catch (error) {
       return error;

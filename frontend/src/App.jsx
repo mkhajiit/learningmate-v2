@@ -3,9 +3,7 @@ import SignUpPage from './pages/SignupPage';
 import SignInPage from './pages/SignInPage';
 import Layout from './components/Layout';
 import AboutPage from './pages/AboutPage';
-import TestPage from './pages/TestPage';
 import HomePage from './pages/HomePage';
-import UserListPage from './pages/UserListPage';
 import MeetList from './pages/meets/MeetList';
 import MeetCategory from './pages/meets/MeetCategory';
 import MeetDetail from './pages/meets/MeetDetail';
@@ -36,9 +34,6 @@ function App() {
           <Route path='/sign-in' element={<SignInPage />} />
           <Route path='/sign-up' element={<SignUpPage />} />
           <Route path='/about' element={<AboutPage />} />
-          <Route path='/test' element={<TestPage />} />
-          <Route path='/user-list' element={<UserListPage />} />
-
           <Route path='/chat/chatRoom/:meetId/' element={<ChatRoom />} />
           <Route path='/chat/chatRoom/:meetId/channels/:channelId' element={<ChatRoom />} />
 

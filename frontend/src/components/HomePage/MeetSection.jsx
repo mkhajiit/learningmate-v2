@@ -8,14 +8,14 @@ import 'swiper/css/pagination';
 import './styles.css';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Container } from 'react-bootstrap';
-import { localDomain } from '../../config/config';
+import { serverDomain } from '../../config/config';
 import CardForMeetSwiper from './CardForMeetSwiper';
 
 export default function MeetSection() {
   const location = useSelector((state) => state.location);
   const [response, setResponse] = useState('');
   const fetchData = useCallback(async () => {
-    const resp = await axios.post(`${localDomain}/meets/find-nearby-meetup`, location);
+    const resp = await axios.post(`${serverDomain}/meets/find-nearby-meetup`, location);
     setResponse(resp.data.data);
   }, [location]);
 
