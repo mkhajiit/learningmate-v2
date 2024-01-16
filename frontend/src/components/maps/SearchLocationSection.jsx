@@ -48,12 +48,7 @@ function SearchLocationSection() {
     });
   };
 
-<<<<<<< HEAD
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-=======
   const handleFormSubmit = () => {
->>>>>>> develop
     searchLocation();
   };
 
@@ -69,10 +64,6 @@ function SearchLocationSection() {
       }),
     );
   };
-<<<<<<< HEAD
-
-=======
->>>>>>> develop
   return (
     <Container>
       {/* mx-auto: 중앙정렬 */}
