@@ -1,18 +1,18 @@
 // 2023.12.27 추가
 
-const participantsDAO = require('../models/participantsDAO');
+// const participantsDAO = require('../models/participantsDAO');
 
-exports.participantInsert = async (req, res) => {
-  const {meet_id} = req.params;
-  const participantData = req.body;
-  try {
-    await participantsDAO.insert(meet_id, participantData, (resp) => {
-      res.send(resp);
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
+// exports.participantInsert = async (req, res) => {
+//   const {meet_id} = req.params;
+//   const participantData = req.body;
+//   try {
+//     await participantsDAO.insert(meet_id, participantData, (resp) => {
+//       res.send(resp);
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
 // exports.participantUpdate = async (req, res) => {
 //   const participantData = req.body;

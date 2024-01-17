@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
 // 리뷰 작성 모달
+// 입력 완료 버튼 누르면 꺼지고 새로고침 돼야함
 import axios from 'axios';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
@@ -12,29 +13,26 @@ import { clearData, updateReviewContent } from '../../store/reviewStore';
 function MeetReviewForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { handleSubmit, setValue } = useForm({ defaultValues: {} });
+  const { handleSubmit } = useForm({ defaultValues: {} });
   const meet_id = useParams().meetid;
   const user_id = useSelector((state) => state.userInfo.userId);
-  const { review } = useSelector((state) => state.reviewStore) || { review: {} };
-  const [reviewModalContent, setReviewModalContent] = useState(null);
+  const { review } = useSelector((state) => state.reviewStore);
 
   const insertReview = useCallback(async () => {
     const reviewData = {
-      meet_id: Number(meet_id),
-      content: review && review.content,
+      meet_id,
+      content: review.content,
       user_id,
     };
     try {
       // 리뷰 데이터를 서버로 전송
-      const resp = await axios.post(`${serverDomain}/reviews/insert`, reviewData, {
+      await axios.post(`${serverDomain}/reviews/insert`, reviewData, {
         withCredentials: true,
         headers: {
           'Content-Type': 'application/json',
         },
       });
-      console.log('리뷰 작성 완료:', resp.data);
-      setReviewModalContent(null); // 모달 닫기
-
+      // console.log('리뷰 작성 완료:', resp.data);
       navigate(`../detail/${meet_id}`, { forceRefresh: true });
     } catch (error) {
       console.error('리뷰 작성 오류:', error);

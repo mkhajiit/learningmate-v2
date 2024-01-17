@@ -1,6 +1,7 @@
 import { useParams } from 'react-router';
 import { useCallback, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
+import gravatar from 'gravatar';
 import { useSelector } from 'react-redux';
 import bookmarksApi from '../../../services/bookmarks';
 
@@ -65,7 +66,9 @@ function LectureDetailSection({ lectureInfo }) {
         <div className='d-flex align-items-center'>
           <div className='flex-shrink-0'>
             <img
-              src={lectureDetail.registerProfile}
+              src={
+                lectureDetail.registerProfile || gravatar.url(lectureDetail.registerNickname, { s: '70', d: 'retro' })
+              }
               alt={`default.png`}
               style={{ width: '70px', maxHeight: '70px', borderRadius: '40px' }}
             />

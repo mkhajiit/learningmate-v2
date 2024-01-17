@@ -10,7 +10,7 @@ const usersRouter = require('./routes/users');
 const testRouter = require('./routes/test');
 
 const meetRouter = require('./routes/meets');
-const participantRouter = require('./routes/participants');
+// const participantRouter = require('./routes/participants');
 const reviewRouter = require('./routes/reviews');
 const likebuttonRouter = require('./routes/likebutton');
 const app = express();
@@ -48,7 +48,7 @@ app.use('/users', usersRouter);
 app.use(testRouter);
 
 app.use('/meets', meetRouter); // 민경 추가
-app.use('/participants', participantRouter); // 민경 추가
+// app.use('/participants', participantRouter); // 민경 추가
 app.use('/reviews', reviewRouter); // 민경 추가
 app.use('/likebutton', likebuttonRouter); // 민경 추가
 

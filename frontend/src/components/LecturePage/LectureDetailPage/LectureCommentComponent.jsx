@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import gravatar from 'gravatar';
 import { commentAction } from '../../../store/comment';
 import commentsApi from '../../../services/comments';
 
@@ -16,11 +17,17 @@ function LectureCommentComponent({ item }) {
       }),
     );
   }, [item.comment_id, dispatch]);
+  const profileImagePath = item.profile_name || gravatar.url(item.nickname, { s: '70', d: 'retro' });
+
   return (
     <Container className='my-4'>
       <div className='d-flex align-items-center'>
         <div className='flex-shrink-0 my-2'>
-          <img src={item.profile_name} alt={`default.png`} style={{ width: '70px', maxHeight: '70px' }} />
+          <img
+            src={profileImagePath}
+            alt={`default.png`}
+            style={{ width: '70px', maxHeight: '70px', borderRadius: '35px' }}
+          />
         </div>
         <div className='flex-grow-1 ms-3'>
           <h4>{item.nickname}</h4>

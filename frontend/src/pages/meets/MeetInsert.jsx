@@ -14,16 +14,12 @@ import LandingModal from '../../components/maps/LandingModal';
 function MeetInsert() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const imageRef = useRef();
+  const { meet } = useSelector((state) => state.meetStore);
+  const user_id = useSelector((state) => state.userInfo.userId);
   // 위치선택 버튼으로 선택한 위치는 position에 위도와 경도가 저장됩니다
   const position = useSelector((state) => state.position);
-  const { meet } = useSelector((state) => state.meetStore);
-  const userId = useSelector((state) => state.userInfo.userId);
-  const auth = useSelector((state) => state.auth.isAuth);
   const categories = ['게임', '요리', '운동', '여행', '취미', '문화예술']; // 카테고리 생성
-
-  const [data, setData] = useState({ user_id: '', nickname: '' });
-  const [isloading, setLoading] = useState(true);
+  const imageRef = useRef();
   const [isOffline, setOffline] = useState(false);
   const [selectedImageFileName, setSelectedImageFileName] = useState('');
   const {
@@ -33,30 +29,6 @@ function MeetInsert() {
     formState: { errors },
   } = useForm({ defaultValues: {}, mode: 'onBlur' });
 
-  const getData = useCallback(async () => {
-    try {
-      const resp = await axios.get(`${serverDomain}/users/userinfo/${userId}`, {
-        withCredentials: true,
-      });
-      if (resp.data.data === false) {
-        window.alert('불러오기 실패');
-      } else {
-        const userData = resp.data.data[0];
-        setData((currentData) => ({
-          ...currentData,
-          ...userData,
-          user_id: userId, // 직접 useSelector로 가져온 userId 사용
-        }));
-        dispatch(changeData({ target: { name: 'user_id', value: userId } }));
-      }
-    } catch (err) {
-      console.error('Error fetching user info:', err);
-    } finally {
-      setLoading(false);
-    }
-  }, [dispatch, userId]);
-
-  // console.log(userInfo.userId);
   const handleImageFileChange = (event) => {
     if (event.target.files[0]) {
       const fileName = event.target.files[0].name;
@@ -120,7 +92,7 @@ function MeetInsert() {
         max_num: meet.max_num,
         onoff: meet.onoff === '온라인' ? 1 : 0,
         category: meet.category,
-        user_id: data.user_id,
+        user_id,
         position,
       };
 
@@ -138,7 +110,7 @@ function MeetInsert() {
 
       try {
         // Meet 데이터와 이미지를 서버로 전송
-        const resp = await axios.post(`${serverDomain}/meets/insert`, meetData, {
+        await axios.post(`${serverDomain}/meets/insert`, meetData, {
           withCredentials: true,
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -150,31 +122,12 @@ function MeetInsert() {
         console.error(error);
       }
     },
-    [meet, data, navigate],
+    [meet, navigate],
   );
-
-  // 없애도 됨
-  useEffect(() => {
-    if (!auth) {
-      navigate('/sign-in');
-    } else {
-      getData();
-    }
-  }, [auth, getData, navigate]);
-
-  useEffect(() => {
-    if (auth) {
-      getData();
-    }
-  }, [auth, getData]);
 
   useEffect(() => {
     dispatch(clearData());
   }, [dispatch]);
-
-  if (isloading) {
-    return <div>Loading....</div>;
-  }
 
   return (
     <main id='main' style={{ background: 'white' }}>
@@ -262,10 +215,6 @@ function MeetInsert() {
                         placeholder='0'
                       />
                     </td>
-                  </tr>
-                  <tr>
-                    <td>생성자</td>
-                    <td>{data.nickname}</td>
                   </tr>
                   <tr>
                     <td>온오프라인 *</td>

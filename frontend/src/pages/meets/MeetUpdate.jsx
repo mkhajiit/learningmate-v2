@@ -16,15 +16,12 @@ function MeetUpdate() {
   const navigate = useNavigate();
   const imageRef = useRef();
   const position = useSelector((state) => state.position);
-  const meet_id = useParams().meetid;
-
   const { meet } = useSelector((state) => state.meetStore);
+  const meet_id = useParams().meetid;
   const dispatch = useDispatch();
   const [isOffline, setOffline] = useState(false);
   const [data, setData] = useState({ user_id: '', nickname: '' });
   const categories = ['게임', '요리', '운동', '여행', '취미', '문화예술']; // 카테고리 생성
-  // const [meetData, setMeetData] = useState({});
-
   const [selectedImageFileName, setSelectedImageFileName] = useState('');
 
   const {
@@ -35,8 +32,6 @@ function MeetUpdate() {
   } = useForm({ defaultValues: {}, mode: 'onBlur' });
 
   useEffect(() => {
-    console.log('Meet State:', meet);
-
     const fetchMeetData = async () => {
       try {
         if (meet_id) {
@@ -46,7 +41,6 @@ function MeetUpdate() {
             },
           });
           const updatedMeet = response.data.data[0];
-          // console.log('Updated Meet Data:', updatedMeet);
 
           // 기존 meet 값이 있는 경우에만 업데이트
           const updatedMeetWithDefaults = {
@@ -111,7 +105,7 @@ function MeetUpdate() {
       }
 
       try {
-        const resp = await axios.patch(`${serverDomain}/meets/update/${meet_id}`, updatedMeet, {
+        await axios.patch(`${serverDomain}/meets/update/${meet_id}`, updatedMeet, {
           withCredentials: true,
           headers: {
             'Content-Type': 'multipart/form-data',

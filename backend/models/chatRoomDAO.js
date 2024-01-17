@@ -12,8 +12,6 @@ const sql = {
 FROM
   meets m
 JOIN
-  meet_participants mp ON m.meet_id = mp.meet_id
-JOIN
   chat_room cr ON m.meet_id = cr.meet_id
 JOIN
   chat_history ch ON cr.channel_id = ch.channel_id

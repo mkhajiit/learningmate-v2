@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 // 모임 디테일
-// db로 가는데 나갔다 들어오면 북마크 지워져있음
 import axios from 'axios';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -165,7 +164,7 @@ function MeetDetail() {
       <section className='property-grid grid'>
         <div className='container'>
           <div className='row'>
-            <div className='col-sm-8' style={{ marginTop: '50px' }}>
+            <div className='col-sm-8' style={{ marginTop: '20px' }}>
               <table className='table table-borderless'>
                 <tbody>
                   <tr>
@@ -176,10 +175,16 @@ function MeetDetail() {
                       <img
                         src={meet.image}
                         alt='모임이미지.jpg'
-                        style={{ borderRadius: '15px', width: '880px', height: '450px' }}
-                      ></img>
+                        style={{
+                          borderRadius: '15px',
+                          width: '100%',
+                          height: '450px',
+                          objectFit: 'cover', // 이미지 비율 유지
+                        }}
+                      />
                     </td>
                   </tr>
+
                   {/* 북마크 */}
                   {user_id !== 0 && (
                     <button
@@ -230,7 +235,7 @@ function MeetDetail() {
               style={{
                 width: '25rem',
                 height: meet.onoff === 1 ? '11rem' : '19rem',
-                marginTop: '120px',
+                marginTop: '90px',
                 marginLeft: '40px',
               }}
             >
@@ -298,24 +303,30 @@ function MeetDetail() {
           <div className='col' style={{ marginLeft: '80px', marginTop: '30px' }}>
             <h3>리뷰</h3>
             {reviews.length > 0 ? (
-              <ul>
-                {reviews.map((review) => (
-                  <li key={review.review_id}>
-                    <p>
-                      {review.content}{' '}
-                      {review.nickname === userInfo.nickname && (
-                        <button
-                          className='btn btn-danger btn-sm'
-                          onClick={() => {
-                            deleteReview(review.review_id);
-                          }}
-                        >
-                          삭제
-                        </button>
-                      )}
-                    </p>
-                    <p>작성자: {review.nickname}</p>
-                  </li>
+              <ul style={{ listStyle: 'none' }}>
+                {reviews.map((review, index, array) => (
+                  <React.Fragment key={review.review_id}>
+                    <li style={{ marginRight: '30px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <p style={{ fontSize: '17px', marginRight: '10px' }}>{review.nickname}: </p>
+                        <p style={{ fontSize: '15px', flex: 1 }}>{review.content}</p>
+                        {review.nickname === userInfo.nickname && (
+                          <button
+                            className='btn btn-sm'
+                            style={{ marginRight: '500px', marginBottom: '20px' }}
+                            onClick={() => {
+                              deleteReview(review.review_id);
+                            }}
+                          >
+                            <i className='bi bi-trash3'></i>
+                          </button>
+                        )}
+                      </div>
+                    </li>
+                    {index < array.length - 1 && (
+                      <hr style={{ marginTop: '5px', border: '1px solid #ccc', width: '60%' }} />
+                    )}
+                  </React.Fragment>
                 ))}
               </ul>
             ) : (

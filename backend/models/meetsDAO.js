@@ -25,7 +25,7 @@ const meetsDAO = {
   meetList: async (item, callback) => {
     // data 들어온거 확인 완료!
     const no = Number(item.no) - 1 || 0;
-    const size = Number(item.size) || 10;
+    const size = Number(item.size) || 5;
 
     try {
       const [resp] = await db.query(sql.meetList, [no * size, size]);
@@ -153,10 +153,10 @@ const meetsDAO = {
   myMeetList: async (user_id) => {
     try {
       const [rows, fields] = await db.query(sql.myMeetList, [user_id]);
-      return { status: 200, data: rows };
+      return {status: 200, data: rows};
     } catch (error) {
       console.error('내 모임 불러오기 중 에러 발생:', error);
-      return { status: 500, message: '내 모임 불러오기 실패', error: error.message };
+      return {status: 500, message: '내 모임 불러오기 실패', error: error.message};
     }
   },
 };

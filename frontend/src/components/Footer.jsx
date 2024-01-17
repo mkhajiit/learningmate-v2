@@ -14,18 +14,16 @@ const Footer = () => (
 
         <div className='col-md-3 mb-md-0 mb-3'>
           <h5 className='text-uppercase'>탐색</h5>
-          <ul className='list-unstyled'>
+          <ul className='list-unstyled '>
             <li>
-              <Link to='/meets'>모임</Link>
+              <Link to='/meets' className='no-underline'>
+                모임
+              </Link>
             </li>
             <li>
-              <Link to='/courses'>강의</Link>
-            </li>
-            <li>
-              <Link to='/sign-in'>로그인</Link>
-            </li>
-            <li>
-              <Link to='/sign-up'>회원가입</Link>
+              <Link to='/courses' className='no-underline'>
+                강의
+              </Link>
             </li>
           </ul>
         </div>
@@ -34,16 +32,24 @@ const Footer = () => (
           <h5 className='text-uppercase'>러닝메이트</h5>
           <ul className='list-unstyled'>
             <li>
-              <Link to='/about'>정보</Link>
+              <Link to='/about' className='no-underline'>
+                정보
+              </Link>
             </li>
             <li>
-              <Link to='/about'>개발자소개</Link>
+              <Link to='/about' className='no-underline'>
+                개발자소개
+              </Link>
             </li>
             <li>
-              <a href='#!'>이용약관</a>
+              <Link to='#!' className='no-underline'>
+                이용약관
+              </Link>
             </li>
             <li>
-              <a href='#!'>개인정보처리방침</a>
+              <Link to='#!' className='no-underline'>
+                개인정보처리방침
+              </Link>
             </li>
           </ul>
         </div>

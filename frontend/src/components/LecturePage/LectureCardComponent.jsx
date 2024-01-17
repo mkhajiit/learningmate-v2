@@ -1,11 +1,14 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import { useNavigate } from 'react-router';
+import gravatar from 'gravatar';
 import cuttingText from '../../helpers/cuttingText';
 
 function LectureCardComponent({ item }) {
   const navigate = useNavigate();
   const lectureTitle = cuttingText(item.title, 21);
+  const profileImagePath = item.profile_name || gravatar.url(item.nickname, { s: '50', d: 'retro' });
+
   return (
     item && (
       <>
@@ -19,7 +22,7 @@ function LectureCardComponent({ item }) {
             <div className='d-flex align-items-start'>
               <div className='flex-shrink-0'>
                 <img
-                  src={item.profile_name}
+                  src={profileImagePath}
                   alt={`default.png`}
                   style={{ width: '50px', height: '50px', borderRadius: '100px' }}
                 />

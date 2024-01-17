@@ -12,3 +12,8 @@ body {
 .nav-link {
   font-size: 18px; /* 필요에 따라 폰트 크기를 조절하세요 */
 }
+
+.no-underline{
+  text-decoration: none;
+  color:black;
+}
