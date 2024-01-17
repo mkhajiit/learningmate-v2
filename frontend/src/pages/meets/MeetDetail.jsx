@@ -112,7 +112,7 @@ function MeetDetail() {
   const deleteReview = useCallback(
     async (reviewId) => {
       try {
-        await axios.delete(`${localDomain}/reviews/delete/${reviewId}`);
+        await axios.delete(`${serverDomain}/reviews/delete/${reviewId}`);
         getMeetDetailAndReviews();
       } catch (error) {
         console.error('Error deleting review:', error);
