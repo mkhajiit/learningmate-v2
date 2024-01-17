@@ -26,14 +26,12 @@ function LectureCommentInput() {
             commentList: result.data.data,
           }),
         );
-        console.log(result.data.data);
-        console.log(userInfo.profilePath);
         setValue('comment', ''); // 입력창 초기화
       } catch (error) {
         console.log(error);
       }
     },
-    [course_id, setValue, userInfo.userId, dispatch, userInfo.profilePath],
+    [course_id, setValue, userInfo.userId, dispatch],
   );
   return (
     <Container>

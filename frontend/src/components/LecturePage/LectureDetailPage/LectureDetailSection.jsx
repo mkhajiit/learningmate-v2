@@ -29,7 +29,6 @@ function LectureDetailSection({ lectureInfo }) {
     try {
       const response = await bookmarksApi.getBookmarkByUserId(user_id);
       const bookMarkedCourseList = response.data[0];
-      console.log(bookMarkedCourseList.filter((item) => item.course_id === Number(course_id)).length);
       setIsBookmarked(bookMarkedCourseList.filter((item) => item.course_id === Number(course_id)).length);
     } catch (error) {
       console.log(error);

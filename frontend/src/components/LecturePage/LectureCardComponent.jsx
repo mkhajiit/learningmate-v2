@@ -19,7 +19,7 @@ function LectureCardComponent({ item }) {
                 <img
                   src={item.profile_name}
                   alt={`default.png`}
-                  style={{ width: '50px', maxHeight: '50px', borderRadius: '100px' }}
+                  style={{ width: '50px', height: '50px', borderRadius: '100px' }}
                 />
               </div>
               <div className='flex-grow-1 ms-3'>
