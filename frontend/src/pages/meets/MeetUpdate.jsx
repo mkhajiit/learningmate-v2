@@ -1,8 +1,6 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-console */
 // 모임 수정
-// 01.10 - 내용 안 불러와짐
-
 import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -113,7 +111,7 @@ function MeetUpdate() {
       }
 
       try {
-        const response = await axios.patch(`${serverDomain}/meets/update/${meet_id}`, updatedMeet, {
+        const resp = await axios.patch(`${serverDomain}/meets/update/${meet_id}`, updatedMeet, {
           withCredentials: true,
           headers: {
             'Content-Type': 'multipart/form-data',

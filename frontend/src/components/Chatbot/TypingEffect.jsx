@@ -13,7 +13,7 @@ function TypingEffect({ text }) {
       } else {
         clearInterval(interval); // 출력이 완료되면 interval을 멈춥니다.
       }
-    }, 100); // 각 글자마다의 간격을 조절할 수 있습니다.
+    }, 50); // 각 글자마다의 간격을 조절할 수 있습니다.
 
     return () => clearInterval(interval); // 컴포넌트가 unmount될 때 interval을 정리합니다.
   }, [text]);

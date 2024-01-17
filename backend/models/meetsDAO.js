@@ -1,4 +1,3 @@
-// 2023.12.29 수정 완료
 const geolib = require('geolib');
 const db = require('./../src/database');
 // 주변위치 검색때 반경(km);

@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-alert */
 // 모임 생성
-// - 최대 참여 인원만큼 참여자 수 제한해야함
 import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -335,7 +334,7 @@ function MeetInsert() {
                     </td>
                   </tr>
                   <tr>
-                    <td>카테고리 선택</td>
+                    <td>카테고리 선택 *</td>
                     <td>
                       <select
                         className='form-select'

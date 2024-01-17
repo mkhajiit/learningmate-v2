@@ -9,7 +9,6 @@ import MeetCategory from './pages/meets/MeetCategory';
 import MeetDetail from './pages/meets/MeetDetail';
 import MeetInsert from './pages/meets/MeetInsert';
 import MeetUpdate from './pages/meets/MeetUpdate';
-// import MeetReviewForm from './pages/meets/MeetReviewForm';
 // 나현
 import Mypage from './pages/mypage/Mypage';
 import MyInfo from './pages/mypage/MyInfo';
@@ -46,7 +45,6 @@ function App() {
           </Route>
           <Route path='/meetcategory' element={<MeetCategory />} />
           <Route path='/meets' element={<MeetList />} />
-          {/* <Route path='/reviews' element={<MeetReviewForm />} /> */}
           <Route path='/detail/:meetid' element={<MeetDetail />} />
           <Route path='/insert' element={<MeetInsert />} />
           <Route path='/update/:meetid' element={<MeetUpdate />} />

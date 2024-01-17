@@ -6,8 +6,9 @@ import { lectureReducer, lectureDetailReducer } from './lecture';
 import commentReducer from './comment';
 import { locationReducer, positionReducer } from './location';
 import userInfoReducer from './userInfo';
-import userStore from './userStore'; // 민경 추가
+// import userStore from './userStore'; // 민경 추가
 import meetStore from './meetStore'; // 민경 추가
+import reviewStore from './reviewStore';
 import eventReducer from './eventStore'; // 나현 추가
 
 const rootReducer = combineReducers({
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   lectureDetail: lectureDetailReducer,
   comment: commentReducer,
   meetStore,
-  userStore,
+  // userStore,
+  reviewStore,
   events: eventReducer,
 });
 

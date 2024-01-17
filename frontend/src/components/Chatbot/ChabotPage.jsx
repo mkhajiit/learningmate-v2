@@ -49,27 +49,27 @@ function ChatbotPage() {
     chatMessageRef.current.scrollTop = chatMessageRef.current.scrollHeight;
   }, [chatMessage]);
   return (
-    <Container className='chatbot-body-style'>
-      <div id='chat-container'>
-        {/* useRef의 ref속성을 사용해 요소를 참조 */}
-        <div id='chat-messages' ref={chatMessageRef}>
-          {chatMessage.map((item, index) => (
-            <div key={index} className={`message ${item.type}`}>
-              {/* eslint-disable no-nested-ternary */}
-              {/* 중첩된 삼항연산자를 쓸수밖에 없어서 사용함 */}
-              {item.type === 'user' ? item.message : index === 0 ? <TypingEffect text={item.message} /> : item.message}
-            </div>
-          ))}
-        </div>
-        <form id='user-input' onSubmit={handleSubmit(submitEvent)}>
-          <input type='text' placeholder='메시지를 입력하세요...' {...register('userInput', { required: true })} />
-          <button type='submit'>전송</button>
-          <div id='user-input-error-messages' style={{ height: '12px' }}>
-            {errors.userInput && '질문을 입력하세요'}
+    // <Container className='chatbot-body-style'>
+    <div id='chat-container' style={{ maxWidth: '100%', maxHeight: '100%', backgroundColor: 'white' }}>
+      {/* useRef의 ref속성을 사용해 요소를 참조 */}
+      <div id='chat-messages' ref={chatMessageRef}>
+        {chatMessage.map((item, index) => (
+          <div key={index} className={`message ${item.type}`}>
+            {/* eslint-disable no-nested-ternary */}
+            {/* 중첩된 삼항연산자를 쓸수밖에 없어서 사용함 */}
+            {item.type === 'user' ? item.message : index === 0 ? <TypingEffect text={item.message} /> : item.message}
           </div>
-        </form>
+        ))}
       </div>
-    </Container>
+      <form id='user-input' onSubmit={handleSubmit(submitEvent)}>
+        <input type='text' placeholder='메시지를 입력하세요...' {...register('userInput', { required: true })} />
+        <button type='submit'>전송</button>
+        <div id='user-input-error-messages' style={{ height: '12px' }}>
+          {errors.userInput && '질문을 입력하세요'}
+        </div>
+      </form>
+    </div>
+    // </Container>
   );
 }
 

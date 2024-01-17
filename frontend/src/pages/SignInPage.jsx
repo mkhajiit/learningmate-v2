@@ -92,7 +92,7 @@ function SignInPage() {
             </Form.Group>
             <Form.Group className='mb-3' controlId='formGroupEmail'>
               <Button variant='primary' style={{ width: '100%' }} type='submit'>
-                등록
+                로그인
               </Button>
             </Form.Group>
           </Form>

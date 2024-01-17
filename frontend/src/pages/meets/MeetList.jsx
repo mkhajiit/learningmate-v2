@@ -26,7 +26,6 @@ function MeetList() {
   useEffect(() => {
     const category = new URLSearchParams(location.search).get('category');
     getMeetList(1, 10, category);
-    // console.log(category);
   }, [getMeetList, location.search]);
 
   return (
@@ -36,14 +35,6 @@ function MeetList() {
           <div className='row'>
             <div className='col-sm-10' style={{ marginLeft: '80px', marginTop: '40px' }}>
               <table className='table table-borderless'>
-                <thead>
-                  <tr>
-                    {/* <th>타이틀</th>
-                    <th>온오프라인</th>
-                    <th>내용</th> */}
-                    {/* <th>멤버 수</th> 추가 해야함 */}
-                  </tr>
-                </thead>
                 <tbody>
                   {meetList.data.map((meetlist) => (
                     <React.Fragment key={meetlist.meet_id}>
@@ -94,17 +85,6 @@ function MeetList() {
                     </React.Fragment>
                   ))}
                 </tbody>
-                <tfoot>
-                  {/* <tr>
-                    <td colSpan={5} className='text-end'>
-                      {login && (
-                        <button className='btn btn-primary btn-sm' onClick={() => navigate('/insert')}>
-                          새로운 모임 작성하기
-                        </button>
-                      )}
-                    </td>
-                  </tr> */}
-                </tfoot>
               </table>
             </div>
           </div>

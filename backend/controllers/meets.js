@@ -1,5 +1,3 @@
-// 2023.12.26 추가
-
 const meetsDAO = require('../models/meetsDAO');
 const domain = require('../config/config.js');
 const imageUploadPath = `${domain.deployDomain}/images/meets/`;

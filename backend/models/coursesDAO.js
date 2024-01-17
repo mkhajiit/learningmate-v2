@@ -22,7 +22,7 @@ const sql = {
 
   delete: 'DELETE FROM courses WHERE course_id = ?',
 
-  search: `SELECT c.course_id, u.nickname, title, attach_image_path, u.profile_name, view_cnt, DATE_FORMAT(c.createdAt, '%Y-%m-%d %H:%i') as createdAt
+  search: `SELECT c.course_id, u.nickname, u.profile_name, title, attach_image_path, view_cnt, DATE_FORMAT(c.createdAt, '%Y-%m-%d %H:%i') as createdAt
            FROM users u INNER JOIN courses c ON u.user_id = c.user_id
            WHERE title LIKE CONCAT('%', ?, '%') OR content LIKE CONCAT('%', ?, '%');`,
 

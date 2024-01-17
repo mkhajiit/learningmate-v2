@@ -1,10 +1,7 @@
-// 2023.12.27 추가
 const reviewsDAO = require('../models/reviewsDAO');
 
 exports.reviewInsert = async (req, res) => {
-  //  const {meet_id} = req.params;
   const reviewData = req.body;
-  console.log('전송된 리뷰 데이터:', reviewData);
   try {
     const resp = await reviewsDAO.insert(reviewData);
     res.send(resp);
@@ -15,10 +12,9 @@ exports.reviewInsert = async (req, res) => {
 };
 
 exports.reviewDelete = async (req, res) => {
-  const {review_id, user_id} = req.params;
-  console.log(req.params);
+  const {review_id} = req.params;
   try {
-    await reviewsDAO.delete(review_id, user_id, (resp) => {
+    await reviewsDAO.delete(review_id, (resp) => {
       res.send(resp);
     });
   } catch (err) {

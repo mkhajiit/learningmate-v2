@@ -12,15 +12,18 @@ function ChatbotModal() {
   return (
     <>
       <ChatbotIcon onClick={handleShow} />
-      <Modal show={show} onHide={handleClose} dialogClassName='modal-xl'>
-        <Modal.Body className='text-center'>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Body className='text-center' style={{ backgroundColor: 'black' }}>
           <ChatbotPage />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
-            닫기
+          <Button
+            className='mt-4'
+            variant='secondary'
+            onClick={handleClose}
+            style={{ width: '70px', height: '70px', borderRadius: '30px' }}
+          >
+            <i className='bi bi-house' style={{ fontSize: '30px' }}></i>
           </Button>
-        </Modal.Footer>
+        </Modal.Body>
       </Modal>
     </>
   );

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-// 아직 안 됨 ㅜㅅㅜ
+// 리뷰 작성 모달
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,32 +7,23 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
 import { Button, Form } from 'react-bootstrap';
 import { serverDomain } from '../../config/config';
-import { changeData, clearData } from '../../store/reviewStore';
+import { clearData, updateReviewContent } from '../../store/reviewStore';
 
 function MeetReviewForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { register, handleSubmit, setValue } = useForm({ defaultValues: {} });
+  const { handleSubmit, setValue } = useForm({ defaultValues: {} });
   const meet_id = useParams().meetid;
-  const userId = useSelector((state) => state.userInfo.userId);
-  const auth = useSelector((state) => state.auth.isAuth);
-  const [data, setData] = useState({ user_id: '', nickname: '' });
-  const [isloading, setLoading] = useState(true);
-  const [reviews, setReviews] = useState([]);
+  const user_id = useSelector((state) => state.userInfo.userId);
   const { review } = useSelector((state) => state.reviewStore) || { review: {} };
-
-  console.log('Review in MeetReviewForm:', review);
-  console.log(meet_id);
-  console.log(userId);
+  const [reviewModalContent, setReviewModalContent] = useState(null);
 
   const insertReview = useCallback(async () => {
-    // Meet 데이터 생성
     const reviewData = {
-      meet_id,
-      content: review.content,
-      userId,
+      meet_id: Number(meet_id),
+      content: review && review.content,
+      user_id,
     };
-
     try {
       // 리뷰 데이터를 서버로 전송
       const resp = await axios.post(`${serverDomain}/reviews/insert`, reviewData, {
@@ -41,14 +32,18 @@ function MeetReviewForm() {
           'Content-Type': 'application/json',
         },
       });
+      console.log('리뷰 작성 완료:', resp.data);
+      setReviewModalContent(null); // 모달 닫기
 
-      console.log('리뷰 작성 완료:', resp.data.data[0]);
-      // 리뷰 작성 후, 필요한 업데이트 또는 이동 작업 수행
-      navigate(`../meets`);
+      navigate(`../detail/${meet_id}`, { forceRefresh: true });
     } catch (error) {
       console.error('리뷰 작성 오류:', error);
     }
   }, [review, meet_id, navigate]);
+
+  useEffect(() => {
+    dispatch(clearData());
+  }, [dispatch]);
 
   return (
     <Form onSubmit={handleSubmit(insertReview)}>
@@ -59,7 +54,7 @@ function MeetReviewForm() {
           className='form-control'
           name='content'
           value={review.content}
-          onChange={(evt) => dispatch(changeData(evt))}
+          onChange={(evt) => dispatch(updateReviewContent(evt.target.value))}
           placeholder='50자 이하로 작성해주세요.'
           maxLength={50}
         />

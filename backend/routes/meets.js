@@ -1,5 +1,3 @@
-// 2023.12.26 수정 완료
-
 const express = require('express');
 const router = express.Router();
 const meetsController = require('../controllers/meets');

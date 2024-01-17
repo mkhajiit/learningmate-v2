@@ -1,4 +1,4 @@
--- Active: 1703034958535@@34.64.245.68@3306@learningmate
+-- Active: 1703035126470@@34.64.245.68@3306@learningmate
 DROP TABLE courses;
 
 -- 강의 테이블 생성
@@ -481,10 +481,12 @@ FROM
 -- CREATE 리뷰 추가
 -- inner join 사용? status=1인 사람만
 INSERT INTO
-    meet_reviews (meet_id, user_id, content)
+    meet_reviews (meet_id, content, user_id)
 VALUES
-    (19, 70, '리뷰 내용 1'),
-    (19, 71, '리뷰 내용 2') -- READ 읽기
+    (97, '리뷰 셀프 작성', 40),
+    (98, '리뷰 셀프 작성', 40); -- READ 읽기
+
+
 SELECT
     *
 FROM
@@ -530,6 +532,16 @@ DELETE FROM
 WHERE
     review_id = 1
     AND user_id = 17;
+
+
+-- 강의 좋아요
+CREATE TABLE likebutton (
+    likebutton INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    meet_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (meet_id) REFERENCES meets(meet_id) ON DELETE CASCADE
+);
 
 -- 나현
 -- 마이페이지 달력 일정 테이블 생성
