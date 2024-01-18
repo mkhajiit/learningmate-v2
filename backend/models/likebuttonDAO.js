@@ -12,7 +12,11 @@ class likebuttonDAO {
   }
 
   static getLikeButtonsByUserId(user_id) {
-    const sql = 'SELECT meet_id FROM likebutton WHERE user_id = ?';
+    const sql = `SELECT m.meet_id, u.nickname, m.title, m.onoff, m.content
+    FROM likebutton l
+    INNER JOIN meets m ON l.meet_id = m.meet_id
+    INNER JOIN users u ON m.user_id = u.user_id
+    WHERE l.user_id = ?`;
     return db.query(sql, [user_id]);
   }
 }

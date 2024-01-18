@@ -26,7 +26,7 @@ function LectureCommentComponent({ item }) {
           <img
             src={profileImagePath}
             alt={`default.png`}
-            style={{ width: '70px', maxHeight: '70px', borderRadius: '35px' }}
+            style={{ width: '70px', height: '70px', borderRadius: '35px' }}
           />
         </div>
         <div className='flex-grow-1 ms-3'>

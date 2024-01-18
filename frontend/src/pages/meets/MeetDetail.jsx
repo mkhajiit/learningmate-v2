@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-console */
 // 모임 디테일
 import axios from 'axios';
@@ -73,7 +74,6 @@ function MeetDetail() {
 
       // 리뷰 정보 설정
       setReviews(reviewResp.data.data);
-      console.log(reviewResp.data.data);
     } catch (error) {
       console.error(error);
     }
@@ -114,11 +114,25 @@ function MeetDetail() {
         await axios.delete(`${serverDomain}/reviews/delete/${reviewId}`);
         getMeetDetailAndReviews();
       } catch (error) {
-        console.error('Error deleting review:', error);
+        console.error(error);
       }
     },
     [getMeetDetailAndReviews],
   );
+
+  const [isMeetExpired, setIsMeetExpired] = useState(false);
+
+  // 현재 날짜가 종료 날짜 이후라면 모임 종료
+  useEffect(() => {
+    const endDate = moment(meet.end_date);
+    const currentDate = moment();
+
+    if (currentDate.isAfter(endDate)) {
+      setIsMeetExpired(true);
+    } else {
+      setIsMeetExpired(false);
+    }
+  }, [meet.end_date]);
 
   // 현재 사용자가 글을 작성한 사용자인지 여부를 확인
   const UserPostAuthor = meet.nickname === userInfo.nickname;
@@ -141,7 +155,6 @@ function MeetDetail() {
     try {
       const response = await likesbuttonApi.getLikeButtonByUserId(user_id);
       const likebuttonMeetList = response.data[0];
-      console.log(likebuttonMeetList.filter((item) => item.meet_id === Number(meet_id)).length);
       setIsliked(likebuttonMeetList.filter((item) => item.meet_id === Number(meet_id)).length);
     } catch (error) {
       console.log(error);
@@ -185,7 +198,7 @@ function MeetDetail() {
                     </td>
                   </tr>
 
-                  {/* 북마크 */}
+                  {/* 좋아요 버튼 */}
                   {user_id !== 0 && (
                     <button
                       type='button'
@@ -279,8 +292,9 @@ function MeetDetail() {
                   className={`btn btn-${isJoined ? 'success' : 'primary'} btn-sm`}
                   onClick={joinMeet}
                   style={{ width: '500px', height: '50px' }}
+                  disabled={isMeetExpired} // 모임이 종료되었을 때 버튼 비활성화
                 >
-                  참여
+                  {isMeetExpired ? '종료된 모임입니다' : '참여'}
                 </button>
               </div>
             </div>

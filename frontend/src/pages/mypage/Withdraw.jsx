@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Sidebar from '../../components/Mypage/Sidebar';
-import '../../components/Mypage/styles/Title.css';
+import '../../components/Mypage/styles/MyPage.css';
 import WithdrawPage from '../../components/Mypage/WithdrawPage';
 
 function Withdraw() {

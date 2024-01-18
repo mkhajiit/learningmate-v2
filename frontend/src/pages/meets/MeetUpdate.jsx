@@ -78,10 +78,9 @@ function MeetUpdate() {
     async (evt) => {
       evt.preventDefault();
 
-      // 이미지 파일 가져오기
       const { files: imageFiles } = document.querySelector('input[name="meetImage"]');
 
-      // 이미지 파일만을 담은 FormData 생성
+      // 이미지 파일 담을 FormData 생성
       const imageFormData = new FormData();
       imageFormData.append('meetImage', imageFiles[0]);
 
@@ -98,9 +97,7 @@ function MeetUpdate() {
         position,
       };
 
-      // 이미지가 변경되지 않았을 경우에만 업데이트
       if (imageFiles[0]) {
-        // Meet 데이터에 이미지 데이터 추가
         updatedMeet.meetImage = imageFormData.get('meetImage');
       }
 
@@ -111,7 +108,6 @@ function MeetUpdate() {
             'Content-Type': 'multipart/form-data',
           },
         });
-        // console.log('Server Response:', response.data);
         dispatch(updateMeetAction(updatedMeet));
         navigate(`../meets`);
       } catch (error) {

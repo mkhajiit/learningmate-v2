@@ -58,21 +58,10 @@ function MeetInsert() {
         meet.onoff === null ||
         !meet.category
       ) {
-        console.log('Meet 데이터:', meet);
-        console.log('Meet 데이터 값 확인:', {
-          title: meet.title,
-          content: meet.content,
-          start_date: meet.start_date,
-          end_date: meet.end_date,
-          max_num: meet.max_num,
-          onoff: meet.onoff,
-          category: meet.category,
-        });
         window.alert('필수 입력 항목을 모두 작성해주세요.');
         return;
       }
 
-      // 이미지 파일 가져오기
       const {
         files: [imageFile],
       } = document.querySelector('input[name="meetImage"]');
@@ -83,7 +72,6 @@ function MeetInsert() {
         imageFormData.append('meetImage', imageFile);
       }
 
-      // Meet 데이터 생성
       const meetData = {
         title: meet.title,
         content: meet.content,
@@ -96,12 +84,11 @@ function MeetInsert() {
         position,
       };
 
-      // 이미지 파일이 선택된 경우에만 Meet 데이터에 이미지 데이터 추가
       if (imageFile) {
         meetData.meetImage = imageFile;
       }
 
-      // meetImage가 null인지 확인하고 로그와 경고 메시지 표시
+      // meetImage가 null일 경우
       if (!meetData.meetImage) {
         console.log('meetImage 값:', meetData.meetImage);
         window.alert('이미지를 선택해주세요.');
@@ -109,14 +96,12 @@ function MeetInsert() {
       }
 
       try {
-        // Meet 데이터와 이미지를 서버로 전송
         await axios.post(`${serverDomain}/meets/insert`, meetData, {
           withCredentials: true,
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
-        console.log('Meet 데이터 및 이미지 업로드 완료');
         navigate(`../meets`);
       } catch (error) {
         console.error(error);

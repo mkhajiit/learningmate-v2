@@ -41,7 +41,7 @@ function LectureCommentInput() {
           <img
             src={userInfo.profilePath || gravatar.url(userInfo.nickname, { s: '70', d: 'retro' })}
             alt={`default.png`}
-            style={{ width: '70px', maxHeight: '70px' }}
+            style={{ width: '70px', height: '70px', borderRadius: '35px' }}
           />
         </div>
         <div className='flex-grow-1 ms-3'>

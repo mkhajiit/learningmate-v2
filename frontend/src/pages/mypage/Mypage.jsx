@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import MyCalendar from '../../components/Mypage/Calendar';
 import Sidebar from '../../components/Mypage/Sidebar';
-import '../../components/Mypage/styles/Title.css';
+import '../../components/Mypage/styles/MyPage.css';
 
 function Mypage() {
   const userInfo = useSelector((state) => state.userInfo);
@@ -16,7 +16,7 @@ function Mypage() {
             <Sidebar />
           </Col>
           <Col xs={10} id='content'>
-            <h3>
+            <h3 className='subtitle'>
               {userInfo.nickname}
               님, 안녕하세요!
             </h3>

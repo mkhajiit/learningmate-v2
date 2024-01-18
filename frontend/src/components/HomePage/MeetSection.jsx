@@ -16,7 +16,9 @@ export default function MeetSection() {
   const [response, setResponse] = useState('');
   const fetchData = useCallback(async () => {
     const resp = await axios.post(`${serverDomain}/meets/find-nearby-meetup`, location);
-    setResponse(resp.data.data);
+    // 뒤에서 10개의 정보만 사용합니다
+    const sliceResp = resp.data.data.slice(-10);
+    setResponse(sliceResp);
   }, [location]);
 
   useEffect(() => {
@@ -38,16 +40,12 @@ export default function MeetSection() {
           modules={[Autoplay, Pagination]}
           className='mySwiper'
         >
-          {/* 슬라이드 10개만 만들게 조건문을 사용 */}
           {response &&
-            response.map(
-              (item, index) =>
-                index < 10 && (
-                  <SwiperSlide key={index}>
-                    <CardForMeetSwiper item={item} />
-                  </SwiperSlide>
-                ),
-            )}
+            response.map((item, index) => (
+              <SwiperSlide key={index}>
+                <CardForMeetSwiper item={item} />
+              </SwiperSlide>
+            ))}
         </Swiper>
       </Container>
     </>

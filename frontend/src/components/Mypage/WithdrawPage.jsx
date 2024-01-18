@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { serverDomain } from '../../config/config';
 import LogoutFunction from '../../containers/Header/LogoutFunction';
+import './styles/MyPage.css';
 
 function WithdrawPage() {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ function WithdrawPage() {
         withCredentials: true,
         data: { password: data.password, user_id: userInfo.userId },
       });
-      console.log('Server Response:', result.data); // 디버깅 확인
+      console.log('Server Response:', result); // 디버깅 확인
       if (result.data.status === 200) {
         window.alert('탈퇴 요청이 성공적으로 처리되었습니다. 안녕히가세요.');
         logoutUser();
@@ -48,7 +49,7 @@ function WithdrawPage() {
 
   return (
     <div>
-      <h2>회원 탈퇴</h2>
+      <h2 className='subtitle'>회원 탈퇴</h2>
       <Form onSubmit={(e) => e.preventDefault()}>
         <Form.Group className='mb-3'>
           <Form.Label>비밀번호</Form.Label>

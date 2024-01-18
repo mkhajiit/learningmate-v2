@@ -107,7 +107,24 @@ function SearchLocationSection() {
             <div style={{ color: '#000', textAlign: 'center' }}>내위치</div>
           </MapMarker>
           {/* 클릭으로 마커 생성 */}
-          {position && <MapMarker position={position} />}
+          {position && (
+            <MapMarker
+              position={position}
+              image={{
+                src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
+                size: {
+                  width: 64,
+                  height: 69,
+                },
+                options: {
+                  offset: {
+                    x: 27,
+                    y: 69,
+                  }, // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+                },
+              }}
+            />
+          )}
           {/* 키워드 검색으로 주변 마커 생성 */}
           {markers.map((marker) => (
             <MapMarker
@@ -120,7 +137,7 @@ function SearchLocationSection() {
           ))}
         </Map>
       </Container>
-      {position && <p>{`클릭한 위치의 위도는 ${position.lat}이고, 경도는 ${position.lng} 입니다`}</p>}
+      {/* {position && <p>{`클릭한 위치의 위도는 ${position.lat}이고, 경도는 ${position.lng} 입니다`}</p>} */}
       <h3>원하는 장소를 지도에 클릭하세요</h3>
     </Container>
   );

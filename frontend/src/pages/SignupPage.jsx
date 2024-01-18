@@ -20,12 +20,10 @@ function SignUpPage() {
   const confirmPassword = watch('password', '');
 
   // email중복확인
-  // useCallback에서 의존성 배열에 명시하지 않으면 해당 함수는 초기 렌더링 때 한 번만 생성되고,
-  // 이후에는 해당 함수가 참조하는 상태나 함수의 변경을 감지하지 않습니다. 즉, 초기 렌더링 시의 값들이 고정적으로 사용되게 됩니다.
   const checkValue = useCallback(async (name, value) => {
     const result = await usersApi.checkUser();
     let isDuplicate = false;
-    // forEach 문에서는 return이나 break를 못쓴다 때문에 isDuplicate 변수를 따로 둬서 사용함
+    // forEach 문에서는 return이나 break를 못쓰기 때문에 isDuplicate 변수를 따로 둬서 사용함
     result.data.data.forEach((item) => {
       if (item[name] === value) {
         // 중복이 있을때만 설정한 변수를 true로 바꾼다

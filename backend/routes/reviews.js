@@ -8,7 +8,7 @@ router.post('/insert', reviewsController.reviewInsert);
 router.delete('/delete/:review_id', reviewsController.reviewDelete);
 // _번 게시물에 대한 리뷰 전체 조회
 router.get('/detail/:meet_id/reviewList', reviewsController.reviewList);
-// _번 게시물에 대한 _번 리뷰 조회
-router.get('/review/:meet_id/:review_id', reviewsController.review);
+// 마이페이지 해당 유저 리뷰 조회
+router.get('/review/:user_id', reviewsController.myReviewList);
 
 module.exports = router;

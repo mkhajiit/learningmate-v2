@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { commentAction } from '../../store/comment';
 import { serverDomain } from '../../config/config';
+import './styles/MyPage.css';
 
 const CourseReviewList = () => {
   const dispatch = useDispatch();
@@ -35,13 +36,13 @@ const CourseReviewList = () => {
 
   return (
     <div>
-      <h5>내가 작성한 강의 댓글 목록</h5>
+      <h5 className='subtitle'>내 강의 댓글 목록</h5>
       {commentList.length === 0 ? (
         <p>작성한 강의 댓글이 없습니다.</p>
       ) : (
-        <ul>
+        <ul className='review-list'>
           {commentList.map((review) => (
-            <li key={review.comment_id} onClick={() => handleReviewClick(review.course_id)}>
+            <li key={review.comment_id} onClick={() => handleReviewClick(review.course_id)} className='review-item'>
               {review.content}
             </li>
           ))}

@@ -44,3 +44,14 @@ exports.review = async (req, res) => {
     console.log(err);
   }
 };
+
+exports.myReviewList = async (req, res) => {
+  const { user_id } = req.params;
+  try {
+    const resp = await reviewsDAO.myReviewList(user_id);
+    res.status(resp.status).send(resp);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ status: 500, message: '내 리뷰 조회 실패', error: error.message });
+  }
+};

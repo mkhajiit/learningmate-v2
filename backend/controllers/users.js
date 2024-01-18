@@ -91,9 +91,10 @@ exports.delete = async (req, res) => {
   const userData = req.body;
   try {
     await usersDao.delete(user_id, userData, (resp) => {
-      if (resp.status === 200) {
-        req.session.userId = resp.sessionData;
-      }
+      console.log('servcie=> ', resp)
+      // if (resp.status === 200) {
+      //   req.session.userId = resp.sessionData;
+      // }
       res.send(resp);
     });
   } catch (err) {

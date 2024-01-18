@@ -18,7 +18,7 @@ const fetchAIResponse = async (prompt) => {
         },
       ],
       temperature: 0.8, // 모델의 출력 다양성
-      max_tokens: 512, // 응답받을 메시지 최대 토큰(단어) 수 설정
+      max_tokens: 1024, // 응답받을 메시지 최대 토큰(단어) 수 설정 현재:1024
       top_p: 1, // 토큰 샘플링 확률을 설정
       frequency_penalty: 0.5, // 일반적으로 나오지 않는 단어를 억제하는 정도
       presence_penalty: 0.5, // 동일한 단어나 구문이 반복되는 것을 억제하는 정도

@@ -48,7 +48,7 @@ router.get('/main-course-list', coursesController.mainCourseList);
 router.get('/course/:course_id', coursesController.course);
 // 강의 검색
 router.get('/search', coursesController.search);
-// 해당 유저가 올린 강의
+// 특정 유저가 올린 강의
 router.get('/courseList/:user_id', coursesController.myCourseList);
 
 module.exports = router;

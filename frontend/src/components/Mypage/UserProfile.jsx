@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { Col, Button } from 'react-bootstrap';
 import MyProfileEdit from './MyProfileEdit';
 import { userInfoAction } from '../../store/userInfo';
 import { serverDomain } from '../../config/config';
-import './styles/UserProfile.css';
+import './styles/MyPage.css';
 
 const UserProfile = () => {
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ const UserProfile = () => {
   return (
     <>
       {!isEditMode && (
-        <>
+        <div className='user-info-container'>
           <h5 className='user-info'>
             <span className='info-label'>닉네임 : </span>
             {userInfo.nickname}
@@ -57,9 +57,9 @@ const UserProfile = () => {
             <span className='info-label'>이메일 : </span>
             {userInfo.email}
           </h5>
-        </>
+        </div>
       )}
-      <Col xs={10} id='content'>
+      <Col>
         {isEditMode ? (
           <MyProfileEdit initialData={userInfo} onSave={handleSaveEdit} onCancel={handleCancelEdit} />
         ) : (

@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import Sidebar from '../../components/Mypage/Sidebar';
-import '../../components/Mypage/styles/Title.css';
+import '../../components/Mypage/styles/MyPage.css';
 import UserUploadedCourses from '../../components/Mypage/UserUploadedCourses';
 
 function MyCourses() {
@@ -16,9 +16,9 @@ function MyCourses() {
             <Sidebar />
           </Col>
           <Col xs={10} id='content'>
-            <h3>
+            <h3 className='subtitle'>
               {userInfo.nickname}
-              님이 업로드한 강의 목록
+              님이 올린 강의 목록
             </h3>
             <UserUploadedCourses />
           </Col>

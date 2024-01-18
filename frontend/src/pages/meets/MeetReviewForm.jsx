@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 // 리뷰 작성 모달
-// 입력 완료 버튼 누르면 꺼지고 새로고침 돼야함
 import axios from 'axios';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';

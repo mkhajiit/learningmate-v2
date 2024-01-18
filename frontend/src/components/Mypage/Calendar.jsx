@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'moment/locale/ko';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { setEvents, addEvent, updateEvent, deleteEvent } from '../../store/eventStore';
+import { setEvents } from '../../store/eventStore';
 import { serverDomain } from '../../config/config';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './styles/MyPage.css';
 
 const localizer = momentLocalizer(moment);
 
@@ -95,7 +96,7 @@ const MyCalendar = () => {
         }}
         components={{
           event: ({ event }) => (
-            <div>
+            <div className='calendar-event'>
               <strong>{event.title}</strong>
               <button onClick={handleDeleteEvent(event.id)}>삭제</button>
             </div>

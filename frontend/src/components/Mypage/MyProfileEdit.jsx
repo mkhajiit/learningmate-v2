@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -27,29 +27,37 @@ function MyProfileEdit({ initialData, onSave, onCancel }) {
   };
 
   return (
-    <div>
-      <h2>내 정보 수정하기</h2>
-      <Form>
-        <Form.Group controlId='formNickname'>
-          <Form.Label>닉네임</Form.Label>
-          <Form.Control type='text' name='nickname' value={editedData.nickname} onChange={handleChange} />
-        </Form.Group>
-        <Form.Group controlId='formPhoneNumber'>
-          <Form.Label>전화번호</Form.Label>
-          <Form.Control type='tel' name='phone_number' value={editedData.phone_number} onChange={handleChange} />
-        </Form.Group>
-        <Form.Group controlId='formEmail'>
-          <Form.Label>이메일</Form.Label>
-          <Form.Control type='email' name='email' value={editedData.email} onChange={handleChange} />
-        </Form.Group>
-        <Button variant='primary' onClick={handleSave}>
-          저장
-        </Button>
-        <Button variant='secondary' onClick={handleCancel}>
-          취소
-        </Button>
-      </Form>
-    </div>
+    <Container>
+      <Row className='justify-content-md-center'>
+        <Col xs={12} md={8} lg={6}>
+          <div className='edit-form-container'>
+            <h3 className='subtitle'>수정하기</h3>
+            <Form>
+              <Form.Group controlId='formNickname'>
+                <Form.Label className='info-label'>닉네임</Form.Label>
+                <Form.Control type='text' name='nickname' value={editedData.nickname} onChange={handleChange} />
+              </Form.Group>
+              <Form.Group controlId='formPhoneNumber'>
+                <Form.Label className='info-label'>전화번호</Form.Label>
+                <Form.Control type='tel' name='phone_number' value={editedData.phone_number} onChange={handleChange} />
+              </Form.Group>
+              <Form.Group controlId='formEmail'>
+                <Form.Label className='info-label'>이메일</Form.Label>
+                <Form.Control type='email' name='email' value={editedData.email} onChange={handleChange} />
+              </Form.Group>
+              <div className='button-group'>
+                <Button variant='primary' onClick={handleSave}>
+                  저장
+                </Button>
+                <Button variant='secondary' onClick={handleCancel}>
+                  취소
+                </Button>
+              </div>
+            </Form>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

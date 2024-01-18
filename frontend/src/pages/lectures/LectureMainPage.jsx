@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { lectureAction } from '../../store/lecture';
-import { SearchBarSection } from '../../components/LecturePage';
+import SearchBarSection from '../../components/LecturePage';
 import coursesApi from '../../services/courses';
 import LectureListContainer from '../../components/LecturePage/LectureListContainer';
 
@@ -12,7 +12,7 @@ function LectureMainPage() {
   const dispatch = useDispatch();
   const login = useSelector((state) => state.auth.isAuth);
   const [loading, setLoading] = useState(false);
-
+  // db에서 전체 강의 데이터를 가져옵니다
   const readCourses = useCallback(async () => {
     try {
       setLoading(true);

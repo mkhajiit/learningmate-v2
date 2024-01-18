@@ -30,7 +30,6 @@ function UserCreatedMeets() {
 
   return (
     <main id='main' style={{ background: 'white' }}>
-      <h3>내가 만든 모임 목록</h3>
       <section className='property-grid grid'>
         <div className='container'>
           <div className='row'>

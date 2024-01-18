@@ -1,33 +1,47 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { Col, Container, Row } from 'react-bootstrap';
+import { lectureAction } from '../../store/lecture';
+import bookmarksApi from '../../services/bookmarks';
+import LectureListContainer from '../LecturePage/LectureListContainer';
 
 function UserLikeCourses() {
-  const [userLikeCourses, setUserLikeCourses] = useState([]);
-  const auth = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state.userInfo);
+  const [loading, setLoading] = useState(false);
+
+  const fetchUserLikeCourses = useCallback(async () => {
+    try {
+      setLoading(true);
+      const resData = await bookmarksApi.getBookmarkByUserId(userInfo.userId);
+      dispatch(lectureAction.insert({ courses: resData.data[0] }));
+      console.log(resData.data[0]);
+    } catch (error) {
+      console.log('에러', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [dispatch, userInfo.userId]);
 
   useEffect(() => {
-    // 유저의 아이디 또는 다른 식별자를 사용하여 해당 유저가 좋아요한 강의들을 가져옴
-    const fetchUserLikeCourses = async () => {
-      try {
-        const response = await axios.get(`/api/userLikeCourses/${auth.userId}`);
-        setUserLikeCourses(response.data.userLikeCourses);
-      } catch (error) {
-        console.error('좋아요한 강의 가져오기 실패:', error);
-      }
-    };
-
     fetchUserLikeCourses();
-  }, [auth.userId]);
+  }, [fetchUserLikeCourses]);
 
   return (
     <div>
-      <h3>구독한 강의 목록</h3>
-      <ul>
-        {userLikeCourses.map((course) => (
-          <li key={course.courseId}>{course.courseName}</li>
-        ))}
-      </ul>
+      <Container fluid>
+        {loading ? (
+          <h1>Loading...</h1>
+        ) : (
+          <Row className='justify-content-md-center align-items-center'>
+            <Col md={10}>
+              <LectureListContainer />
+            </Col>
+          </Row>
+        )}
+      </Container>
     </div>
   );
 }

@@ -50,6 +50,7 @@ function LectureRegisterPage() {
       shouldDirty: true,
     });
   };
+
   const onSubmitEvent = useCallback(
     async (formSubmitData) => {
       try {

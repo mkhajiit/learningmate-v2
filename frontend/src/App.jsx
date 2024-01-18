@@ -4,6 +4,8 @@ import SignInPage from './pages/SignInPage';
 import Layout from './components/Layout';
 import AboutPage from './pages/AboutPage';
 import HomePage from './pages/HomePage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsServicePage from './pages/TermsServicePage';
 import MeetList from './pages/meets/MeetList';
 import MeetCategory from './pages/meets/MeetCategory';
 import MeetDetail from './pages/meets/MeetDetail';
@@ -33,9 +35,10 @@ function App() {
           <Route path='/sign-in' element={<SignInPage />} />
           <Route path='/sign-up' element={<SignUpPage />} />
           <Route path='/about' element={<AboutPage />} />
+          <Route path='/privacy-policy' element={<PrivacyPolicyPage />} />
+          <Route path='/term-service' element={<TermsServicePage />} />
           <Route path='/chat/chatRoom/:meetId/' element={<ChatRoom />} />
           <Route path='/chat/chatRoom/:meetId/channels/:channelId' element={<ChatRoom />} />
-
           {/* 중첩할때 앞에 /붙이면 에러나므로 주의할것 ex)/register(x) register(o) */}
           <Route path='/courses'>
             <Route index element={<LectureMainPage />} />

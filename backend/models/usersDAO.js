@@ -171,10 +171,11 @@ const usersDao = {
       } else {
         const password_hash = resdata[0].password_hash;
         const passwordMatch = await bcrypt.compare(password, password_hash);
+        console.log('passwordMatch=> ', passwordMatch)
         if (passwordMatch) {
           console.log('비밀번호 일치');
           await db.query(sql.sql_delete, [Number(user_id)]);
-          console.log(resdata);
+          console.log('resdata=> ', resdata);
           fn_callback({
             status: 200,
             message: '탈퇴 성공',

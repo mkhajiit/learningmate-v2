@@ -12,7 +12,11 @@ class bookmarkDAO {
   }
 
   static getBookmarksByUserId(user_id) {
-    const sql = 'SELECT course_id FROM bookmark WHERE user_id = ?';
+    const sql = `SELECT c.course_id, u.nickname, c.title, c.attach_image_path, c.view_cnt, DATE_FORMAT(c.createdAt, '%Y-%m-%d %H:%i') as createdAt
+    FROM bookmark b
+    INNER JOIN courses c ON b.course_id = c.course_id
+    INNER JOIN users u ON c.user_id = u.user_id
+    WHERE b.user_id = ?`;
     return db.query(sql, [user_id]);
   }
 }

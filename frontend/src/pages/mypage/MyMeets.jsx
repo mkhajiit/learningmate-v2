@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import Sidebar from '../../components/Mypage/Sidebar';
-import '../../components/Mypage/styles/Title.css';
+import '../../components/Mypage/styles/MyPage.css';
 import UserCreatedMeets from '../../components/Mypage/UserCreatedMeets';
 
 function MyMeets() {
@@ -16,7 +16,7 @@ function MyMeets() {
             <Sidebar />
           </Col>
           <Col xs={10} id='content'>
-            <h3>
+            <h3 className='subtitle'>
               {userInfo.nickname}
               님이 만든 모임 목록
             </h3>

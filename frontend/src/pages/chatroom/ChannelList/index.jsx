@@ -19,7 +19,6 @@ const ChannelList = (props) => {
   const getRoomData = useCallback(async () => {
     try {
       const resp = await axios.get(`${serverDomain}/chat/chatRoom/${meetId}`);
-      console.log('aaa', resp.data.data.initialRoom);
       setRoomData(resp.data.data.initialRoom);
     } catch (error) {
       console.error(error);
@@ -54,7 +53,6 @@ const ChannelList = (props) => {
 
   useEffect(() => {
     if (meetId && location.pathname) {
-      console.log('ChannelList: channelId 바꼈다 meetId:', meetId, location.pathname);
       setCountList({});
     }
   }, [meetId, location]);

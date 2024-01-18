@@ -1,5 +1,5 @@
 // 삭제된 게시글에 url로 접근하려고하면 팅겨 내버리는것 구현
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
@@ -74,6 +74,11 @@ function LectureUpdatePage() {
     },
     [navigate, course_id],
   );
+
+  useEffect(() => {
+    // 페이지가 로드될 때 스크롤을 최상단으로 이동
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Container fluid style={{ height: '100vh' }}>

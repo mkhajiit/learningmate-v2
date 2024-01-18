@@ -16,7 +16,7 @@ function SearchBarSection() {
     formState: { errors },
     reset,
   } = useForm({ mode: 'onChange' });
-
+  // db에서 검색어에 맞는 제목과 내용을 가진 데이터들을 가져오는 함수
   const fetchSearchTerm = async (submitData) => {
     try {
       const result = await axios.get(`${serverDomain}/courses/search`, {

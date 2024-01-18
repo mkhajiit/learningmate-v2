@@ -31,13 +31,24 @@ const init = {
     content: '',
     user_id: 0,
   },
+  reviewList: [],
 };
 
 // reducer 정의
 const reviewStore = (state = init, action) => {
   switch (action.type) {
     case REVIEW_DETAIL:
-      return { ...state, review: action.payload };
+      // console.log('action=> ', action.payload.review.reviewList);
+      /*
+      state => { review: {
+        reviewList: [
+          {..},
+          {..}
+        ]
+      }}
+      */
+      // return { ...state, review: action.payload };
+      return { ...state, reviewList: action.payload.review.reviewList };
     case REVIEW_CHANGE_DATA:
       return { ...state, review: { ...state.review, [action.payload.name]: action.payload.value } };
     case REVIEW_CLEAR_DATA:
