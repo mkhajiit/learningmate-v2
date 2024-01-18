@@ -31,6 +31,7 @@ const UserProfile = () => {
           nickname: editedData.nickname,
           email: editedData.email,
           phone_number: editedData.phone_number,
+          profilePath: editedData.profilePath,
         }),
       );
       setIsEditMode(false);
