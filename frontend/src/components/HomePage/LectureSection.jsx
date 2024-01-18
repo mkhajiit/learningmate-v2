@@ -1,4 +1,5 @@
 /* eslint-disable import/no-unresolved */
+// 홈페이지에 강의정보를 swiper로 띄우는 컴포넌트
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -7,19 +8,16 @@ import './styles.css';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Container } from 'react-bootstrap';
 import { useCallback, useEffect, useState } from 'react';
-import axios from 'axios';
 import CardForSwiper from './CardForSwiper';
-import { localDomain } from '../../config/config';
+import coursesApi from '../../services/courses';
 
 export default function CourseSection() {
   const [dataList, setDataList] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  // const img = `${process.env.PUBLIC_URL}/img/lectureImg.jpg`;
   const fetchData = useCallback(async () => {
     try {
       // 메인페이지 강의정보에서 카드로 띄울 데이터를 9개만 가져오는 api
-      const resp = await axios.get(`${localDomain}/courses/main-course-list`);
-      console.log(resp.data.data);
+      const resp = await coursesApi.getMainCourseList();
       setDataList(resp.data.data);
     } catch (error) {
       console.log(error);

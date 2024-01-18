@@ -20,9 +20,9 @@ const Sidebar = () => {
       <Nav.Link href='/like-courses' className='sidebar-link'>
         내 강의 모아보기
       </Nav.Link>
-      <Nav.Link href='/waiting-meets' className='sidebar-link'>
+      {/* <Nav.Link href='/waiting-meets' className='sidebar-link'>
         대기 중인 모임 보기
-      </Nav.Link>
+      </Nav.Link> */}
       <Nav.Link href='/my-meets' className='sidebar-link'>
         내가 만든 모임 보기
       </Nav.Link>

@@ -1,128 +1,129 @@
 /* eslint-disable no-console */
 /* eslint-disable no-alert */
 // 모임 생성
-// 24.01.04 ~
-// - onoff, approve는 0, 1 값 받기(완료)
-// - 최대 참여 인원 음수로 안 가게 설정하기(완료), 최대 인원도 제한 하면 좋을 듯
-// - 제목, 내용 글자수 제한 두기 - 완료
-// - 종료날짜가 시작날짜 뒤로 가지 않게 하기 - 완료
-// 24.01.08 ~
-// - 모임 생성 안 됨 - 완료
-// - 오프라인 체크하면 위치 작성 뜨게 하기 - 완료
-// - 로그인 정보가 안 가져와짐 - 완료
-// - 최대 참여 인원만큼 참여자 수 제한해야함
-// - 하나라도 작성 안 하면 생성 안 되게
-// - 이미지 기능 다시
-// - meets 사진도 public - users에 넣기
 import axios from 'axios';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { localDomain } from '../../config/config';
+import { Button } from 'react-bootstrap';
+import { serverDomain } from '../../config/config';
 import { changeData, clearData, setDates } from '../../store/meetStore';
 import LandingModal from '../../components/maps/LandingModal';
 
 function MeetInsert() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { meet } = useSelector((state) => state.meetStore);
+  const user_id = useSelector((state) => state.userInfo.userId);
   // 위치선택 버튼으로 선택한 위치는 position에 위도와 경도가 저장됩니다
   const position = useSelector((state) => state.position);
-  const { meet } = useSelector((state) => state.meetStore);
-  const userInfo = useSelector((state) => state.userInfo);
-  const auth = useSelector((state) => state.auth.isAuth);
-  // const { register } = useForm({ defaultValues: {}, mode: 'onBlur' });
   const categories = ['게임', '요리', '운동', '여행', '취미', '문화예술']; // 카테고리 생성
-
-  const [data, setData] = useState({ user_id: '', nickname: '' });
-  const [isloading, setLoading] = useState(true);
+  const imageRef = useRef();
   const [isOffline, setOffline] = useState(false);
+  const [selectedImageFileName, setSelectedImageFileName] = useState('');
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({ defaultValues: {}, mode: 'onBlur' });
 
-  const getData = useCallback(async () => {
-    try {
-      const resp = await axios.get(`${localDomain}/users/userinfo`, {
-        withCredentials: true,
+  const handleImageFileChange = (event) => {
+    if (event.target.files[0]) {
+      const fileName = event.target.files[0].name;
+      setSelectedImageFileName(fileName);
+      setValue('meetImage', event.target.files[0], {
+        shouldValidate: true,
+        shouldTouch: true,
+        shouldDirty: true,
       });
-      if (resp.data.data === false) {
-        window.alert('불러오기 실패');
-      } else {
-        const userData = resp.data.data[0];
-        setData((currentData) => ({
-          ...currentData,
-          ...userData,
-          user_id: userInfo.userId,
-        }));
-        dispatch(changeData({ target: { name: 'user_id', value: userInfo.userId } }));
-      }
-    } catch (err) {
-      console.error('Error fetching user info:', err);
-    } finally {
-      setLoading(false);
+    } else {
+      const fileName = '';
+      setSelectedImageFileName(fileName);
     }
-  }, [dispatch, userInfo]);
-
-  // console.log(userInfo.userId);
+  };
 
   const insertMeet = useCallback(
     async (evt) => {
       evt.preventDefault();
 
-      const sendData = {
+      // 필수 입력 항목 체크
+      if (
+        !meet.title ||
+        !meet.content ||
+        !meet.start_date ||
+        !meet.end_date ||
+        !meet.max_num ||
+        meet.onoff === null ||
+        !meet.category
+      ) {
+        window.alert('필수 입력 항목을 모두 작성해주세요.');
+        return;
+      }
+
+      const {
+        files: [imageFile],
+      } = document.querySelector('input[name="meetImage"]');
+
+      // 이미지 파일이 선택된 경우에만 FormData 생성
+      const imageFormData = new FormData();
+      if (imageFile) {
+        imageFormData.append('meetImage', imageFile);
+      }
+
+      const meetData = {
         title: meet.title,
         content: meet.content,
         start_date: meet.start_date,
         end_date: meet.end_date,
         max_num: meet.max_num,
         onoff: meet.onoff === '온라인' ? 1 : 0,
-        image: meet.image,
         category: meet.category,
-        approve: meet.approve === '승인 후 참가' ? 1 : 0,
-        user_id: data.user_id,
+        user_id,
         position,
       };
+
+      if (imageFile) {
+        meetData.meetImage = imageFile;
+      }
+
+      // meetImage가 null일 경우
+      if (!meetData.meetImage) {
+        console.log('meetImage 값:', meetData.meetImage);
+        window.alert('이미지를 선택해주세요.');
+        return;
+      }
+
       try {
-        const response = await axios.post(`${localDomain}/meets/insert/`, sendData, { withCredentials: true });
-        console.log('Server Response:', response.data); // 서버 응답을 콘솔에 출력
+        await axios.post(`${serverDomain}/meets/insert`, meetData, {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
         navigate(`../meets`);
       } catch (error) {
         console.error(error);
       }
     },
-    [meet, data, navigate],
+    [meet, navigate],
   );
-
-  // 없애도 됨
-  useEffect(() => {
-    if (!auth) {
-      navigate('/sign-in');
-    } else {
-      getData();
-    }
-  }, [auth, getData, navigate]);
-
-  useEffect(() => {
-    if (auth) {
-      getData();
-    }
-  }, [auth, getData]);
 
   useEffect(() => {
     dispatch(clearData());
   }, [dispatch]);
-
-  if (isloading) {
-    return <div>Loading....</div>;
-  }
 
   return (
     <main id='main' style={{ background: 'white' }}>
       <section className='property-grid grid'>
         <div className='container'>
           <div className='row'>
-            <form className='col-sm-12'>
+            <form className='col-sm-12' onSubmit={handleSubmit(insertMeet)}>
               <table className='table'>
                 <tbody>
                   <tr>
-                    <td>제목</td>
+                    <td>제목 *</td>
                     <td>
                       <input
                         type='text'
@@ -136,7 +137,7 @@ function MeetInsert() {
                     </td>
                   </tr>
                   <tr>
-                    <td>내용</td>
+                    <td>내용 *</td>
                     <td>
                       <textarea
                         cols='80'
@@ -151,7 +152,7 @@ function MeetInsert() {
                     </td>
                   </tr>
                   <tr>
-                    <td>일정</td>
+                    <td>일정 *</td>
                     <td>
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         <input
@@ -201,11 +202,7 @@ function MeetInsert() {
                     </td>
                   </tr>
                   <tr>
-                    <td>생성자</td>
-                    <td>{data.nickname}</td>
-                  </tr>
-                  <tr>
-                    <td>온오프라인</td>
+                    <td>온오프라인 *</td>
                     <td>
                       <div className='form-check form-check-inline'>
                         <input
@@ -243,11 +240,35 @@ function MeetInsert() {
                     </td>
                   </tr>
                   <tr>
-                    <td>관련 이미지</td>
-                    <td>{/* <ImageUpload /> */}</td>
+                    <td>관련 이미지 *</td>
+                    <td>
+                      <input
+                        type='file'
+                        className='form-control'
+                        id='meetImage'
+                        name='meetImage'
+                        accept='image/*'
+                        {...register('meetImage', { required: true })}
+                        ref={imageRef}
+                        style={{ display: 'none' }}
+                        onChange={handleImageFileChange}
+                      />
+                      <Button
+                        variant='success'
+                        size='sm'
+                        onClick={() => {
+                          imageRef.current.click();
+                        }}
+                      >
+                        이미지선택
+                      </Button>{' '}
+                      {selectedImageFileName && (
+                        <p style={{ display: 'inline-block', marginLeft: '10px' }}>{selectedImageFileName}</p>
+                      )}
+                    </td>
                   </tr>
                   <tr>
-                    <td>카테고리 선택</td>
+                    <td>카테고리 선택 *</td>
                     <td>
                       <select
                         className='form-select'
@@ -262,33 +283,6 @@ function MeetInsert() {
                           </option>
                         ))}
                       </select>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>승인 허가 여부</td>
-                    <td>
-                      <div className='form-check form-check-inline'>
-                        <input
-                          type='radio'
-                          className='form-check-input'
-                          name='approve'
-                          value='승인 후 참가'
-                          checked={meet.approve === '승인 후 참가'}
-                          onChange={(evt) => dispatch(changeData(evt))}
-                        />
-                        <label className='form-check-label'>승인 후 참가</label>
-                      </div>
-                      <div className='form-check form-check-inline'>
-                        <input
-                          type='radio'
-                          className='form-check-input'
-                          name='approve'
-                          value='자유 참가'
-                          checked={meet.approve === '자유 참가'}
-                          onChange={(evt) => dispatch(changeData(evt))}
-                        />
-                        <label className='form-check-label'>자유 참가</label>
-                      </div>
                     </td>
                   </tr>
                   <tr>

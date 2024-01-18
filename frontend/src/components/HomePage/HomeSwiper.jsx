@@ -23,16 +23,16 @@ export default function App() {
           className='mySwiper'
         >
           <SwiperSlide>
-            <img src={`${process.env.PUBLIC_URL}/img/lectureImg.jpg`} alt='exampleImage3.jpg'></img>
+            <img src={`${process.env.PUBLIC_URL}/img/학생들.jpg`} alt='exampleImage3.jpg'></img>
           </SwiperSlide>
           <SwiperSlide>
-            <img src={`${process.env.PUBLIC_URL}/img/Hani.jpg`} alt='exampleImage2.jpg'></img>
+            <img src={`${process.env.PUBLIC_URL}/img/lecture-278583_1280.jpg`} alt='exampleImage2.jpg'></img>
           </SwiperSlide>
           <SwiperSlide>
             <img src={`${process.env.PUBLIC_URL}/img/party01.jpg`} alt='exampleImage3.jpg'></img>
           </SwiperSlide>
           <SwiperSlide>
-            <img src={`${process.env.PUBLIC_URL}/img/lectureImg.jpg`} alt='exampleImage3.jpg'></img>
+            <img src={`${process.env.PUBLIC_URL}/img/video-conference-6077159_1280.jpg`} alt='exampleImage3.jpg'></img>
           </SwiperSlide>
         </Swiper>
       </Container>

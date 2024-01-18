@@ -1,7 +1,7 @@
 const db = require('../src/database');
 
 const sql = {
-  courseList: `SELECT c.course_id, u.nickname, title, attach_image_path, view_cnt, DATE_FORMAT(c.createdAt, '%Y-%m-%d %H:%i') as createdAt
+  courseList: `SELECT c.course_id, u.nickname, u.profile_name, title, attach_image_path, view_cnt, DATE_FORMAT(c.createdAt, '%Y-%m-%d %H:%i') as createdAt
                FROM users u INNER JOIN courses c ON u.user_id = c.user_id
                ORDER BY c.course_id DESC;`, // 강의번호로 내림차순 (GROUP BY c.course_id 해야하나?)
 
@@ -10,7 +10,7 @@ const sql = {
                 ORDER BY c.course_id DESC
                 LIMIT 9;`,
 
-  course: `SELECT c.user_id, c.course_id, u.nickname, title, content, category, attach_file_path, attach_file_name, attach_image_path, view_cnt, DATE_FORMAT(c.createdAt, '%Y-%m-%d') as createdAt
+  course: `SELECT c.user_id, c.course_id, u.nickname, u.profile_name, title, content, category, attach_file_path, attach_file_name, attach_image_path, view_cnt, DATE_FORMAT(c.createdAt, '%Y-%m-%d %H:%i') as createdAt
             FROM users u INNER JOIN courses c ON u.user_id = c.user_id
             WHERE c.course_id = ?;`, // 특정 강의 상세조회
 
@@ -22,11 +22,12 @@ const sql = {
 
   delete: 'DELETE FROM courses WHERE course_id = ?',
 
-  search: `SELECT c.course_id, u.nickname, title, attach_image_path, view_cnt, DATE_FORMAT(c.createdAt, '%Y-%m-%d %H:%i') as createdAt
+  search: `SELECT c.course_id, u.nickname, u.profile_name, title, attach_image_path, view_cnt, DATE_FORMAT(c.createdAt, '%Y-%m-%d %H:%i') as createdAt
            FROM users u INNER JOIN courses c ON u.user_id = c.user_id
            WHERE title LIKE CONCAT('%', ?, '%') OR content LIKE CONCAT('%', ?, '%');`,
 
   increase_view: `UPDATE courses SET view_cnt = view_cnt + 1 WHERE course_id = ?`,
+  myCourseList: 'SELECT * FROM courses WHERE user_id = ?',
 };
 
 const coursesDAO = {
@@ -102,6 +103,7 @@ const coursesDAO = {
   },
 
   update: async (item, videoPath, videoName, imagePath, callback) => {
+    console.log(item.content);
     try {
       const resp = await db.query(sql.update, [
         item.title,
@@ -141,10 +143,21 @@ const coursesDAO = {
   search: async (term, callback) => {
     try {
       const [resp] = await db.query(sql.search, [term, term]);
+      console.log(resp);
       callback({ status: 200, message: '검색성공', data: resp });
     } catch (error) {
       console.log(error);
       callback({ status: 500, message: '검색실패', error: error });
+    }
+  },
+
+  myCourseList: async (user_id) => {
+    try {
+      const [rows, fields] = await db.query(sql.myCourseList, [user_id]);
+      return { status: 200, data: rows };
+    } catch (error) {
+      console.error('내 강의 불러오기 중 에러 발생:', error);
+      return { status: 500, message: '내 강의 불러오기 실패', error: error.message };
     }
   },
 };

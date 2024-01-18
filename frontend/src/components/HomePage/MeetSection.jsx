@@ -1,15 +1,29 @@
 /* eslint-disable import/no-unresolved */
+import { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import './styles.css';
-
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Container } from 'react-bootstrap';
-import CardForSwiper from './CardForSwiper';
+import { serverDomain } from '../../config/config';
+import CardForMeetSwiper from './CardForMeetSwiper';
 
 export default function MeetSection() {
-  const img = `${process.env.PUBLIC_URL}/img/Hani.jpg`;
+  const location = useSelector((state) => state.location);
+  const [response, setResponse] = useState('');
+  const fetchData = useCallback(async () => {
+    const resp = await axios.post(`${serverDomain}/meets/find-nearby-meetup`, location);
+    // 뒤에서 10개의 정보만 사용합니다
+    const sliceResp = resp.data.data.slice(-10);
+    setResponse(sliceResp);
+  }, [location]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
   return (
     <>
       <Container style={{ height: '300px' }}>
@@ -26,34 +40,12 @@ export default function MeetSection() {
           modules={[Autoplay, Pagination]}
           className='mySwiper'
         >
-          {/* 슬라이드 내용에 통신으로 meet에서 가져온 객체를 프롭으로 보낸다 */}
-          <SwiperSlide>
-            <CardForSwiper item={img} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CardForSwiper item={img} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CardForSwiper item={img} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CardForSwiper item={img} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CardForSwiper item={img} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CardForSwiper item={img} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CardForSwiper item={img} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CardForSwiper item={img} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CardForSwiper item={img} />
-          </SwiperSlide>
+          {response &&
+            response.map((item, index) => (
+              <SwiperSlide key={index}>
+                <CardForMeetSwiper item={item} />
+              </SwiperSlide>
+            ))}
         </Swiper>
       </Container>
     </>

@@ -5,6 +5,7 @@ const MEET_DETAIL = 'MEET_DETAIL'; // 게시물 상세 정보
 const MEET_CHANGE_DATA = 'MEET_CHANGE_DATA'; // 게시물 데이터 수정
 const MEET_CLEAR_DATA = 'MEET_CLEAR_DATA'; // 게시물 데이터 초기화
 const MEET_SET_DATES = 'MEET_SET_DATES'; // 날짜 설정
+const UPDATE_MEET = 'UPDATE_MEET';
 
 // 액션 생성자 정의
 export const getMeetAction = (data) => ({ type: MEET_DETAIL, payload: data });
@@ -27,6 +28,11 @@ export const setDates = (start_date, end_date) => ({
 
 export const clearData = () => ({ type: MEET_CLEAR_DATA });
 
+export const updateMeetAction = (updatedMeet) => ({
+  type: UPDATE_MEET,
+  payload: updatedMeet,
+});
+
 // 초기 상태 정의 initialState
 const init = {
   meet: {
@@ -41,7 +47,6 @@ const init = {
     onoff: '',
     image: '',
     category: '',
-    approve: '',
     createdAt: '',
   },
 };
@@ -63,24 +68,11 @@ const meetStore = (state = init, action) => {
         },
       };
     case MEET_CLEAR_DATA:
-      return {
-        ...state,
-        meet: {
-          meet_id: '',
-          nickname: '',
-          email: '',
-          title: '',
-          content: '',
-          start_date: '',
-          end_date: '',
-          max_num: '',
-          onoff: '',
-          image: '',
-          category: '',
-          approve: '',
-          createdAt: '',
-        },
-      };
+      return init;
+
+    case UPDATE_MEET:
+      return { ...state, meet: action.payload };
+
     default:
       return state;
   }

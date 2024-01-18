@@ -1,4 +1,5 @@
-// 추가할 기능: 검색결과 ui목록 구현
+// 카카오맵으로 위치선택해서 위치정보를 얻는 화면
+// 추가할 기능: 검색결과 ui목록 구현(프로젝트 끝나고 나중에)
 import { useState } from 'react';
 import { Button, Container, Form, InputGroup } from 'react-bootstrap';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
@@ -9,7 +10,6 @@ function SearchLocationSection() {
   const dispatch = useDispatch();
   const [keyword, setKeyword] = useState('');
   const [markers, setMarkers] = useState([]);
-  // position을 axios통신으로 저장하시면 마우스로 찍은게 저장이됩니다.
   const position = useSelector((state) => state.position);
   const [map, setMap] = useState(false);
   const [info, setInfo] = useState(null);
@@ -48,18 +48,15 @@ function SearchLocationSection() {
     });
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault(); // 기본 폼 제출 동작 막기
+  const handleFormSubmit = () => {
     searchLocation();
   };
 
   const onClickHandlerMarker = (marker) => {
-    // 더블클릭하면 맵중앙으로 마커이동
     const moveLatLon = new window.kakao.maps.LatLng(marker.position.lat, marker.position.lng);
     map.panTo(moveLatLon);
 
-    setInfo(marker); // setInfo 함수 호출
-    // marker.position.lat이 숫자가아니기 때문에 toFixed(6)를 쓰기위해서는 숫자화를 해줘야함
+    setInfo(marker);
     dispatch(
       positionAction.setPosition({
         lat: Number(marker.position.lat).toFixed(6),
@@ -67,11 +64,6 @@ function SearchLocationSection() {
       }),
     );
   };
-  // useEffect(() => {
-  //   console.log('내 위도:', reduxLat);
-  //   console.log('내 경도:', reduxLng);
-  //   console.log('저장할 위치정보:', position);
-  // }, [reduxLat, reduxLng, position]);
   return (
     <Container>
       {/* mx-auto: 중앙정렬 */}
@@ -97,38 +89,42 @@ function SearchLocationSection() {
           onCreate={setMap}
           disableDoubleClickZoom={true} // 더블클릭 확대 끔
           // 클릭한 위치의 위도 경도를 받는 이벤트 소수점6자리까지만 받는다 mouseEvent.latLng.getLat()는 숫자라 따로 변환안해도 된다
-          onClick={
-            (_t, mouseEvent) =>
-              dispatch(
-                positionAction.setPosition({
-                  lat: mouseEvent.latLng.getLat().toFixed(6),
-                  lng: mouseEvent.latLng.getLng().toFixed(6),
-                }),
-              )
-            // setPosition((current) => ({
-            //   ...current,
-            //   lat: mouseEvent.latLng.getLat().toFixed(6),
-            //   lng: mouseEvent.latLng.getLng().toFixed(6),
-            // }))
+          onClick={(_t, mouseEvent) =>
+            dispatch(
+              positionAction.setPosition({
+                lat: mouseEvent.latLng.getLat().toFixed(6),
+                lng: mouseEvent.latLng.getLng().toFixed(6),
+              }),
+            )
           }
         >
           {/* 내위치 마커 생성 */}
           <MapMarker
             position={{ lat: reduxLat, lng: reduxLng }}
             // 내위치마커를 클릭해도 위치가 저장이 된다
-            onClick={
-              () => dispatch(positionAction.setPosition({ lat: reduxLat.toFixed(6), lng: reduxLng.toFixed(6) }))
-              // setPosition((current) => ({
-              //   ...current,
-              //   lat: reduxLat.toFixed(6),
-              //   lng: reduxLng.toFixed(6),
-              // }))
-            }
+            onClick={() => dispatch(positionAction.setPosition({ lat: reduxLat.toFixed(6), lng: reduxLng.toFixed(6) }))}
           >
             <div style={{ color: '#000', textAlign: 'center' }}>내위치</div>
           </MapMarker>
           {/* 클릭으로 마커 생성 */}
-          {position && <MapMarker position={position} />}
+          {position && (
+            <MapMarker
+              position={position}
+              image={{
+                src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
+                size: {
+                  width: 64,
+                  height: 69,
+                },
+                options: {
+                  offset: {
+                    x: 27,
+                    y: 69,
+                  }, // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+                },
+              }}
+            />
+          )}
           {/* 키워드 검색으로 주변 마커 생성 */}
           {markers.map((marker) => (
             <MapMarker
@@ -141,7 +137,7 @@ function SearchLocationSection() {
           ))}
         </Map>
       </Container>
-      {position && <p>{`클릭한 위치의 위도는 ${position.lat}이고, 경도는 ${position.lng} 입니다`}</p>}
+      {/* {position && <p>{`클릭한 위치의 위도는 ${position.lat}이고, 경도는 ${position.lng} 입니다`}</p>} */}
       <h3>원하는 장소를 지도에 클릭하세요</h3>
     </Container>
   );

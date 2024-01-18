@@ -3,8 +3,9 @@ import { Button, Container, InputGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
-import axios from 'axios';
+import gravatar from 'gravatar';
 import { commentAction } from '../../../store/comment';
+import commentsApi from '../../../services/comments';
 
 function LectureCommentInput() {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ function LectureCommentInput() {
     async (formData) => {
       try {
         const submitData = { comment: formData.comment, user_id: userInfo.userId, course_id };
-        const result = await axios.post('http://localhost:8000/comments/insert', submitData);
+        const result = await commentsApi.insertComment(submitData);
         dispatch(
           commentAction.insert({
             commentList: result.data.data,
@@ -35,9 +36,13 @@ function LectureCommentInput() {
   );
   return (
     <Container>
-      <div className='d-flex align-items-center'>
-        <div className='flex-shrink-0'>
-          <img src={userInfo.profilePath} alt={`default.png`} style={{ width: '70px' }} />
+      <div className='d-flex align-items-center mt-4 mx-2'>
+        <div className='flex-shrink-0 mt-2 mx-1'>
+          <img
+            src={userInfo.profilePath || gravatar.url(userInfo.nickname, { s: '70', d: 'retro' })}
+            alt={`default.png`}
+            style={{ width: '70px', height: '70px', borderRadius: '35px' }}
+          />
         </div>
         <div className='flex-grow-1 ms-3'>
           <h4>{userInfo.nickname}</h4>

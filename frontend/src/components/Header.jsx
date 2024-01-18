@@ -12,7 +12,7 @@ function Header() {
   };
   return (
     <nav className='navbar navbar-expand-lg bg-body-tertiary'>
-      <div className='container-fluid'>
+      <div className='container-fluid mx-5'>
         <Navbar.Brand href='/'>
           <img
             alt=''
@@ -33,41 +33,41 @@ function Header() {
         >
           <span className='navbar-toggler-icon'></span>
         </button>
-        <div className='collapse navbar-collapse' id='navbarColor04'>
+        <div className='collapse navbar-collapse mx-5' id='navbarColor04'>
           <ul className='navbar-nav me-auto'>
-            <li className='nav-item'>
+            <li className='nav-item mx-3'>
               <Link className='nav-link' to='/'>
                 Home
                 <span className='visually-hidden'>(current)</span>
               </Link>
             </li>
-            <li className='nav-item'>
+            {/* <li className='nav-item'>
               <Link className='nav-link' to='/'>
                 검색
                 <span className='visually-hidden'>(current)</span>
               </Link>
-            </li>
-            <li className='nav-item'>
-              <Link className='nav-link' to='/meets'>
+            </li> */}
+            <li className='nav-item mx-3'>
+              <Link className='nav-link' to='/meetcategory'>
                 모임
                 <span className='visually-hidden'>(current)</span>
               </Link>
             </li>
-            <li className='nav-item'>
+            <li className='nav-item mx-3'>
               <Link className='nav-link' to='/courses'>
                 강의
                 <span className='visually-hidden'>(current)</span>
               </Link>
             </li>
             {!auth ? (
-              <li className='nav-item'>
+              <li className='nav-item mx-3'>
                 <Link className='nav-link' to='/sign-up'>
                   회원가입
                   <span className='visually-hidden'>(current)</span>
                 </Link>
               </li>
             ) : (
-              <li className='nav-item'>
+              <li className='nav-item mx-3'>
                 <Link className='nav-link' to='/mypage'>
                   마이페이지
                   <span className='visually-hidden'>(current)</span>
@@ -75,7 +75,7 @@ function Header() {
               </li>
             )}
           </ul>
-          <form className='d-flex'>
+          <form className='d-flex mx-4'>
             {!auth ? (
               <button className='btn btn-secondary my-2 my-sm-0' type='button' onClick={handleLoginClick}>
                 로그인
