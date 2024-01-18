@@ -32,8 +32,10 @@ export default function LectureMainPageDetail() {
         dispatch(
           lectureDetailAction.insert({
             title: resp.data.data[0].title,
-            content: resp.data.data[0].content.split('\n').map((line) => {
-              return `${line}\n`; // 줄 바꿈 문자를 추가하여 문자열로 변환
+            content: resp.data.data[0].content.split('\n').map((line, index, array) => {
+              const isLastElement = index === array.length - 1; // 배열의 마지막 요소인지 확인
+              // 마지막 요소가 아니면 줄 바꿈 문자를 추가하고, 마지막 요소면 그대로 반환
+              return isLastElement ? line : `${line}\n`;
             }),
             userId: resp.data.data[0].user_id,
             registerNickname: resp.data.data[0].nickname,
