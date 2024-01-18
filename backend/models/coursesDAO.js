@@ -69,7 +69,7 @@ const coursesDAO = {
         // 작성자가 아니면 조회수 1증가
         if (Number(user_id) !== resp[0][0].user_id) {
           await db.query(sql.increase_view, [id]);
-          console.log('조회수증가');
+          // console.log('조회수증가');
         }
         callback({
           status: 200,
