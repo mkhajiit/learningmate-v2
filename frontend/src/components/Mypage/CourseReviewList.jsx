@@ -18,7 +18,6 @@ const CourseReviewList = () => {
       setLoading(true);
       const response = await axios.get(`${serverDomain}/comments/my-comment-list/${userInfo.userId}`);
       dispatch(commentAction.insert({ commentList: response.data.data }));
-      console.log(response.data);
     } catch (error) {
       console.error('Error fetching reviews:', error);
     } finally {

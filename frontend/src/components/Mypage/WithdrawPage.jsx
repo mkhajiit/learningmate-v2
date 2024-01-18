@@ -33,7 +33,6 @@ function WithdrawPage() {
         withCredentials: true,
         data: { password: data.password, user_id: userInfo.userId },
       });
-      console.log('Server Response:', result); // 디버깅 확인
       if (result.data.status === 200) {
         window.alert('탈퇴 요청이 성공적으로 처리되었습니다. 안녕히가세요.');
         logoutUser();

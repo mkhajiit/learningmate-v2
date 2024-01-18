@@ -20,7 +20,6 @@ function UserCreatedMeets() {
 
   const fetchUserCreatedMeets = useCallback(async (no = 1, size = 10) => {
     const resp = await axios.get(`${serverDomain}/meets/meetList/${userInfo.userId}`, { params: { no, size } });
-    console.log(resp.data);
     setUserCreatedMeets(resp.data);
   }, []);
 

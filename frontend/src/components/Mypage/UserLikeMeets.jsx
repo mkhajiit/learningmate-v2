@@ -22,7 +22,6 @@ function UserLikeMeets() {
     async (no = 1, size = 10) => {
       try {
         const resp = await axios.get(`${localDomain}/likebutton/list/${userInfo.userId}`, { params: { no, size } });
-        console.log(resp.data[0]);
         setUserLikeMeets({
           ...userLikeMeets,
           data: resp.data[0] || [], // 데이터가 없을 경우 빈 배열로 설정

@@ -17,7 +17,6 @@ function UserLikeCourses() {
       setLoading(true);
       const resData = await bookmarksApi.getBookmarkByUserId(userInfo.userId);
       dispatch(lectureAction.insert({ courses: resData.data[0] }));
-      console.log(resData.data[0]);
     } catch (error) {
       console.log('에러', error);
     } finally {

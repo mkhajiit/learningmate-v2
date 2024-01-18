@@ -18,7 +18,6 @@ function UserUploadedCourses() {
       setLoading(true);
       const resData = await coursesApi.myCourseList(userInfo.userId);
       dispatch(lectureAction.insert({ courses: resData.data.data }));
-      console.log(resData.data.data);
     } catch (error) {
       console.log('에러', error);
     } finally {

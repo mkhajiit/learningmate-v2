@@ -11,7 +11,6 @@ const UserProfile = () => {
   const dispatch = useDispatch();
   const [isEditMode, setIsEditMode] = useState(false);
   const userInfo = useSelector((state) => state.userInfo);
-  console.log(userInfo);
 
   const handleEditClick = () => {
     setIsEditMode(true);
@@ -21,7 +20,6 @@ const UserProfile = () => {
     setIsEditMode(false);
   };
 
-  console.log(userInfo);
   const handleSaveEdit = async (editedData) => {
     try {
       // 수정된 데이터를 서버에 전송하는 API 호출

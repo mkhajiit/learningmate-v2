@@ -15,13 +15,11 @@ const MyCalendar = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.userInfo);
   const events = useSelector((state) => state.events);
-  console.log(events);
 
   const fetchEvents = async () => {
     try {
       const response = await axios.get(`${serverDomain}/events/getEvents/${userInfo.userId}`);
       dispatch(setEvents(response.data.data));
-      console.log(response.data);
     } catch (error) {
       console.error('Error fetching events:', error);
     }
@@ -44,7 +42,6 @@ const MyCalendar = () => {
         });
         // Redux 상태 업데이트
         await fetchEvents();
-        console.log(events);
       } catch (error) {
         console.error('Error adding new event:', error);
       }
