@@ -25,7 +25,6 @@ export const get = async (url, options = {}) => {
 };
 
 export const post = async (url, data, options = {}) => {
-  console.log(url, data);
   return fetcher(url, {
     method: 'post',
     data,
