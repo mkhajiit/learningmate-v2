@@ -10,6 +10,7 @@ import { Button } from 'react-bootstrap';
 import { serverDomain } from '../../config/config';
 import { changeData, clearData, setDates } from '../../store/meetStore';
 import LandingModal from '../../components/maps/LandingModal';
+import { positionAction } from '../../store/location';
 
 function MeetInsert() {
   const navigate = useNavigate();
@@ -107,10 +108,11 @@ function MeetInsert() {
         console.error(error);
       }
     },
-    [meet, navigate],
+    [meet, navigate, position, user_id],
   );
 
   useEffect(() => {
+    dispatch(positionAction.setPosition({ lat: 0, lng: 0 }));
     dispatch(clearData());
   }, [dispatch]);
 
