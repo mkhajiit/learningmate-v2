@@ -58,7 +58,6 @@ const ChannelList = (props) => {
   }, [meetId, location]);
 
   const onMessage = (data) => {
-    console.log('message 왔다', data);
     // 새로운 메시지가 도착할 때 화면을 갱신하는 로직 추가
     getChatData();
   };
@@ -106,7 +105,6 @@ const ChannelList = (props) => {
       try {
         const response = await axios.get(`${serverDomain}/chat/chatRoom/${meetId}/channels/${channel.channel_id}}`);
         const chatRoomData = response.data.data.channelRoom;
-        console.log('ddddd', chatRoomData);
         setRoomData(chatRoomData);
         onChannelClick(channel);
       } catch (error) {
@@ -184,12 +182,10 @@ const ChannelList = (props) => {
         show={showCreateChannelModal}
         onCloseModal={closeCreateChannelModal}
         onChannelCreated={(newChannel) => {
-          console.log('New Channel Created:', newChannel);
-
           // 서버 응답에서 직접 값을 추출
           const { channel_id, description } = newChannel || {};
 
-          console.log('Channel Info from Server:', { channel_id, description });
+          // console.log('Channel Info from Server:', { channel_id, description });
 
           // 서버 응답에서 직접 값을 추출하여 UI 업데이트 등을 진행
           // 예를 들어, channel_id 및 description 등을 활용
