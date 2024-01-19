@@ -32,9 +32,7 @@ export default function LectureMainPageDetail() {
         dispatch(
           lectureDetailAction.insert({
             title: resp.data.data[0].title,
-            content: resp.data.data[0].content.split('\n').map((line) => {
-              return `${line}\n`; // 줄 바꿈 문자를 추가하여 문자열로 변환
-            }),
+            content: resp.data.data[0].content,
             userId: resp.data.data[0].user_id,
             registerNickname: resp.data.data[0].nickname,
             videoPath: resp.data.data[0].attach_file_path,

@@ -37,7 +37,6 @@ exports.courseInsert = async (req, res) => {
 
 exports.courseUpdate = async (req, res) => {
   const courseData = JSON.parse(req.body.data);
-  console.log(courseData);
   const videoPath = req.files['lectureVideo'][0]
     ? `${videoUploadPath}/${req.files['lectureVideo'][0].filename}`
     : '';

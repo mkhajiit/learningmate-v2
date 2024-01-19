@@ -1,5 +1,5 @@
 import { useParams } from 'react-router';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import gravatar from 'gravatar';
 import { useSelector } from 'react-redux';
@@ -84,8 +84,12 @@ function LectureDetailSection({ lectureInfo }) {
           조회수:{lectureInfo.views} 등록일:{lectureDetail.createdAt}
         </h4>
         {/* dispatch때 문자열로 저장한 content 문자열을 <div>로 나눠서 하나씩 출력하면 줄바꿈이 적용되어서 화면에 나옴 */}
-        {content.map((line, index) => (
-          <div key={index}>{line}</div>
+        {content.split('\n').map((line, index, array) => (
+          <React.Fragment key={index}>
+            {line}
+            {/* 마지막줄에는 줄바꿈문자를 넣지 않는다. */}
+            {index !== array.length - 1 && <br />}
+          </React.Fragment>
         ))}
       </Container>
     </>
