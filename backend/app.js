@@ -28,6 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 //origin: 클라이언트의 주소 , 다른 포트로 쿠키를 보낼때는 cors 옵션에  credentials: true 추가해야함
+//배포용 CORS 코드
 // app.use(
 //     cors({
 //         origin: `https://web-learningmate-5r422alqajqbni.sel4.cloudtype.app`,
@@ -35,6 +36,7 @@ app.use(cookieParser());
 //     })
 // );
 
+//로컬용 CORS 코드
 app.use(
   cors({
     origin: ['http://localhost:3001', 'http://localhost:3000'],

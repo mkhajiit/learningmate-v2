@@ -31,3 +31,13 @@
 | 프론트엔드 | React, Axios, styled-components, ESLint 등 |
 | 백엔드     | Node.js, Express, MySQL, multer, dotenv 등 |
 | 배포       | GCP, Cloudtype, GitHub                     |
+
+---
+
+## 리펙토링 계획
+
+1. localDomain 으로 여기저기 퍼져있는 url을 하나의 변수를 export하게해서 쉽게 수정이 가능하게 만들 것
+2. 경고 뜨는것들 최대한 수정
+3. 챗봇 부활 시키기
+4. CSS 고치기
+5. 재배포하기
