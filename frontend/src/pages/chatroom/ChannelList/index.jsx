@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { NavLink, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { serverDomain } from '../../../config/config';
+import { localDomain } from '../../../config/config';
 import CollapseButton from './sytle2';
 import CreateChannelModal from '../CreateChannelModal/index';
 
@@ -18,7 +18,7 @@ const ChannelList = (props) => {
 
   const getRoomData = useCallback(async () => {
     try {
-      const resp = await axios.get(`${serverDomain}/chat/chatRoom/${meetId}`);
+      const resp = await axios.get(`${localDomain}/chat/chatRoom/${meetId}`);
       setRoomData(resp.data.data.initialRoom);
     } catch (error) {
       console.error(error);
@@ -64,7 +64,7 @@ const ChannelList = (props) => {
 
   const fetchChannelList = async () => {
     try {
-      const response = await fetch(`${serverDomain}/chat/channels/${meetId}`);
+      const response = await fetch(`${localDomain}/chat/channels/${meetId}`);
       const data = await response.json();
       if (response.ok) {
         setChatRoomInfo(data.data);
@@ -78,7 +78,7 @@ const ChannelList = (props) => {
 
   const fetchAndUpdateChannelList = async () => {
     try {
-      const response = await axios.get(`${serverDomain}/chat/channels/${meetId}`);
+      const response = await axios.get(`${localDomain}/chat/channels/${meetId}`);
       const { data } = response.data;
 
       setChatRoomInfo(data);
@@ -103,7 +103,7 @@ const ChannelList = (props) => {
   const handleChannelClick = useCallback(
     async (channel) => {
       try {
-        const response = await axios.get(`${serverDomain}/chat/chatRoom/${meetId}/channels/${channel.channel_id}}`);
+        const response = await axios.get(`${localDomain}/chat/chatRoom/${meetId}/channels/${channel.channel_id}}`);
         const chatRoomData = response.data.data.channelRoom;
         setRoomData(chatRoomData);
         onChannelClick(channel);

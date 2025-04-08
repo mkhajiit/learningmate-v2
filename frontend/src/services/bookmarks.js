@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { serverDomain } from '../config/config';
+import { localDomain } from '../config/config';
 
 const bookmarksApi = {
   insertBookmark: async (user_id, course_id) => {
     try {
       const data = { user_id, course_id };
-      const response = await axios.post(`${serverDomain}/bookmark/add`, data);
+      const response = await axios.post(`${localDomain}/bookmark/add`, data);
       return response;
     } catch (error) {
       return error;
@@ -13,7 +13,7 @@ const bookmarksApi = {
   },
   getBookmarkByUserId: async (user_id) => {
     try {
-      const response = await axios.get(`${serverDomain}/bookmark/list/${user_id}`);
+      const response = await axios.get(`${localDomain}/bookmark/list/${user_id}`);
       return response;
     } catch (error) {
       return error;
@@ -21,7 +21,7 @@ const bookmarksApi = {
   },
   deleteBookmark: async (user_id, course_id) => {
     try {
-      const response = await axios.delete(`${serverDomain}/bookmark/remove/${user_id}/${course_id}`);
+      const response = await axios.delete(`${localDomain}/bookmark/remove/${user_id}/${course_id}`);
       return response;
     } catch (error) {
       return error;

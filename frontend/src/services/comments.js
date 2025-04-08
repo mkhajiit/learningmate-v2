@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { serverDomain } from '../config/config';
+import { localDomain } from '../config/config';
 
 const commentsApi = {
   getCommentList: async (course_id) => {
     try {
-      const response = await axios.get(`${serverDomain}/comments/lecture-comment-list/${course_id}`);
+      const response = await axios.get(`${localDomain}/comments/lecture-comment-list/${course_id}`);
       return response;
     } catch (error) {
       return error;
@@ -12,7 +12,7 @@ const commentsApi = {
   },
   insertComment: async (submitData) => {
     try {
-      const response = await axios.post(`${serverDomain}/comments/insert`, submitData);
+      const response = await axios.post(`${localDomain}/comments/insert`, submitData);
       return response;
     } catch (error) {
       return error;
@@ -20,7 +20,7 @@ const commentsApi = {
   },
   deleteComments: async (comment_id) => {
     try {
-      const response = await axios.delete(`${serverDomain}/comments/delete/${comment_id}`);
+      const response = await axios.delete(`${localDomain}/comments/delete/${comment_id}`);
       return response;
     } catch (error) {
       return error;

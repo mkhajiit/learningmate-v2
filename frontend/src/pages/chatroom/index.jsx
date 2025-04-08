@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
-import { serverDomain } from '../../config/config';
+import { localDomain } from '../../config/config';
 import ChannelList from './ChannelList/index';
 import Menu from '../../components/Menu/index';
 import 'react-toastify/dist/ReactToastify.css';
@@ -52,7 +52,7 @@ const ChatRoom = () => {
 
   const getUserData = useCallback(async () => {
     try {
-      const response = await axios.get(`${serverDomain}/users/list`, { withCredentials: true });
+      const response = await axios.get(`${localDomain}/users/list`, { withCredentials: true });
       const loggedInUser = response.data.data.find((user) => user.user_id === userinfo.userId);
 
       if (loggedInUser) {
@@ -76,7 +76,7 @@ const ChatRoom = () => {
   const onChannelClick = useCallback(
     async (channel) => {
       try {
-        const response = await axios.get(`${serverDomain}/chat/chatRoom/${meetId}/channels/${channel.channel_id}`);
+        const response = await axios.get(`${localDomain}/chat/chatRoom/${meetId}/channels/${channel.channel_id}`);
         setRoomData(response.data.data.channelChatRoomData);
         setSelectedChannel(channel);
       } catch (error) {
@@ -89,7 +89,7 @@ const ChatRoom = () => {
   const getChatData = useCallback(async () => {
     try {
       if (channelId !== null) {
-        const response = await axios.get(`${serverDomain}/chat/chatRoom/${meetId}/channels/${channelId}`);
+        const response = await axios.get(`${localDomain}/chat/chatRoom/${meetId}/channels/${channelId}`);
         setRoomData(response.data.data.channelChatRoomData);
       }
     } catch (error) {
@@ -116,7 +116,7 @@ const ChatRoom = () => {
 
   const onLogOut = useCallback(async () => {
     try {
-      await axios.get(`${serverDomain}/users/logout`);
+      await axios.get(`${localDomain}/users/logout`);
       navigate('/');
     } catch (error) {
       console.dir(error);

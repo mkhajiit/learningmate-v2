@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Col, Button } from 'react-bootstrap';
 import MyProfileEdit from './MyProfileEdit';
 import { userInfoAction } from '../../store/userInfo';
-import { serverDomain } from '../../config/config';
+import { localDomain } from '../../config/config';
 import './styles/MyPage.css';
 
 const UserProfile = () => {
@@ -23,7 +23,7 @@ const UserProfile = () => {
   const handleSaveEdit = async (editedData) => {
     try {
       // 수정된 데이터를 서버에 전송하는 API 호출
-      await axios.patch(`${serverDomain}/users/updateuserprofile/${userInfo.userId}`, editedData);
+      await axios.patch(`${localDomain}/users/updateuserprofile/${userInfo.userId}`, editedData);
       // 수정이 성공하면 새로운 데이터로 상태 업데이트
       dispatch(
         userInfoAction.insert({

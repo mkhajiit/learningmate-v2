@@ -4,7 +4,7 @@ import autosize from 'autosize';
 import { ChatArea, Form, Toolbox } from './style';
 import { post, get } from '../utils/fetcher';
 import useInput from '../hooks/useInput';
-import { serverDomain } from '../../../config/config';
+import { localDomain } from '../../../config/config';
 
 const ChatBox = ({ onSubmitForm, chat, onChangeChat, placeholder, userData }) => {
   const { meetId, channelId } = useParams();
@@ -21,7 +21,7 @@ const ChatBox = ({ onSubmitForm, chat, onChangeChat, placeholder, userData }) =>
   useEffect(() => {
     const fetchNewMessages = async () => {
       try {
-        const response = await get(`${serverDomain}/chat/chatRoom/${meetId}/channels/${channelId}`);
+        const response = await get(`${localDomain}/chat/chatRoom/${meetId}/channels/${channelId}`);
         setNewMessages(response.data);
       } catch (error) {
         console.error('새로운 채팅 메시지 가져오기 실패:', error.message);
@@ -43,7 +43,7 @@ const ChatBox = ({ onSubmitForm, chat, onChangeChat, placeholder, userData }) =>
         const senderProfile = userData.profilePath;
 
         try {
-          await post(`${serverDomain}/chat/sendMessage/${meetId}/${channelId}`, {
+          await post(`${localDomain}/chat/sendMessage/${meetId}/${channelId}`, {
             content: chatValue,
             senderUserId,
             senderNickname,

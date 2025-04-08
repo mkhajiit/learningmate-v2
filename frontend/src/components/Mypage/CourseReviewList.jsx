@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { commentAction } from '../../store/comment';
-import { serverDomain } from '../../config/config';
+import { localDomain } from '../../config/config';
 import './styles/MyPage.css';
 
 const CourseReviewList = () => {
@@ -16,7 +16,7 @@ const CourseReviewList = () => {
   const fetchReviews = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${serverDomain}/comments/my-comment-list/${userInfo.userId}`);
+      const response = await axios.get(`${localDomain}/comments/my-comment-list/${userInfo.userId}`);
       dispatch(commentAction.insert({ commentList: response.data.data }));
     } catch (error) {
       console.error('Error fetching reviews:', error);

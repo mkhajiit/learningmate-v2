@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { serverDomain } from '../../config/config';
+import { localDomain } from '../../config/config';
 import LogoutFunction from '../../containers/Header/LogoutFunction';
 import './styles/MyPage.css';
 
@@ -29,7 +29,7 @@ function WithdrawPage() {
     }
     try {
       // 입력된 비밀번호와 저장된 비밀번호 비교
-      const result = await axios.delete(`${serverDomain}/users/delete/${userInfo.userId}`, {
+      const result = await axios.delete(`${localDomain}/users/delete/${userInfo.userId}`, {
         withCredentials: true,
         data: { password: data.password, user_id: userInfo.userId },
       });

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getReviewAction } from '../../store/reviewStore';
-import { serverDomain } from '../../config/config';
+import { localDomain } from '../../config/config';
 import './styles/MyPage.css';
 
 const MeetReviewList = () => {
@@ -16,7 +16,7 @@ const MeetReviewList = () => {
   const fetchReviews = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${serverDomain}/reviews/review/${userInfo.userId}`);
+      const response = await axios.get(`${localDomain}/reviews/review/${userInfo.userId}`);
       dispatch(getReviewAction({ reviewList: response.data.data }));
     } catch (error) {
       console.error('Error fetching reviews:', error);
