@@ -25,22 +25,22 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 //origin: 클라이언트의 주소 , 다른 포트로 쿠키를 보낼때는 cors 옵션에  credentials: true 추가해야함
-app.use(
-    cors({
-        origin: `https://web-learningmate-5r422alqajqbni.sel4.cloudtype.app`,
-        credentials: true,
-    })
-);
-
 // app.use(
-//   cors({
-//     origin: ['http://localhost:3001', 'http://localhost:3000'],
-//     credentials: true,
-//   }),
+//     cors({
+//         origin: `https://web-learningmate-5r422alqajqbni.sel4.cloudtype.app`,
+//         credentials: true,
+//     })
+// );
 
+app.use(
+  cors({
+    origin: ['http://localhost:3001', 'http://localhost:3000'],
+    credentials: true,
+  })
+);
 //라우터
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
