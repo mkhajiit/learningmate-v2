@@ -36,8 +36,12 @@
 
 ## 리펙토링 계획
 
-1. localDomain 으로 여기저기 퍼져있는 url을 하나의 변수를 export하게해서 쉽게 수정이 가능하게 만들 것
 2. 경고 뜨는것들 최대한 수정
 3. 챗봇 부활 시키기
 4. CSS 고치기
 5. 재배포하기
+
+## 리펙토링 현황
+
+프론트쪽 domain 설정은 chat기능쪽 제외하고 axios 인스턴스를 api로 만들어서 통합함
+백앤드쪽 domain 설정은 config.js에 선언된 localDomain, deployDomain을 수동으로 바꿔서 설정

@@ -2,6 +2,7 @@
 const coursesDAO = require('../models/coursesDAO');
 const domain = require('../config/config.js');
 // db에 저장할 파일의 경로명을 변수로설정
+// domain.localDomain, domain.deployDomain으로 로컬, 배포 도메인 설정
 const videoUploadPath = `${domain.localDomain}/images/courses/`;
 
 const path = require('path');
