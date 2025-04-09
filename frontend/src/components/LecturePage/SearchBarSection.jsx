@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form';
 import { FaTimes } from 'react-icons/fa';
 import { useState } from 'react';
 import { lectureAction } from '../../store/lecture';
-import { localDomain } from '../../config/config';
 import coursesApi from '../../services/courses';
+import api from '../../pages/api/api';
 
 function SearchBarSection() {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ function SearchBarSection() {
   // db에서 검색어에 맞는 제목과 내용을 가진 데이터들을 가져오는 함수
   const fetchSearchTerm = async (submitData) => {
     try {
-      const result = await axios.get(`${localDomain}/courses/search`, {
+      const result = await api.get('/courses/search', {
         params: {
           term: submitData.searchInput,
         },

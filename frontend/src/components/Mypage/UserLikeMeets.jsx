@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { localDomain } from '../../config/config';
+import api from '../../pages/api/api';
 
 function UserLikeMeets() {
   const navigate = useNavigate();
@@ -21,7 +20,7 @@ function UserLikeMeets() {
   const fetchUserLikeMeets = useCallback(
     async (no = 1, size = 10) => {
       try {
-        const resp = await axios.get(`${localDomain}/likebutton/list/${userInfo.userId}`, { params: { no, size } });
+        const resp = await api.get(`/likebutton/list/${userInfo.userId}`, { params: { no, size } });
         setUserLikeMeets({
           ...userLikeMeets,
           data: resp.data[0] || [], // 데이터가 없을 경우 빈 배열로 설정

@@ -1,21 +1,20 @@
 /* eslint-disable import/no-unresolved */
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import './styles.css';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Container } from 'react-bootstrap';
-import { localDomain } from '../../config/config';
 import CardForMeetSwiper from './CardForMeetSwiper';
+import api from '../../pages/api/api';
 
 export default function MeetSection() {
   const location = useSelector((state) => state.location);
   const [response, setResponse] = useState('');
   const fetchData = useCallback(async () => {
-    const resp = await axios.post(`${localDomain}/meets/find-nearby-meetup`, location);
+    const resp = await api.post('/meets/find-nearby-meetup', location);
     // 뒤에서 10개의 정보만 사용합니다
     const sliceResp = resp.data.data.slice(-10);
     setResponse(sliceResp);

@@ -1,9 +1,7 @@
 // 모임 리스트
-import axios from 'axios';
-
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { localDomain } from '../../config/config';
+import api from '../api/api';
 
 function MeetList() {
   const location = useLocation();
@@ -19,7 +17,7 @@ function MeetList() {
 
   const getMeetList = useCallback(async (no = 1, size = 10, category = null) => {
     const params = { no, size, category };
-    const resp = await axios.get(`${localDomain}/meets/meetList`, { params });
+    const resp = await api.get(`/meets/meetList`, { params });
     // console.log(resp.data);
     setMeetList(resp.data);
   }, []);

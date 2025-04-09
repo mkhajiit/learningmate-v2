@@ -1,16 +1,15 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-console */
 // 모임 디테일
-import axios from 'axios';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
-import { localDomain } from '../../config/config';
 import MeetReviewForm from './MeetReviewForm';
 import MeetDetailMapSection from '../../components/maps/MeetDetailMapSection';
 import likesbuttonApi from '../../services/likesbutton';
+import api from '../api/api';
 
 function MeetDetail() {
   const navigate = useNavigate();
@@ -63,8 +62,8 @@ function MeetDetail() {
   const getMeetDetailAndReviews = useCallback(async () => {
     try {
       const [meetResp, reviewResp] = await Promise.all([
-        axios.get(`${localDomain}/meets/meet/${meet_id}`),
-        axios.get(`${localDomain}/reviews/detail/${meet_id}/reviewList`),
+        api.get(`/meets/meet/${meet_id}`),
+        api.get(`/reviews/detail/${meet_id}/reviewList`),
       ]);
 
       // Meet 정보 설정
@@ -101,7 +100,7 @@ function MeetDetail() {
 
   const deleteMeet = useCallback(async () => {
     try {
-      await axios.delete(`${localDomain}/meets/delete/${meet_id}`);
+      await api.delete(`/meets/delete/${meet_id}`);
       navigate('/meets'); // 삭제 후 meets로 이동
     } catch (error) {
       console.error(error);
@@ -111,7 +110,7 @@ function MeetDetail() {
   const deleteReview = useCallback(
     async (reviewId) => {
       try {
-        await axios.delete(`${localDomain}/reviews/delete/${reviewId}`);
+        await api.delete(`/reviews/delete/${reviewId}`);
         getMeetDetailAndReviews();
       } catch (error) {
         console.error(error);

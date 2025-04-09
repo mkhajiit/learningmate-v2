@@ -4,9 +4,10 @@ import autosize from 'autosize';
 import { ChatArea, Form, Toolbox } from './style';
 import { post, get } from '../utils/fetcher';
 import useInput from '../hooks/useInput';
-import { localDomain } from '../../../config/config';
 
-const ChatBox = ({ onSubmitForm, chat, onChangeChat, placeholder, userData }) => {
+const ChatBox = ({ onSubmitForm, chat, userData }) => {
+  // 팀원이 만든건데 처음 보는 통신 패턴이 보여서 일단 기존 방법을 쓰되 이 모듈 안에서만 쓰도록 Domain 변수를 설정해둠
+  const localDomain = 'http://localhost:8000';
   const { meetId, channelId } = useParams();
   const textareaRef = useRef(null);
   const [chatValue, chatHandler, setChatValue] = useInput(chat);

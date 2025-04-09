@@ -1,10 +1,9 @@
-import axios from 'axios';
-import { localDomain } from '../config/config';
+import api from '../pages/api/api';
 
 const commentsApi = {
   getCommentList: async (course_id) => {
     try {
-      const response = await axios.get(`${localDomain}/comments/lecture-comment-list/${course_id}`);
+      const response = await api.get(`/comments/lecture-comment-list/${course_id}`);
       return response;
     } catch (error) {
       return error;
@@ -12,7 +11,7 @@ const commentsApi = {
   },
   insertComment: async (submitData) => {
     try {
-      const response = await axios.post(`${localDomain}/comments/insert`, submitData);
+      const response = await api.post(`/comments/insert`, submitData);
       return response;
     } catch (error) {
       return error;
@@ -20,7 +19,7 @@ const commentsApi = {
   },
   deleteComments: async (comment_id) => {
     try {
-      const response = await axios.delete(`${localDomain}/comments/delete/${comment_id}`);
+      const response = await api.delete(`/comments/delete/${comment_id}`);
       return response;
     } catch (error) {
       return error;

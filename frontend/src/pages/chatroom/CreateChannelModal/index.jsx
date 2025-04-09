@@ -1,10 +1,9 @@
-import axios from 'axios';
 import React, { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import Modal from '../../../components/Modal/index';
 import useInput from '../hooks/useInput';
 import { Button, Input, Label } from './style';
-import { localDomain } from '../../../config/config';
+import api from '../../api/api';
 
 const CreateChannelModal = ({ show, onCloseModal, onChannelCreated, meetId }) => {
   const [newChannel, onChangeNewChannel, setNewChannel] = useInput('');
@@ -19,7 +18,7 @@ const CreateChannelModal = ({ show, onCloseModal, onChannelCreated, meetId }) =>
 
       try {
         // 여기서 axios.post로 새로운 채널을 추가하는 API 호출을 합니다.
-        const response = await axios.post(`${localDomain}/chat/chatRoom/${meetId}/channels`, {
+        const response = await api.post(`/chat/chatRoom/${meetId}/channels`, {
           description: newChannel,
         });
 

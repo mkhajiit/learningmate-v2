@@ -1,16 +1,15 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-console */
 // 모임 수정
-import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import moment from 'moment';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { localDomain } from '../../config/config';
 import { changeData, setDates, updateMeetAction } from '../../store/meetStore';
 import LandingModal from '../../components/maps/LandingModal';
+import api from '../api/api';
 
 function MeetUpdate() {
   const navigate = useNavigate();
@@ -35,7 +34,7 @@ function MeetUpdate() {
     const fetchMeetData = async () => {
       try {
         if (meet_id) {
-          const response = await axios.get(`${localDomain}/meets/meet/${meet_id}`, {
+          const response = await api.get(`/meets/meet/${meet_id}`, {
             headers: {
               'Cache-Control': 'no-store',
             },
@@ -102,7 +101,7 @@ function MeetUpdate() {
       }
 
       try {
-        await axios.patch(`${localDomain}/meets/update/${meet_id}`, updatedMeet, {
+        await api.patch(`/meets/update/${meet_id}`, updatedMeet, {
           withCredentials: true,
           headers: {
             'Content-Type': 'multipart/form-data',

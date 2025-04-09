@@ -3,12 +3,12 @@ import { useDispatch } from 'react-redux';
 import { useCallback } from 'react';
 import { authAction } from '../../store/auth';
 import { userInfoAction } from '../../store/userInfo';
-import { localDomain } from '../../config/config';
+import api from '../../pages/api/api';
 
 function LogoutFunction() {
   const dispatch = useDispatch();
   const logoutUser = useCallback(async () => {
-    await axios.get(`${localDomain}/users/logout`, { withCredentials: true });
+    await api.get(`/users/logout`, { withCredentials: true });
     dispatch(authAction.logout());
     dispatch(userInfoAction.initialize());
     window.location.reload();
