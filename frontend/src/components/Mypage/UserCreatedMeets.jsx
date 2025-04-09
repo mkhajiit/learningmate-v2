@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { serverDomain } from '../../config/config';
+import api from '../../pages/api/api';
 
 function UserCreatedMeets() {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ function UserCreatedMeets() {
   const login = useSelector((state) => state.auth.isAuth);
 
   const fetchUserCreatedMeets = useCallback(async (no = 1, size = 10) => {
-    const resp = await axios.get(`${serverDomain}/meets/meetList/${userInfo.userId}`, { params: { no, size } });
+    const resp = await api.get(`/meets/meetList/${userInfo.userId}`, { params: { no, size } });
     setUserCreatedMeets(resp.data);
   }, []);
 

@@ -25,22 +25,24 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 //origin: 클라이언트의 주소 , 다른 포트로 쿠키를 보낼때는 cors 옵션에  credentials: true 추가해야함
-app.use(
-    cors({
-        origin: `https://web-learningmate-5r422alqajqbni.sel4.cloudtype.app`,
-        credentials: true,
-    })
-);
-
+//배포용 CORS 코드
 // app.use(
-//   cors({
-//     origin: ['http://localhost:3001', 'http://localhost:3000'],
-//     credentials: true,
-//   }),
+//     cors({
+//         origin: `https://web-learningmate-5r422alqajqbni.sel4.cloudtype.app`,
+//         credentials: true,
+//     })
+// );
 
+//로컬용 CORS 코드
+app.use(
+  cors({
+    origin: ['http://localhost:3001', 'http://localhost:3000'],
+    credentials: true,
+  })
+);
 //라우터
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -57,18 +59,14 @@ app.use('/events', eventRouter); // 나현 추가
 
 app.use('/chat', chatRoutes); // 소영 추가
 
-// catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
 
-// error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });

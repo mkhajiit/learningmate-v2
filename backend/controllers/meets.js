@@ -1,6 +1,6 @@
 const meetsDAO = require('../models/meetsDAO');
 const domain = require('../config/config.js');
-const imageUploadPath = `${domain.deployDomain}/images/meets/`;
+const imageUploadPath = `${domain.localDomain}/images/meets/`;
 
 exports.meetInsert = async (req, res) => {
   try {
@@ -25,7 +25,7 @@ exports.meetInsert = async (req, res) => {
 
 exports.meetUpdate = async (req, res) => {
   try {
-    const {meet_id} = req.params;
+    const { meet_id } = req.params;
     const meetData = req.body;
     const image = req.file ? `${imageUploadPath}${req.file.filename}` : '';
 
@@ -48,7 +48,7 @@ exports.meetUpdate = async (req, res) => {
 };
 
 exports.meetDelete = async (req, res) => {
-  const {meet_id} = req.params;
+  const { meet_id } = req.params;
   try {
     await meetsDAO.delete(meet_id, (resp) => {
       res.send(resp);
@@ -61,7 +61,7 @@ exports.meetDelete = async (req, res) => {
 exports.meetList = async (req, res) => {
   const meetListParams = req.query;
 
-  const {category} = meetListParams;
+  const { category } = meetListParams;
 
   try {
     await meetsDAO.meetList(meetListParams, (resp) => {
@@ -71,7 +71,7 @@ exports.meetList = async (req, res) => {
         filteredMeetups = filteredMeetups.filter((meetup) => meetup.category === category);
       }
 
-      res.json({data: filteredMeetups});
+      res.json({ data: filteredMeetups });
     });
   } catch (err) {
     console.error(err);
@@ -80,7 +80,7 @@ exports.meetList = async (req, res) => {
 };
 
 exports.meet = async (req, res) => {
-  const {meet_id} = req.params;
+  const { meet_id } = req.params;
   try {
     await meetsDAO.meet(meet_id, (resp) => {
       res.send(resp);

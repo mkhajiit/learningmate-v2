@@ -1,9 +1,9 @@
-
 // 배포환경에서는 videoUploadPath 경로를 유저이미지 저장경로와 같게해야 저장됨
 const coursesDAO = require('../models/coursesDAO');
 const domain = require('../config/config.js');
 // db에 저장할 파일의 경로명을 변수로설정
-const videoUploadPath = `${domain.deployDomain}/images/courses/`;
+// domain.localDomain, domain.deployDomain으로 로컬, 배포 도메인 설정
+const videoUploadPath = `${domain.localDomain}/images/courses/`;
 
 const path = require('path');
 
@@ -21,15 +21,9 @@ exports.courseInsert = async (req, res) => {
     const imagePath = req.files['lectureImage'][0]
       ? `${videoUploadPath}${req.files['lectureImage'][0].filename}`
       : '';
-    await coursesDAO.insert(
-      courseData,
-      videoPath,
-      videoName,
-      imagePath,
-      (resp) => {
-        res.send(resp);
-      },
-    );
+    await coursesDAO.insert(courseData, videoPath, videoName, imagePath, (resp) => {
+      res.send(resp);
+    });
   } catch (err) {
     console.log(err);
   }
@@ -49,15 +43,9 @@ exports.courseUpdate = async (req, res) => {
     ? `${videoUploadPath}/${req.files['lectureImage'][0].filename}`
     : '';
   try {
-    await coursesDAO.update(
-      courseData,
-      videoPath,
-      videoName,
-      imagePath,
-      (resp) => {
-        res.send(resp);
-      },
-    );
+    await coursesDAO.update(courseData, videoPath, videoName, imagePath, (resp) => {
+      res.send(resp);
+    });
   } catch (error) {
     console.log(error);
   }

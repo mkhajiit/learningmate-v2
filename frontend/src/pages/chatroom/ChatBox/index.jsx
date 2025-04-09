@@ -4,9 +4,10 @@ import autosize from 'autosize';
 import { ChatArea, Form, Toolbox } from './style';
 import { post, get } from '../utils/fetcher';
 import useInput from '../hooks/useInput';
-import { serverDomain } from '../../../config/config';
 
-const ChatBox = ({ onSubmitForm, chat, onChangeChat, placeholder, userData }) => {
+const ChatBox = ({ onSubmitForm, chat, userData }) => {
+  // 팀원이 만든건데 처음 보는 통신 패턴이 보여서 일단 기존 방법을 쓰되 이 모듈 안에서만 쓰도록 Domain 변수를 설정해둠
+  const localDomain = 'http://localhost:8000';
   const { meetId, channelId } = useParams();
   const textareaRef = useRef(null);
   const [chatValue, chatHandler, setChatValue] = useInput(chat);
@@ -21,7 +22,7 @@ const ChatBox = ({ onSubmitForm, chat, onChangeChat, placeholder, userData }) =>
   useEffect(() => {
     const fetchNewMessages = async () => {
       try {
-        const response = await get(`${serverDomain}/chat/chatRoom/${meetId}/channels/${channelId}`);
+        const response = await get(`${localDomain}/chat/chatRoom/${meetId}/channels/${channelId}`);
         setNewMessages(response.data);
       } catch (error) {
         console.error('새로운 채팅 메시지 가져오기 실패:', error.message);
@@ -43,7 +44,7 @@ const ChatBox = ({ onSubmitForm, chat, onChangeChat, placeholder, userData }) =>
         const senderProfile = userData.profilePath;
 
         try {
-          await post(`${serverDomain}/chat/sendMessage/${meetId}/${channelId}`, {
+          await post(`${localDomain}/chat/sendMessage/${meetId}/${channelId}`, {
             content: chatValue,
             senderUserId,
             senderNickname,

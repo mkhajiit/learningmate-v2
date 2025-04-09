@@ -1,16 +1,15 @@
 /* eslint-disable no-console */
 /* eslint-disable no-alert */
 // 모임 생성
-import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
-import { serverDomain } from '../../config/config';
 import { changeData, clearData, setDates } from '../../store/meetStore';
 import LandingModal from '../../components/maps/LandingModal';
 import { positionAction } from '../../store/location';
+import api from '../api/api';
 
 function MeetInsert() {
   const navigate = useNavigate();
@@ -97,7 +96,7 @@ function MeetInsert() {
       }
 
       try {
-        await axios.post(`${serverDomain}/meets/insert`, meetData, {
+        await api.post(`/meets/insert`, meetData, {
           withCredentials: true,
           headers: {
             'Content-Type': 'multipart/form-data',

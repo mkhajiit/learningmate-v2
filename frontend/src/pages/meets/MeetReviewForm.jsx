@@ -1,13 +1,12 @@
 /* eslint-disable no-console */
 // 리뷰 작성 모달
-import axios from 'axios';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
 import { Button, Form } from 'react-bootstrap';
-import { serverDomain } from '../../config/config';
 import { clearData, updateReviewContent } from '../../store/reviewStore';
+import api from '../api/api';
 
 function MeetReviewForm() {
   const navigate = useNavigate();
@@ -25,7 +24,7 @@ function MeetReviewForm() {
     };
     try {
       // 리뷰 데이터를 서버로 전송
-      await axios.post(`${serverDomain}/reviews/insert`, reviewData, {
+      await api.post(`/reviews/insert`, reviewData, {
         withCredentials: true,
         headers: {
           'Content-Type': 'application/json',

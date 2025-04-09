@@ -5,9 +5,9 @@ import 'moment/locale/ko';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { setEvents } from '../../store/eventStore';
-import { serverDomain } from '../../config/config';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './styles/MyPage.css';
+import api from '../../pages/api/api';
 
 const localizer = momentLocalizer(moment);
 
@@ -18,7 +18,7 @@ const MyCalendar = () => {
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get(`${serverDomain}/events/getEvents/${userInfo.userId}`);
+      const response = await api.get(`/events/getEvents/${userInfo.userId}`);
       dispatch(setEvents(response.data.data));
     } catch (error) {
       console.error('Error fetching events:', error);
@@ -34,7 +34,7 @@ const MyCalendar = () => {
     if (title) {
       try {
         // 서버에 새 이벤트 추가
-        const response = await axios.post(`${serverDomain}/events/insert`, {
+        const response = await api.post('/events/insert', {
           user_id: userInfo.userId,
           title,
           start: moment(start).format('YYYY-MM-DD'),
@@ -51,7 +51,7 @@ const MyCalendar = () => {
   const handleUpdateEvent = async (id, updatedEvent) => {
     try {
       // 서버에 이벤트 업데이트 요청
-      await axios.put(`${serverDomain}/events/update/${id}`, updatedEvent);
+      await api.put(`/events/update/${id}`, updatedEvent);
       // Redux 상태 업데이트
       await fetchEvents();
     } catch (error) {
@@ -63,7 +63,7 @@ const MyCalendar = () => {
     try {
       event.stopPropagation();
       // 서버에 이벤트 삭제 요청
-      await axios.delete(`${serverDomain}/events/delete/${id}`);
+      await api.delete(`/events/delete/${id}`);
       // Redux 상태 업데이트
       await fetchEvents();
     } catch (error) {

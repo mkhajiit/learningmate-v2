@@ -1,11 +1,9 @@
 /* eslint-disable no-console */
-import axios from 'axios';
 import gravatar from 'gravatar';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
-import { toast, ToastContainer } from 'react-toastify';
-import { serverDomain } from '../../config/config';
+import { toast } from 'react-toastify';
 import ChannelList from './ChannelList/index';
 import Menu from '../../components/Menu/index';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,7 +13,6 @@ import makeSection from './utils/makeSection';
 import MyCalendar from './components/Calendar';
 
 import {
-  AddButton,
   ProfileImg,
   ProfileModal,
   RightMenu,
@@ -28,6 +25,7 @@ import {
   ChannelTitle,
   Header,
 } from './style1';
+import api from '../api/api';
 
 const ChatRoom = () => {
   const { meetId, channelId } = useParams();
@@ -52,7 +50,7 @@ const ChatRoom = () => {
 
   const getUserData = useCallback(async () => {
     try {
-      const response = await axios.get(`${serverDomain}/users/list`, { withCredentials: true });
+      const response = await api.get(`/users/list`, { withCredentials: true });
       const loggedInUser = response.data.data.find((user) => user.user_id === userinfo.userId);
 
       if (loggedInUser) {
@@ -76,7 +74,7 @@ const ChatRoom = () => {
   const onChannelClick = useCallback(
     async (channel) => {
       try {
-        const response = await axios.get(`${serverDomain}/chat/chatRoom/${meetId}/channels/${channel.channel_id}`);
+        const response = await api.get(`/chat/chatRoom/${meetId}/channels/${channel.channel_id}`);
         setRoomData(response.data.data.channelChatRoomData);
         setSelectedChannel(channel);
       } catch (error) {
@@ -89,7 +87,7 @@ const ChatRoom = () => {
   const getChatData = useCallback(async () => {
     try {
       if (channelId !== null) {
-        const response = await axios.get(`${serverDomain}/chat/chatRoom/${meetId}/channels/${channelId}`);
+        const response = await api.get(`/chat/chatRoom/${meetId}/channels/${channelId}`);
         setRoomData(response.data.data.channelChatRoomData);
       }
     } catch (error) {
@@ -116,7 +114,7 @@ const ChatRoom = () => {
 
   const onLogOut = useCallback(async () => {
     try {
-      await axios.get(`${serverDomain}/users/logout`);
+      await api.get(`/users/logout`);
       navigate('/');
     } catch (error) {
       console.dir(error);
