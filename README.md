@@ -45,3 +45,4 @@
 
 프론트쪽 domain 설정은 chat기능쪽 제외하고 axios 인스턴스를 api로 만들어서 통합함
 백앤드쪽 domain 설정은 config.js에 선언된 localDomain, deployDomain을 수동으로 바꿔서 설정
+백앤드쪽은 express-generator를 쓴듯? port설정은 www.js에서 가능함
