@@ -39,10 +39,11 @@
 2. 경고 뜨는것들 최대한 수정
 3. 챗봇 부활 시키기
 4. CSS 고치기
-5. 재배포하기
+5. 프론트엔드는 vercel, 백앤드는 railway로 재배포하기, db는 아직 못정함
 
 ## 리펙토링 현황
 
+로컬 환경에서 모임 생성 및 삭제, 채팅룸 작동 잘되는거 확인함
 프론트쪽 domain 설정은 chat기능쪽 제외하고 axios 인스턴스를 api로 만들어서 통합함
 백앤드쪽 domain 설정은 config.js에 선언된 localDomain, deployDomain을 수동으로 바꿔서 설정
 백앤드쪽은 express-generator를 쓴듯? port설정은 www.js에서 가능함
