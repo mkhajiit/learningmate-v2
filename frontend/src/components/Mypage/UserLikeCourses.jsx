@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Col, Container, Row } from 'react-bootstrap';
 import { lectureAction } from '../../store/lecture';
 import bookmarksApi from '../../services/bookmarks';
-import LectureListContainer from '../../features/lecture/components/LectureListContainer';
+import LectureListContainer from '../../features/lecture/container/LectureListContainer';
 
 function UserLikeCourses() {
   const dispatch = useDispatch();

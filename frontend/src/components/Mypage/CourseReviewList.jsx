@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { commentAction } from '../../store/comment';
 import './styles/MyPage.css';
 import api from '../../pages/api/api';

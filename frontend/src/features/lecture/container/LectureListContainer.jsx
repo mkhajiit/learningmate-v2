@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Col, Pagination, Row } from 'react-bootstrap';
-import LectureCardComponent from './LectureCardComponent';
+import LectureCardComponent from '../components/LectureCardComponent';
 
 function LectureListContainer() {
   const courses = useSelector((state) => state.lecture.courses);

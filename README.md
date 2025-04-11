@@ -47,7 +47,10 @@
 프론트쪽 domain 설정은 chat기능쪽 제외하고 axios 인스턴스를 api로 만들어서 통합함
 백앤드쪽 domain 설정은 config.js에 선언된 localDomain, deployDomain을 수동으로 바꿔서 설정
 백앤드쪽은 express-generator를 쓴듯? port설정은 www.js에서 가능함
+feature 폴더 내부에 각 항목의 기능별로 페이지와 컴포넌트를 구분했음
 
 ## 리펙토링 중 발생한 문제들
+
+폴더를 만들고 경로를 옮길때 현재 설정된 프리셋 때문에 수동으로 하다 컴포넌트의 경로가 꼬이는 일 발생했음 => setting.json에서 "javascript.updateImportsOnFileMove.enabled": "prompt" 변경해서 파일 옮기면 자동으로 경로 수정해줄지 물어보도록 수정함
 
 카카오맵 api가 바뀌어서 api가 작동을 안했다. 1년전에는 없었는데 카카오 내 어플리케이션 제품 설정 카카오맵에 들어가서 on을 시켜야 작동한다.
