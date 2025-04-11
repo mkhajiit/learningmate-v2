@@ -1,5 +1,8 @@
 # 🧠 1조 러닝메이트 프로젝트 - LearningMate
 
+👉 팀 협업 및 PR 기록은 기존 리포지토리에서 확인 가능합니다.
+기존 리포지토리 PR 내역: [https://github.com/mkhajiit/LearningMate/pulls?q=is%3Apr+is%3Aclosed]
+
 ## 🔍 주제: Social Activity & Learning Service
 
 유튜브처럼 강의 영상을 등록할 수 있고,  
