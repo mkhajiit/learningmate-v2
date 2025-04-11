@@ -22,7 +22,11 @@ import MyMeets from './pages/mypage/MyMeets';
 import MyCourses from './pages/mypage/MyCourses';
 import Withdraw from './pages/mypage/Withdraw';
 // 강의페이지
-import LectureMainPage, { LectureRegisterPage, LectureUpdatePage, LectureMainPageDetail } from './pages/lectures';
+import LectureMainPage, {
+  LectureRegisterPage,
+  LectureUpdatePage,
+  LectureMainPageDetail,
+} from './features/lecture/pages/lectures';
 // 채팅방페이지
 import ChatRoom from './pages/chatroom/index';
 

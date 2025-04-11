@@ -11,7 +11,7 @@ import { useCallback, useEffect, useState } from 'react';
 import CardForSwiper from './CardForSwiper';
 import coursesApi from '../../services/courses';
 
-export default function CourseSection() {
+export default function HomeLectureSection() {
   const [dataList, setDataList] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const fetchData = useCallback(async () => {

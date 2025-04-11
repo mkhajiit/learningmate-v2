@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { lectureAction } from '../../store/lecture';
 import coursesApi from '../../services/courses';
-import LectureListContainer from '../LecturePage/LectureListContainer';
+import LectureListContainer from '../../features/lecture/components/LectureListContainer';
 
 function UserUploadedCourses() {
   const navigate = useNavigate();

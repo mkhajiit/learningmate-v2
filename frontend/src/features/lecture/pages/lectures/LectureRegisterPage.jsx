@@ -3,7 +3,7 @@ import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import coursesApi from '../../services/courses';
+import coursesApi from '../../../../services/courses';
 
 function LectureRegisterPage() {
   const inputRef = useRef();
