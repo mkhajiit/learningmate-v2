@@ -3,6 +3,10 @@
 👉 팀 협업 및 PR 기록은 기존 리포지토리에서 확인 가능합니다.
 기존 리포지토리 PR 내역: [https://github.com/mkhajiit/LearningMate/pulls?q=is%3Apr+is%3Aclosed]
 
+## 구현한 기능
+
+회원가입, 로그인, 챗봇, 깃허브 협업 환경 구성, about 페이지, 강의 페이지, 카카오 맵 기능, 홈페이지
+
 ## 🔍 주제: Social Activity & Learning Service
 
 유튜브처럼 강의 영상을 등록할 수 있고,  
@@ -14,16 +18,14 @@
 
 - **2023-12-13**: 프로젝트 시작
 - **2023-12-20**: GCP 인스턴스 생성 및 DB 구축 (협업 및 배포 환경 설정)
-- **2023-12-21**: GitHub 협업 환경 구성 완료  
-  👉 [깃허브 링크 바로가기](https://github.com/mkhajiit/LearningMate)
+- **2023-12-21**: GitHub 협업 환경 구성 완료
 - **2023-12-31**: 프로젝트 파일 구조 리팩토링
   - `learningmate-front` → `frontend`
   - `learningmate-server` → `backend`
   - `db.sql` 파일 → `migration` 폴더로 이동
 - **2023-12-31**: `frontend`에 ESLint 적용
 - **2024-01-07**: `multer` 사용 시 한글 파일명 깨짐 문제 → 1.4.4 버전으로 다운그레이드하여 해결
-- **2024-01-15 ~ 01-19**: 총 3차례의 배포 테스트 진행  
-  👉 클라우드타입 배포 링크: [https://web-learningmate-5r422alqajqbni.sel4.cloudtype.app/](https://web-learningmate-5r422alqajqbni.sel4.cloudtype.app/)
+- **2024-01-15 ~ 01-19**: 총 3차례의 배포 테스트 진행
 
 ---
 
