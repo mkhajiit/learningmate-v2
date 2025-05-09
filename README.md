@@ -31,3 +31,7 @@
 | 배포       | GCP, Cloudtype, GitHub                     |
 
 ---
+
+## 결과물
+
+[포트폴리오 보기](https://docs.google.com/presentation/d/1Q97nv8-hQS9OnwzVH8bf1W7l9xwMfFu0/edit?usp=drive_link&ouid=109584807367731844865&rtpof=true&sd=true)
