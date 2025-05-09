@@ -23,7 +23,6 @@
 - **2023-12-31**: `frontend`에 ESLint 적용
 - **2024-01-07**: `multer` 사용 시 한글 파일명 깨짐 문제 → 1.4.4 버전으로 다운그레이드하여 해결
 - **2024-01-15 ~ 01-19**: 총 3차례의 배포 테스트 진행  
-  👉 클라우드타입 배포 링크: [https://web-learningmate-5r422alqajqbni.sel4.cloudtype.app/](https://web-learningmate-5r422alqajqbni.sel4.cloudtype.app/)
 
 ---
 
