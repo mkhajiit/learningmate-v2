@@ -1,5 +1,8 @@
 # 🧠 1조 러닝메이트 프로젝트 - LearningMate
 
+👉 팀 협업 및 PR 기록은 기존 리포지토리에서 확인 가능합니다.
+기존 리포지토리 PR 내역: [https://github.com/mkhajiit/LearningMate/pulls?q=is%3Apr+is%3Aclosed]
+
 ## 🔍 주제: Social Activity & Learning Service
 
 유튜브처럼 강의 영상을 등록할 수 있고,  
@@ -18,7 +21,7 @@
   - `db.sql` 파일 → `migration` 폴더로 이동
 - **2023-12-31**: `frontend`에 ESLint 적용
 - **2024-01-07**: `multer` 사용 시 한글 파일명 깨짐 문제 → 1.4.4 버전으로 다운그레이드하여 해결
-- **2024-01-15 ~ 01-19**: 총 3차례의 배포 테스트 진행
+- **2024-01-15 ~ 01-19**: 총 3차례의 배포 테스트 진행 후 최종 배포
 
 ---
 
@@ -31,3 +34,4 @@
 | 배포       | GCP, Cloudtype, GitHub                     |
 
 ---
+

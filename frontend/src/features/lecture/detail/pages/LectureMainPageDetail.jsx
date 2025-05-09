@@ -3,14 +3,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Button, ButtonGroup, Container } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router';
-
 import { useDispatch, useSelector } from 'react-redux';
-import LectureCommentSection, {
-  LectureDetailSection,
-  LectureVideoSection,
-} from '../../components/LecturePage/LectureDetailPage';
-import { lectureAction, lectureDetailAction } from '../../store/lecture';
-import coursesApi from '../../services/courses';
+import LectureCommentSection, { LectureDetailSection, LectureVideoSection } from '..';
+import coursesApi from '../../../../services/courses';
+import { lectureAction, lectureDetailAction } from '../../../../store/lecture';
 
 export default function LectureMainPageDetail() {
   const navigate = useNavigate();

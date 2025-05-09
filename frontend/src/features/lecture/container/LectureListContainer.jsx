@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Col, Pagination, Row } from 'react-bootstrap';
-import LectureCardComponent from './LectureCardComponent';
+import LectureCardComponent from '../components/LectureCardComponent';
 
 function LectureListContainer() {
   const courses = useSelector((state) => state.lecture.courses);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(12);
 
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const coursesList = courses.slice(indexOfFirstUser, indexOfLastUser);
-
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
   return (
     <>
       <Col lg={12} className='align-items-center mt-3'>

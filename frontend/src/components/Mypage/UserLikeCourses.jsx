@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
 import { Col, Container, Row } from 'react-bootstrap';
 import { lectureAction } from '../../store/lecture';
 import bookmarksApi from '../../services/bookmarks';
-import LectureListContainer from '../LecturePage/LectureListContainer';
+import LectureListContainer from '../../features/lecture/container/LectureListContainer';
 
 function UserLikeCourses() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.userInfo);
   const [loading, setLoading] = useState(false);

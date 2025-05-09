@@ -1,4 +1,5 @@
 // 배포환경에서는 videoUploadPath 경로를 유저이미지 저장경로와 같게해야 저장됨
+// 클라우드 타입은 폴더 두개를 못쓰게함
 const coursesDAO = require('../models/coursesDAO');
 const domain = require('../config/config.js');
 // db에 저장할 파일의 경로명을 변수로설정

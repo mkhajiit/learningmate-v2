@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import gravatar from 'gravatar';
-import { commentAction } from '../../../store/comment';
-import commentsApi from '../../../services/comments';
+import { commentAction } from '../../../../store/comment';
+import commentsApi from '../../../../services/comments';
 
 function LectureCommentComponent({ item }) {
   const dispatch = useDispatch();
@@ -17,7 +16,7 @@ function LectureCommentComponent({ item }) {
       }),
     );
   }, [item.comment_id, dispatch]);
-  const profileImagePath = item.profile_name || gravatar.url(item.nickname, { s: '70', d: 'retro' });
+  const profileImagePath = item.profile_name;
 
   return (
     <Container className='my-4'>

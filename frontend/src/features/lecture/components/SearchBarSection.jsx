@@ -1,11 +1,10 @@
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { FaTimes } from 'react-icons/fa';
 import { useState } from 'react';
-import { lectureAction } from '../../store/lecture';
-import coursesApi from '../../services/courses';
-import api from '../../pages/api/api';
+import { lectureAction } from '../../../store/lecture';
+import coursesApi from '../../../services/courses';
+import api from '../../../pages/api/api';
 
 function SearchBarSection() {
   const dispatch = useDispatch();
