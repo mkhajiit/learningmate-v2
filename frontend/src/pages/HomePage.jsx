@@ -1,13 +1,13 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Container } from 'react-bootstrap';
-import HomeSwiper from '../components/HomePage/HomeSwiper';
-import MeetSection from '../components/HomePage/MeetSection';
-import CourseSection from '../components/HomePage/LectureSection';
 import ChatbotModal from '../components/Chatbot';
 import { locationAction } from '../store/location';
+import HomeSwiper from '../features/home/HomeSwiper';
+import MeetSection from '../features/home/MeetSection';
+import HomeLectureSection from '../features/home/HomeLectureSection';
 
-function Home() {
+function HomePage() {
   const dispatch = useDispatch();
   const fetchLocation = useCallback(async () => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -46,7 +46,7 @@ function Home() {
         <MeetSection />
         <br />
         <h2>강의정보</h2>
-        <CourseSection />
+        <HomeLectureSection />
         <br />
         <br />
         <br />
@@ -55,4 +55,4 @@ function Home() {
     </>
   );
 }
-export default Home;
+export default HomePage;

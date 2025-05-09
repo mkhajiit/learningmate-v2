@@ -2,10 +2,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import LectureCommentComponent from './LectureCommentComponent';
+
 import LectureCommentInput from './LectureCommentInput';
 import { commentAction } from '../../../store/comment';
 import commentsApi from '../../../services/comments';
+import LectureCommentComponent from './components/LectureCommentComponent';
 
 function LectureCommentSection() {
   const dispatch = useDispatch();

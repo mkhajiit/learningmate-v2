@@ -73,7 +73,7 @@ function SignUpPage() {
                     required: true,
                     pattern: {
                       value: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
-                      message: '잘못된 문자형식 입력입니다 숫자를 입력하세요',
+                      message: '이메일 형식으로 입력해주세요',
                     },
                     validate: async (value) => {
                       // validate 함수에서는 true가 반환되면 유효성 검사를 통과했다고 간주하고, false가 반환되면 유효성 검사를 실패했다고 간주

@@ -2,10 +2,12 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import { useNavigate } from 'react-router';
 import gravatar from 'gravatar';
-import cuttingText from '../../helpers/cuttingText';
+import cuttingText from '../../../helpers/cuttingText';
 
 function LectureCardComponent({ item }) {
   const navigate = useNavigate();
+  // item 없는 에러 발생시 null
+  if (!item) return null;
   const lectureTitle = cuttingText(item.title, 21);
   const profileImagePath = item.profile_name || gravatar.url(item.nickname, { s: '50', d: 'retro' });
 
